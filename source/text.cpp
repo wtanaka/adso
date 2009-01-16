@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 
+
 #include "unit.h"
 #include "adso.h"
 #include "code.h"
@@ -21,19 +22,6 @@ using namespace std;
 
 
 
-
-int Text::init_markup(std::string x) { return 1; };
-std::string Text::return_vocab_list() { return ""; }
-std::string Text::return_segmented_chinese() { 
-  if (elements->size() == 0) { return ""; }
-  std::string output = "";
-  for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
-    if (i > 0) { output += " "; }
-    output += likely(0,i)->return_chinese_output_encoding();
-  }
-
-  return output;
- }
 
 
 // Constructor and Destructor
@@ -62,12 +50,12 @@ Text::Text(Text *t, Text *a, Text *b) {
 
 };
 void Text::clone_values(Text *x) {
-  x->english = return_english();
+  x->english = return_english_no_spacing();
   x->chinese = return_chinese();
   x->chinese_utf8s = return_chinese_utf8s();
   x->chinese_utf8c = return_chinese_utf8c();
-  x->pinyin = return_pinyin();
-  x->jyutpin = return_jyutpin();
+  x->pinyin = return_pinyin_no_spacing();
+  x->jyutpin = return_jyutpin_no_spacing();
   x->asciify_punctuation = asciify_punctuation;
   x->split_nonchinese_on_punctuation = split_nonchinese_on_punctuation;
   return;
@@ -83,7 +71,6 @@ void Text::append_clone_values(Text *x) {
   x->split_nonchinese_on_punctuation = split_nonchinese_on_punctuation;
   return;
 }
-
 
 
 
@@ -139,6 +126,9 @@ int Text::init(Adso *a, Code *c, Encoding *e, Feedback *f, Memory *m, Ontology *
 	integer_representation = 0;
 	decimal_representation = 0;
 
+	full_definitions = 0;
+
+	split_nonchinese_on_punctuation = 0;
 	asciify_punctuation = 0;
 
 	table = "";
@@ -221,9 +211,25 @@ int Text::init(Adso *a, Code *c, Encoding *e, Feedback *f, Memory *m, Ontology *
 	return 1;
 }
 
+int Text::init_markup(std::string t) {
+
+	fulltext = t;
+	fulltext_gb2312 = "";
+
+	/* Unless we know the encoding of this chunk of text
+	 * we ask the encoding class to analyse it for us. And
+      	 * set the variables in the encoding class appropriately.
+	 * We should only need to do this once for any text we 
+	 * analyse.
+	 */
+	parser->parse_textbook_markup(this);
+
+	return 1;
+}
 int Text::init_text(std::string t) {
 
 	fulltext = t;
+	fulltext_gb2312 = "";
 
 	/* Unless we know the encoding of this chunk of text
 	 * we ask the encoding class to analyse it for us. And
@@ -240,10 +246,6 @@ int Text::init_text(std::string t) {
                 if (existing_output_encoding != 0) { encoding->output_encoding = existing_output_encoding; }
                 if (existing_output_script != 0) { encoding->output_script = existing_output_script; }
         }
-
-
-
-	if (encoding->input_encoding == 0 || encoding->input_script == 0) { encoding->analyse_encoding(this); }
 
 	parser->parse(this);
 
@@ -428,9 +430,8 @@ std::string Text::debug() {
     for (unsigned int ii = 0; ii < elements->at(0)->at(i)->size(); ii++) {
 
 
-
-        // GB2312
-        if (encoding->output_encoding == 1) {
+      
+	if (encoding->output_encoding == 1) {
       if (ii == 0) {
         std::cout << elements->at(0)->at(i)->at(ii)->return_chinese() <<"\t" << elements->at(0)->at(i)->at(ii)->myclass << "\t" << elements->at(0)->at(i)->at(ii)->flag << "\t" << elements->at(0)->at(i)->at(ii)->confidence << "\t" << i << "\n";
       } else {
@@ -455,12 +456,13 @@ std::string Text::debug() {
         std::cout << "..." << elements->at(0)->at(i)->at(ii)->return_chinese_utf8c() <<"\t" << elements->at(0)->at(i)->at(ii)->myclass << "\t" << elements->at(0)->at(i)->at(ii)->flag << "\t" << elements->at(0)->at(i)->at(ii)->confidence << "\t" << i << "\n";
       }
         }
-
-
     }
   }
   return debug;
 }
+
+
+
 std::string Text::return_chinese(int b) {
   if (elements->size() == 0) { return ""; }
   if (elements->at(0)->size()-1 < b) { return ""; }
@@ -477,6 +479,66 @@ std::string Text::return_chinese(int a, int b, int c) {
   if (elements->at(a)->at(b)->size()-1 < c) { return ""; }
   return elements->at(a)->at(b)->at(c)->return_chinese();
 }
+std::string Text::return_gb2312_popup() {
+
+  std::string results = "";
+  std::string p = "";
+  std::string e = "";
+  std::string s = "";
+  std::string t = "";
+
+  if (elements->size() == 0) {
+        post_english_spacing = 0;
+        post_pinyin_spacing = 0;
+	s = return_chinese();
+	t = s;
+	e = return_english_no_spacing();
+	p = return_pinyin_no_spacing();
+
+	e = escape_apostrophes(e);
+	p = escape_apostrophes(p);
+
+        results = "<span onclick=\"onWordClick()\" class=\"gb2312\" onmouseover=\"tip(event,'"+e+"','"+p+"','"+s+"','"+t+"')\" onmouseout=\"htip()\">"+s+"</span>";
+  } else {
+    for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+        results += likely(0, i)->return_gb2312_popup();
+    }
+  }
+  return results;
+}
+std::string Text::return_gb2312_popup_for_editing(int edit_element) {
+
+  std::string results = "";
+  std::string p = "";
+  std::string e = "";
+  std::string s = "";
+  std::string t = "";
+
+  std::stringstream myStream1;
+  myStream1 << edit_element;
+  std::string element_id = myStream1.str();
+
+  if (elements->size() == 0) {
+        post_english_spacing = 0;
+        post_pinyin_spacing = 0;
+	s = return_chinese();
+	t = s;
+	e = return_english_no_spacing();
+	p = return_pinyin_no_spacing();
+
+	e = escape_apostrophes(e);
+	p = escape_apostrophes(p);
+
+        results = "<span ";
+	results +="id=\"adso_" + element_id + "\" class=\"gb2312\" onclick=\"onWordClick()\" onmouseover=\"tip(event,'"+e+"','"+p+"','"+s+"','"+t+"','"+element_id+"')\" onmouseout=\"htip()\">"+s+"</span>";
+  } else {
+    for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+        edit_element += encoding->word_length(likely(0, i)->return_chinese_utf8s(), "utf8");
+        results += likely(0, i)->return_gb2312_popup_for_editing(edit_element);
+    }
+  }
+  return results;
+}
 std::string Text::return_popup() {
 
   std::string results = "";
@@ -490,8 +552,16 @@ std::string Text::return_popup() {
         post_pinyin_spacing = 0;
 	s = return_chinese_utf8s();
 	t = return_chinese_utf8c();
-	e = return_english();
-	p = return_pinyin();
+	if (encoding->input_script == 2) {
+		t = s;
+		s = return_chinese_utf8c();
+	}
+	e = return_english_no_spacing();
+	p = return_pinyin_no_spacing();
+
+	e = escape_apostrophes(e);
+	p = escape_apostrophes(p);
+
         results = "<span onclick=\"onWordClick()\" onmouseover=\"tip(event,'"+e+"','"+p+"','"+s+"','"+t+"')\" onmouseout=\"htip()\">"+s+"</span>";
   } else {
     for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
@@ -500,6 +570,96 @@ std::string Text::return_popup() {
   }
   return results;
 }
+std::string Text::return_popup_for_editing(int edit_element) {
+
+  std::string results = "";
+  std::string p = "";
+  std::string e = "";
+  std::string s = "";
+  std::string t = "";
+
+  std::stringstream myStream1;
+  myStream1 << edit_element;
+  std::string element_id = myStream1.str();
+
+  if (elements->size() == 0) {
+        post_english_spacing = 0;
+        post_pinyin_spacing = 0;
+	s = return_chinese_utf8s();
+	t = return_chinese_utf8c();
+	e = return_english_no_spacing();
+	p = return_pinyin_no_spacing();
+
+	e = escape_apostrophes(e);
+	p = escape_apostrophes(p);
+
+        results = "<span ";
+	results +="id=\"adso_" + element_id + "\" onclick=\"onWordClick()\" onmouseover=\"tip(event,'"+e+"','"+p+"','"+s+"','"+t+"','"+element_id+"')\" onmouseout=\"htip()\">"+s+"</span>";
+  } else {
+    for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+        edit_element += encoding->word_length(likely(0, i)->return_chinese_utf8s(), "utf8");
+        results += likely(0, i)->return_popup_for_editing(edit_element);
+    }
+  }
+  return results;
+}
+std::string Text::return_popup_for_editing_five_fields(int edit_element) {
+
+  std::string results = "";
+  std::string p = "";
+  std::string e = "";
+  std::string s = "";
+  std::string t = "";
+
+  std::stringstream myStream1;
+  myStream1 << edit_element;
+  std::string element_id = myStream1.str();
+
+  if (elements->size() == 1 && edit_element == 1) {
+    if (elements->at(0)->size() == 1) {
+      if (is_category_non_recursive("NonChinese",0,0) == 1) {
+        results = "<span ";
+	results +="id=\"adso_" + element_id + "\" onclick=\"onWordClick()\" onmousedown=\"adso_mousedown('"+element_id+"')\" onmouseup=\"adso_mouseup('"+element_id+"')\">"+return_chinese_utf8s()+"</span>";
+	return results;
+      }
+    }
+  }
+
+  if (elements->size() == 0) {
+        post_english_spacing = 0;
+        post_pinyin_spacing = 0;
+	s = return_chinese_utf8s();
+	t = return_chinese_utf8c();
+	e = return_english_no_spacing();
+	p = return_pinyin_no_spacing();
+
+	e = escape_apostrophes(e);
+	p = escape_apostrophes(p);
+	s = escape_apostrophes(s);
+	t = escape_apostrophes(t);
+
+	if (e == "\"") { 
+		e = s; 
+		p = s;
+		s = s;
+		t = s;
+	}
+
+        
+
+        results = "<span ";
+	results +="id=\"adso_" + element_id + "\" onclick=\"onWordClick()\" onmousedown=\"adso_mousedown('"+element_id+"')\" onmouseup=\"adso_mouseup('"+element_id+"')\" onmouseover=\"tip(event,'"+e+"','"+p+"','"+s+"','"+t+"','','"+element_id+"')\" onmouseout=\"htip()\">"+apostrophes_to_html(s)+"</span>";
+
+
+  } else {
+    for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+        edit_element += encoding->word_length(likely(0, i)->return_chinese_utf8s(), "utf8");
+        results += likely(0, i)->return_popup_for_editing_five_fields(edit_element);
+    }
+  }
+  return results;
+}
+
 std::string Text::return_chinese() {
 
   std::string results = "";
@@ -553,6 +713,54 @@ std::string Text::return_chinese_utf8c() {
       results += likely(0, i)->return_chinese_utf8c();
   }
   return pre + results + post;
+}
+std::string Text::return_segmented_chinese() {
+  if (elements->size() == 0) { return ""; }
+  std::string output = "";
+  for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+    if (i > 0) { output += " "; }
+    output += likely(0,i)->return_chinese_output_encoding();
+  }
+
+  return output;
+
+}
+std::string Text::return_vocab_list() {
+  if (elements->size() == 0) { return ""; }
+
+  std::vector<std::string> *vocab_list = new std::vector<std::string>;
+  std::string output = "";
+  
+
+  for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+    vocab_list->push_back(likely(0,i)->return_chinese_utf8s() + "\t" + likely(0,i)->return_pinyin() + "\t" + likely(0,i)->return_english() + "\t" + likely(0,i)->myclass );
+  }
+
+  for (int i = 0; i < vocab_list->size(); i++) {
+    output += vocab_list->at(i) + "<br/>\n";
+  }
+
+  delete vocab_list;
+  return output;
+
+}
+std::string Text::return_vocab_list_with_traditional() {
+  if (elements->size() == 0) { return ""; }
+
+  std::vector<std::string> *vocab_list = new std::vector<std::string>;
+  std::string output = "";
+
+  for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
+    vocab_list->push_back(likely(0,i)->return_chinese_utf8c() + "\t" + likely(0,i)->return_pinyin() + "\t" + likely(0,i)->return_english() + "\t" + likely(0,i)->myclass );
+  }
+
+  for (int i = 0; i < vocab_list->size(); i++) {
+    output += vocab_list->at(i) + "<br/>\n";
+  }
+
+  delete vocab_list;
+  return output;
+
 }
 std::string Text::return_english_no_spacing() {
 
@@ -698,7 +906,7 @@ std::string Text::generate_chinese() {
   std::string reseg1 = return_chinese_input_encoding();
   int totalwordlength = encoding->character_length(reseg1);
   int split_distance = 1;
-  if (totalwordlength == 1) { return "unknown"; }
+  if (totalwordlength == 1) { return "UNKNOWN"; }
   if (totalwordlength >= 4) { split_distance = 2; }
   std::string myformer = "";
   std::string mylatter = "";
@@ -706,7 +914,7 @@ std::string Text::generate_chinese() {
   for (unsigned int z = 0; z < split_distance && reseg1 != ""; z++) {
     chunk += encoding->first_character_length(reseg1);
   }
-  if (chunk > reseg1.length()) { return "unknown"; }
+  if (chunk > reseg1.length()) { return "UNKNOWN"; }
   myformer = reseg1.substr(0, chunk);
   mylatter = reseg1.substr(chunk);
   Text *text4swap1 = new Text(this);
@@ -748,7 +956,7 @@ std::string Text::generate_chinese_utf8c() {
   std::string reseg1 = return_chinese_input_encoding();
   int totalwordlength = encoding->character_length(reseg1);
   int split_distance = 1;
-  if (totalwordlength == 1) { return "UNKNOWN"; }
+  if (totalwordlength == 1) { return "unknown"; }
   if (totalwordlength >= 4) { split_distance = 2; }
   std::string myformer = "";
   std::string mylatter = "";
@@ -756,14 +964,14 @@ std::string Text::generate_chinese_utf8c() {
   for (unsigned int z = 0; z < split_distance && reseg1 != ""; z++) {
     chunk += encoding->first_character_length(reseg1);
   }
-  if (chunk > reseg1.length()) { return "UNKNOWN"; }
+  if (chunk > reseg1.length()) { return "unknown"; }
   myformer = reseg1.substr(0, chunk);
   mylatter = reseg1.substr(chunk);
   Text *text4swap1 = new Text(this);
   text4swap1->init_text(myformer);
   Text *text4swap2 = new Text(this);
   text4swap2->init_text(mylatter);
-  std::string revised_pinyin = text4swap1->return_chinese_utf8c() + " " + text4swap2->return_chinese_utf8c();
+  std::string revised_pinyin = text4swap1->return_chinese_utf8c() + text4swap2->return_chinese_utf8c();
   delete text4swap1;
   delete text4swap2;
   chinese_utf8c = revised_pinyin;
@@ -785,12 +993,17 @@ std::string Text::generate_pinyin(std::string spacing) {
   if (totalwordlength == 2) { spacing = ""; }
   if (totalwordlength == 3) { split_distance = 1; }
   if (totalwordlength >= 4) { split_distance = 2; }
+  if (totalwordlength > 4) { spacing = " "; } // phrases most likely
   std::string myformer = "";
   std::string mylatter = "";
+  int temp_chunk = 0;
   int chunk = 0;
   for (unsigned int z = 0; z < split_distance && reseg1 != ""; z++) {
-    chunk += encoding->first_character_length(reseg1);
+    temp_chunk = encoding->first_character_length(reseg1);
+    chunk += temp_chunk;
+    reseg1 = reseg1.substr(temp_chunk);
   }
+  reseg1 = return_chinese_input_encoding();
   if (chunk > reseg1.length()) { return "UNKNOWN"; }
   myformer = reseg1.substr(0, chunk);
   mylatter = reseg1.substr(chunk);
@@ -800,11 +1013,13 @@ std::string Text::generate_pinyin(std::string spacing) {
   text4swap2->init_text(mylatter);
   std::string revised_pinyin = "";
 
+
   if  (spacing == "") {
     revised_pinyin = text4swap1->return_pinyin_no_spacing() + spacing + text4swap2->return_pinyin_no_spacing();
   } else {
     revised_pinyin = text4swap1->return_pinyin() + spacing + text4swap2->return_pinyin();
   }
+
   delete text4swap1;
   delete text4swap2;
   pinyin = revised_pinyin;
@@ -828,7 +1043,9 @@ std::string Text::return_pinyin_no_spacing() {
     return results;
   }
 
-  if (elements->size() == 0) { return pre + generate_pinyin() + post; }
+  /* Generate Pinyin Generates the Pinyin Using PRE and POST Elements Automatically */
+  //if (elements->size() == 0) { return pre + generate_pinyin() + post; }
+  if (elements->size() == 0) { return generate_pinyin(); }
   for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
     results += likely(0, i)->return_pinyin_no_spacing();
   }
@@ -844,7 +1061,6 @@ std::string Text::return_pinyin() {
   if (pre_chinese != NULL) { pre += pre_chinese->return_pinyin(); }
   if (post_chinese != NULL) { post += post_chinese->return_pinyin(); }
 
-
   if (pinyin != "") { 
     results += pre;
     if (pre_pinyin_spacing == 1) { results += " "; }
@@ -854,7 +1070,9 @@ std::string Text::return_pinyin() {
     return results;
   }
 
-  if (elements->size() == 0) { return pre + generate_pinyin() + post; }
+  /* Generate Pinyin Generates the Pinyin Using PRE and POST Elements Automatically */
+  //if (elements->size() == 0) { return pre + generate_pinyin() + post; }
+  if (elements->size() == 0) { return generate_pinyin(); }
   for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
     results += likely(0, i)->return_pinyin();
   }
@@ -1324,6 +1542,11 @@ int Text::shift_pre_chinese(Text *source, int a, int b, int c, Text *destination
   delete source->elements->at(a)->at(b);
   source->elements->at(a)->erase(source->elements->at(a)->begin()+b);
 
+  /* Removing this cauess reduplicated pinyin in output. I'm not sure why! */
+  temp->return_pinyin();
+
+
+
   // Relocate in our New Vector
   destination->add_pre_chinese(temp); 
 
@@ -1633,6 +1856,7 @@ int Text::shift_post_chinese_to_all_category(int a, int b, std::string category,
 			Text *verb_unit  = text(a,b,i);
 			Text *new_unit   = new Unit(this);
 			toadd->clone_values(new_unit);
+                        verb_unit->return_chinese_utf8c(); // strange bugfix, remove and the last le is repeated for shuai1huai4le5 and other compounds. Cause unknown.
 			verb_unit->add_post_chinese(new_unit);
 		}
 	}
@@ -1900,12 +2124,18 @@ int Text::map_ontology_to_class(Text *t, Ontology *ontology) {
 void Text::frequency_reset(Text *t, Adso *original_adso) {
   std::string dbquery = "";
   try {
-  if (elements->size() == 0) { return; }
-  for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
-    dbquery = "UPDATE expanded_unified SET FREQ=0";
-    //original_adso->command_string(dbquery);
+    dbquery = "UPDATE expanded_unified SET FREQ=0,FREQ2=0";
+    original_adso->command_string(dbquery);
     std::cout << dbquery << std::endl;
-  }
+    for (int i = 0; i < 7000; i++) {
+      std::stringstream myStream1;
+      myStream1 << i;
+      dbquery = "UPDATE _" + myStream1.str() + " SET FREQ=0,FREQ2=0";
+      try {
+      original_adso->command_string(dbquery);
+      } catch (...) {}
+      std::cout << dbquery << std::endl;
+    }
   } catch (...) { return; }
   return;
 }
@@ -1917,12 +2147,48 @@ void Text::frequency_count(Text *t, Adso *original_adso) {
   if (elements->size() == 0) { return; }
   for (unsigned int i = 0; i < elements->at(0)->size(); i++) {
     dbquery = "UPDATE expanded_unified SET FREQ=FREQ+1 WHERE CHINESE LIKE BINARY \"" + elements->at(0)->at(i)->at(0)->chinese + "\"";
-    //original_adso->command_string(dbquery);
+    original_adso->command_string(dbquery);
+    std::cout << dbquery << std::endl;
+    dbquery = "UPDATE _" + table + " SET FREQ=FREQ+1 WHERE CHINESE LIKE BINARY \"" + elements->at(0)->at(i)->at(0)->chinese + "\"";
+    original_adso->command_string(dbquery);
     std::cout << dbquery << std::endl;
   }
   } catch (...) { return; }
   return;
 }
+
+
+
+std::string Text::escape_apostrophes(std::string fullt) {
+
+        unsigned int x = fullt.find("'");
+        while (x != std::string::npos) {
+                fullt.replace(x, 1, "`");
+                x = fullt.find("'", x+2);
+        }
+
+	/* UTF8 Apostrophe */
+        x = fullt.find("’");
+        while (x != std::string::npos) {
+                fullt.replace(x, 3, "`");
+                x = fullt.find("’",x+2);
+        }
+
+        return fullt;
+
+}
+std::string Text::apostrophes_to_html(std::string fullt) {
+
+        unsigned int x = fullt.find("'");
+        while (x != std::string::npos) {
+                fullt.replace(x, 1, "&apos;");
+                x = fullt.find("'", x+2);
+        }
+        return fullt;
+
+}
+
+
 
 
 

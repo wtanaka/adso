@@ -22,6 +22,7 @@ int Date::combine2(Text *t, int a, int b, int c) {
 		}
 	}
 
+
 	if (t->return_chinese(a,b+1) == "ÖÁ") {
 		if (t->is_category_non_recursive("Date",a,b+2) == 1) {
 			add_post_english("through");
@@ -40,51 +41,62 @@ int Date::combine2(Text *t, int a, int b, int c) {
 		add_pre_english("ever since");
 		myclass+=":Range";
 		shift_post_chinese(t,a,b+1,0,this);
-		make_only(a,b,this);
+		t->make_only(a,b,this);
 	}
 	if (t->return_chinese(a,b-1) == "½ØÖÁ") {
 		add_pre_english("up until");
 		myclass+=":Range";
 		shift_pre_chinese(t,a,b-1,0,this); b--;
-		make_only(a,b,this);
+		t->make_only(a,b,this);
 	}
 
 	if (t->return_chinese(a,b+1) == "ÏÄ¼¾") {
 		add_post_english("in the summer");
 		myclass+=":Season";
 		shift_post_chinese(t,a,b+1,0,this);
-		make_only(a,b,this);
+		t->make_only(a,b,this);
 	}
 	if (t->return_chinese(a,b+1) == "Çï¼¾") {
 		add_post_english("in the autumn");
 		myclass+=":Season";
 		shift_post_chinese(t,a,b+1,0,this);
-		make_only(a,b,this);
+		t->make_only(a,b,this);
 	}
 	if (t->return_chinese(a,b+1) == "´º¼¾") {
 		add_post_english("in the spring");
 		myclass+=":Season";
 		shift_post_chinese(t,a,b+1,0,this);
-		make_only(a,b,this);
+		t->make_only(a,b,this);
 	}
 	if (t->return_chinese(a,b+1) == "¶¬¼¾") {
 		add_post_english("in the winter");
 		myclass+=":Season";
 		shift_post_chinese(t,a,b+1,0,this);
-		make_only(a,b,this);
+		t->make_only(a,b,this);
 	}
 
 	if (t->return_chinese(a,b+1) == "Æð") {
-                if (myclass.find("Day") != std::string::npos) {
-			add_pre_english("starting on the");
+	        if (myclass.find("Day") != std::string::npos) {
+			if (myclass.find("Month") != std::string::npos) {
+				add_pre_english("starting on");
+			} else {
+				add_pre_english("starting on the");
+			}
 		} else {
                 	if (myclass.find("Month") != std::string::npos) {
 				add_pre_english("starting in ");
 			}
 		}
+
 		shift_post_chinese(t,a,b+1,0,this);
-		make_only(a,b,this);
+		t->make_only(a,b,this);
+
+		if (t->return_chinese(a,b-1) == "×Ô") {
+		  shift_pre_chinese(t,a,b-1,0,this);
+		  b--;
+		}
 	}
+
 	// This doesn't really belong in this function, but we should give
 	// a default boost to verbs that follow dates, as in most cases
 	// this will result in better default performance.

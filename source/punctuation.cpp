@@ -62,9 +62,9 @@ int Punctuation::pre_unify(Text *t, int a, int b, int c) {
 	return 1;
 };
 
-std::string Punctuation::return_english() { if (english != "") { return Text::return_english(); } return return_chinese(); }
-std::string Punctuation::return_pinyin() { if (english != "") { return return_english(); } return return_chinese(); }
-std::string Punctuation::return_jyutpin() { return return_chinese(); }
+std::string Punctuation::return_english() { if (english != "") { return Text::return_english(); } return return_chinese_output_encoding(); }
+std::string Punctuation::return_pinyin() { if (english != "") { return return_english(); } return return_chinese_output_encoding(); }
+std::string Punctuation::return_jyutpin() { return return_chinese_output_encoding(); }
 
 int Punctuation::adjust_spacing(Text *parent, int main_vector, int element_vector, int option) {
 

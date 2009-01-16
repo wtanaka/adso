@@ -31,7 +31,7 @@ class Adso {
 		int connected_to_verb_db;
 		int connected_to_ontology_db;
 
-		Adso(std::string a, std::string b, std::string c);
+		Adso(std::string dbusername, std::string dbpassword, std::string dbdatabase);
 		~Adso();
 
 

@@ -639,7 +639,13 @@ std::string Text::return_popup_for_editing_five_fields(int edit_element) {
 	t = escape_apostrophes(t);
 
 
-	if (e == "\"") { e = s; }
+	if (e == "\"") { 
+		e = s; 
+		e = s;
+		p = s;
+		s = s;
+		t = s;
+	}
 
         results = "<span ";
 	results +="id=\"adso_" + element_id + "\" onclick=\"onWordClick()\" onmousedown=\"adso_mousedown('"+element_id+"')\" onmouseup=\"adso_mouseup('"+element_id+"')\" onmouseover=\"tip(event,'"+e+"','"+p+"','"+s+"','"+t+"','','"+element_id+"')\" onmouseout=\"htip()\">"+apostrophes_to_html(s)+"</span>";

@@ -119,6 +119,7 @@ std::string Polisher::return_polished_english(std::string x) {
 	x = replace_text(x, " for from ", " from ");
 	x = replace_text(x, "years of time", "years");
 	x = replace_text(x, "to be to be ", "to be ");
+	x = replace_text(x, "on on the ", "on the ");
 
 
 	// UTF8 is not in the backend database, so a Quick Fix Here

@@ -239,7 +239,7 @@
 # Sentence Beginning we want to catch
 <IF><NOTCLASS Adjusted> AND <CLASS Punctuation> AND <CLASS 1 Noun> AND <CLASS 2 Day> AND <CLASS 3 Preposition></IF><THEN><PRETEXT all 2>on the</PRETEXT> AND <TAG Adjusted></THEN>
 <IF><NOTCLASS Adjusted> AND <CLASS Punctuation> AND <CLASS 1 Noun> AND <CLASS 2 Date> AND <CLASS 3 Preposition></IF><THEN><PRETEXT all 2>in</PRETEXT> AND <TAG Adjusted></THEN>
-<IF><NOTCLASS Adjusted> AND <CLASS Day> AND <CLASS 2 Comma> AND (<CLASS -2 Terminal> OR <CLASS -2 Punctuation>)</IF><THEN><PRETEXT all 0>on the</PRETEXT></THEN>
+<IF><NOTCLASS Adjusted> AND <NOTCLASS Month> AND <CLASS Day> AND <CLASS 2 Comma> AND (<CLASS -2 Terminal> OR <CLASS -2 Punctuation>)</IF><THEN><PRETEXT all 0>on the</PRETEXT></THEN>
 #
 #
 # Time Compound
@@ -629,3 +629,16 @@ a<IF><CLASS De01> AND <CLASS 1 Punctuation> AND <LASTLOOP me 1>Shi01</LASTLOOP><
 #
 #
 #
+#
+#
+#
+# 这是 X time 内
+<IF><CHINESE 这> AND <CHINESE 1 是> AND <CLASS 4 Directional></IF><THEN><SET all english>this is</SET> AND <SET 1 all english>the</SET> AND <SWITCH 2 4> AND <SWITCH 1 2></THEN>
+#
+<IF><CHINESE 中> AND <CLASS 1 Comma> AND <CLASS -1 Noun> AND <CLASS -2 Measure> AND <CLASS -3 Number> AND <NOTCLASS Adjusted></IF><THEN><PRETEXT all -3>among</PRETEXT> AND <DELETE all></THEN>
+#
+# prevent awkward translations
+<IF><CHINESE 之一> AND <CLASS 1 Punctuation></IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 性></IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 大> AND <CLASS 1 Noun></IF><THEN><NOTTRANSLATE></THEN>
+
