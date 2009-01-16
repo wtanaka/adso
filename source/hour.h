@@ -1,7 +1,7 @@
 #ifndef HOUR_H
 #define HOUR_H
 
-#include "time.h"
+#include "adsotime.h"
 
 class Hour: public Time {
 

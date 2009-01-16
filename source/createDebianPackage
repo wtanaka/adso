@@ -1,1 +1,0 @@
-checkinstall -D --showinstall="no" --pkgname="Adso" --pkgarch="id36" --pkglicense="Adso License" --pkgsource="http://popupchinese.com/tools/adso" --maintainer="david.lancashire@gmail.com" make install

@@ -127,7 +127,7 @@ std::string Polisher::return_polished_english(std::string x) {
 	x = replace_text(x, "……", "......");
 	x = replace_text(x, "—", "--");
 	x = replace_text(x, "‘", "\"");
-	x = replace_text(x, "’", "\"");
+	//x = replace_text(x, "’", "\"");
 
 
 		// Pinyin Conversion

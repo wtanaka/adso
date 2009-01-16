@@ -1,3 +1,7 @@
+November 11,
+- --editable-five-fields UTF8 single quote output edited to create more standards-compliant
+  javascript that will not produce errors under certain conditions handling UTF8 encoded text.
+
 November 10,
 - --refined UTF8 mysql-based parsing algorithm. It now checks against the traditional database 
   when it does not find content in the simplified space and vice-versa.This enables the software

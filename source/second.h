@@ -1,7 +1,7 @@
 #ifndef SECOND_H
 #define SECOND_H
 
-#include "time.h"
+#include "adsotime.h"
 #include "text.h"
 
 class Second: public Time {

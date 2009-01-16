@@ -108,7 +108,7 @@
 #include "shi03.h"
 #include "suo01.h"
 #include "temporal.h"
-#include "time.h"
+#include "adsotime.h"
 #include "wei01.h"
 #include "xia01.h"
 #include "xian01.h"

@@ -1,5 +1,5 @@
 #include "hour.h"
-#include "time.h"
+#include "adsotime.h"
 #include "text.h"
 #include <sstream>
 

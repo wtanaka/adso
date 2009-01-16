@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <mysql.h>
+//#include <mysql.h>
 
 class Database
 {
@@ -14,7 +14,6 @@ class Database
         virtual void connect( std::string& name, std::string& password, std::string& data ) = 0;
         virtual void disconnect() = 0;
         virtual void query( std::string& query, std::vector<std::string>& results ) = 0;
-        virtual void command( std::string& query) = 0;
 };
 
 #endif

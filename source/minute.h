@@ -1,7 +1,7 @@
 #ifndef MINUTE_H
 #define MINUTE_H
 
-#include "time.h"
+#include "adsotime.h"
 #include "text.h"
 
 class Minute: public Time {
