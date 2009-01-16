@@ -9,26 +9,26 @@ class Db106 {
 		Db106();
 		~Db106();
 
-	const char * table_2101[2][11];
-	const char * table_2102[28][11];
-	const char * table_2103[2][11];
-	const char * table_2104[433][11];
-	const char * table_2105[4][11];
-	const char * table_2106[33][11];
-	const char * table_2107[106][11];
-	const char * table_2108[2][11];
-	const char * table_2109[11][11];
-	const char * table_2110[16][11];
-	const char * table_2111[22][11];
-	const char * table_2112[6][11];
-	const char * table_2113[6][11];
-	const char * table_2114[3][11];
-	const char * table_2115[2][11];
-	const char * table_2116[728][11];
-	const char * table_2117[283][11];
-	const char * table_2118[3][11];
-	const char * table_2119[7][11];
-	const char * table_2120[12][11];
+	const char * table_2101[71][11];
+	const char * table_2102[6][11];
+	const char * table_2103[60][11];
+	const char * table_2104[15][11];
+	const char * table_2105[8][11];
+	const char * table_2106[3][11];
+	const char * table_2107[18][11];
+	const char * table_2108[19][11];
+	const char * table_2109[5][11];
+	const char * table_2110[11][11];
+	const char * table_2111[3][11];
+	const char * table_2112[27][11];
+	const char * table_2113[9][11];
+	const char * table_2114[21][11];
+	const char * table_2115[3][11];
+	const char * table_2116[38][11];
+	const char * table_2117[48][11];
+	const char * table_2118[6][11];
+	const char * table_2119[10][11];
+	const char * table_2120[11][11];
 
 };
 #endif

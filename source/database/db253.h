@@ -9,17 +9,17 @@ class Db253 {
 		Db253();
 		~Db253();
 
-	const char * table_5041[2][11];
-	const char * table_5042[2][11];
+	const char * table_5041[5][11];
+	const char * table_5042[4][11];
 	const char * table_5043[2][11];
 	const char * table_5044[2][11];
-	const char * table_5045[13][11];
-	const char * table_5046[2][11];
-	const char * table_5047[2][11];
+	const char * table_5045[2][11];
+	const char * table_5046[3][11];
+	const char * table_5047[3][11];
 	const char * table_5048[2][11];
 	const char * table_5049[2][11];
 	const char * table_5050[2][11];
-	const char * table_5051[4][11];
+	const char * table_5051[3][11];
 	const char * table_5052[2][11];
 	const char * table_5053[2][11];
 	const char * table_5054[2][11];

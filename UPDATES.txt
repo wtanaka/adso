@@ -1,3 +1,7 @@
+December 26,
+- pinyin-generation improvements for compounds rooted in the number class
+- updated version of the database from Popup Chinese
+
 November 20,
 - Added /search directory. It contains a basic java program that will index Chinese texts 
   using Chinese, English and Pinyin using the Lucene engine, along with brief instructions

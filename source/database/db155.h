@@ -9,26 +9,26 @@ class Db155 {
 		Db155();
 		~Db155();
 
-	const char * table_3081[4][11];
-	const char * table_3082[5][11];
-	const char * table_3083[5][11];
-	const char * table_3084[5][11];
-	const char * table_3085[21][11];
-	const char * table_3086[13][11];
+	const char * table_3081[2][11];
+	const char * table_3082[6][11];
+	const char * table_3083[2][11];
+	const char * table_3084[6][11];
+	const char * table_3085[2][11];
+	const char * table_3086[62][11];
 	const char * table_3087[4][11];
-	const char * table_3088[5][11];
-	const char * table_3089[26][11];
-	const char * table_3090[5][11];
-	const char * table_3091[52][11];
-	const char * table_3092[10][11];
-	const char * table_3093[3][11];
-	const char * table_3094[29][11];
-	const char * table_3095[6][11];
-	const char * table_3096[5][11];
+	const char * table_3088[15][11];
+	const char * table_3089[5][11];
+	const char * table_3090[69][11];
+	const char * table_3091[6][11];
+	const char * table_3092[32][11];
+	const char * table_3093[6][11];
+	const char * table_3094[9][11];
+	const char * table_3095[2][11];
+	const char * table_3096[3][11];
 	const char * table_3097[3][11];
-	const char * table_3098[2][11];
-	const char * table_3099[3][11];
-	const char * table_3100[28][11];
+	const char * table_3098[5][11];
+	const char * table_3099[6][11];
+	const char * table_3100[17][11];
 
 };
 #endif

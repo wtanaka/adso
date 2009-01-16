@@ -9,26 +9,26 @@ class Db46 {
 		Db46();
 		~Db46();
 
-	const char * table_901[50][11];
-	const char * table_902[24][11];
-	const char * table_903[6][11];
-	const char * table_904[72][11];
-	const char * table_905[19][11];
-	const char * table_906[15][11];
-	const char * table_907[67][11];
-	const char * table_908[69][11];
-	const char * table_909[6][11];
-	const char * table_910[23][11];
-	const char * table_911[58][11];
-	const char * table_912[6][11];
-	const char * table_913[27][11];
-	const char * table_914[6][11];
-	const char * table_915[21][11];
-	const char * table_916[39][11];
-	const char * table_917[42][11];
-	const char * table_918[140][11];
-	const char * table_919[44][11];
-	const char * table_920[21][11];
+	const char * table_901[4][11];
+	const char * table_902[51][11];
+	const char * table_903[12][11];
+	const char * table_904[107][11];
+	const char * table_905[38][11];
+	const char * table_906[22][11];
+	const char * table_907[56][11];
+	const char * table_908[86][11];
+	const char * table_909[82][11];
+	const char * table_910[9][11];
+	const char * table_911[12][11];
+	const char * table_912[10][11];
+	const char * table_913[24][11];
+	const char * table_914[32][11];
+	const char * table_915[5][11];
+	const char * table_916[45][11];
+	const char * table_917[11][11];
+	const char * table_918[7][11];
+	const char * table_919[186][11];
+	const char * table_920[25][11];
 
 };
 #endif

@@ -9,26 +9,26 @@ class Db83 {
 		Db83();
 		~Db83();
 
-	const char * table_1641[7][11];
-	const char * table_1642[7][11];
-	const char * table_1643[49][11];
-	const char * table_1644[129][11];
-	const char * table_1645[58][11];
-	const char * table_1646[41][11];
-	const char * table_1647[102][11];
-	const char * table_1648[32][11];
-	const char * table_1649[182][11];
-	const char * table_1650[57][11];
-	const char * table_1651[15][11];
-	const char * table_1652[113][11];
-	const char * table_1653[36][11];
-	const char * table_1654[276][11];
-	const char * table_1655[17][11];
-	const char * table_1656[26][11];
-	const char * table_1657[10][11];
-	const char * table_1658[23][11];
-	const char * table_1659[673][11];
-	const char * table_1660[133][11];
+	const char * table_1641[6][11];
+	const char * table_1642[5][11];
+	const char * table_1643[23][11];
+	const char * table_1644[69][11];
+	const char * table_1645[4][11];
+	const char * table_1646[6][11];
+	const char * table_1647[33][11];
+	const char * table_1648[18][11];
+	const char * table_1649[16][11];
+	const char * table_1650[9][11];
+	const char * table_1651[17][11];
+	const char * table_1652[24][11];
+	const char * table_1653[58][11];
+	const char * table_1654[19][11];
+	const char * table_1655[11][11];
+	const char * table_1656[62][11];
+	const char * table_1657[68][11];
+	const char * table_1658[16][11];
+	const char * table_1659[63][11];
+	const char * table_1660[78][11];
 
 };
 #endif

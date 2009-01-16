@@ -9,26 +9,26 @@ class Db134 {
 		Db134();
 		~Db134();
 
-	const char * table_2661[3][11];
-	const char * table_2662[19][11];
-	const char * table_2663[4][11];
-	const char * table_2664[77][11];
-	const char * table_2665[6][11];
-	const char * table_2666[39][11];
-	const char * table_2667[9][11];
+	const char * table_2661[2][11];
+	const char * table_2662[3][11];
+	const char * table_2663[111][11];
+	const char * table_2664[3][11];
+	const char * table_2665[4][11];
+	const char * table_2666[2][11];
+	const char * table_2667[4][11];
 	const char * table_2668[3][11];
-	const char * table_2669[38][11];
-	const char * table_2670[4][11];
-	const char * table_2671[54][11];
-	const char * table_2672[16][11];
-	const char * table_2673[41][11];
-	const char * table_2674[41][11];
-	const char * table_2675[21][11];
-	const char * table_2676[17][11];
-	const char * table_2677[10][11];
-	const char * table_2678[22][11];
-	const char * table_2679[2][11];
-	const char * table_2680[3][11];
+	const char * table_2669[3][11];
+	const char * table_2670[14][11];
+	const char * table_2671[5][11];
+	const char * table_2672[2][11];
+	const char * table_2673[2][11];
+	const char * table_2674[7][11];
+	const char * table_2675[5][11];
+	const char * table_2676[2][11];
+	const char * table_2677[2][11];
+	const char * table_2678[3][11];
+	const char * table_2679[3][11];
+	const char * table_2680[12][11];
 
 };
 #endif

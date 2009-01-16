@@ -1,5 +1,5 @@
-echo "Generating SQLite database generation file...."
+echo "Generating SQLite database generation file.... (a very long wait)"
 php 1_generate_expanded_unified.php > temp
-echo "Feeding database generation file into SQLite.... (a slightly shorter wait)"
+echo "Feeding database generation file into SQLite.... (a slightly shorter but still very long wait)"
 sqlite3 adso.sb < temp
 rm -f temp

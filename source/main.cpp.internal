@@ -333,7 +333,7 @@ int main(int argc, char **argv) {
 void copyright() {
 
 std::cout << " \
-\nAdso Chinese Text-Analysis System v5.055: (c) David Lancashire, 2008 \n\
+\nAdso Chinese Text-Analysis System v5.058: (c) David Lancashire, 2008 \n\
 \n\
 Chinese translation and text analysis engine. Inquiries welcome: david.lancashire@gmail.com\n";
 	return;

@@ -3,7 +3,8 @@ MySQL Database Dump:
 
 For the MySQL installation install this .sql file into the database "expanded" 
 using the login "adso" and password "adso".  Otherwise edit the file adso.cpp 
-and hardcode your login/database info into the software.
+and hardcode your login/database info into the software OR use the command-line
+flags to send the database/username/password to the software at runtime.
 
 The Short Version:
 

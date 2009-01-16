@@ -11,7 +11,7 @@ class Db302 {
 
 	const char * table_6021[2][11];
 	const char * table_6022[2][11];
-	const char * table_6023[2][11];
+	const char * table_6023[4][11];
 	const char * table_6024[2][11];
 	const char * table_6025[2][11];
 	const char * table_6026[2][11];
@@ -20,7 +20,7 @@ class Db302 {
 	const char * table_6029[2][11];
 	const char * table_6030[2][11];
 	const char * table_6031[2][11];
-	const char * table_6032[4][11];
+	const char * table_6032[2][11];
 	const char * table_6033[2][11];
 	const char * table_6034[2][11];
 	const char * table_6035[2][11];

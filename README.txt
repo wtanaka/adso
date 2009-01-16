@@ -1,19 +1,22 @@
 David Lancashire
 david.lancashire@gmail.com
 http://www.adsotrans.com
+http://www.popupchinese.com
 --------------------------
 
-Adso is a semantic analysis engine for Chinese text. It provides:
+Adso is a Chinese text analysis engine. It provides:
 
 * intelligent word segmentation
 * intelligent hanzi to pinyin conversion
 * Chinese-English gist translation
 * document preprocessing for search/clustering/etc.
-* semantic REGEXP
+* semantic analysis and regexp
 
-Adso is designed so that additional rules can be provided to the engine through external rulesets. The software comes with a default set of grammar rules: if you spot an error or missegmentation, please email us so that we can fix it. Missing entries can be added through our dictionary interface (http://www.adsotrans.com or http://dict.chinesepod.com) as well. We require contributors to provide us with joint copyright over contributions to our database, but respect the rights of major contributors to release materials under alternate licenses if desired (contact us for details). All contributions and edits are reviewed more or less monthly for quality control purposes.
+In addition to working as a standalone engine, Adso can be installed as a system library and used by other applications which need text segmentation, translation, content extraction, hanzi-to-pinyin conversion. A brief example of how to compile the software into related applications can be found in the source/libsrc directory. Please compile either the MySQL or Internal versions if you are installing Adso for use as a system library.
 
-If you see a general grammatical rule Adso does not support, or a word that is routinely translated incorrectly in a very specific context, we can fix it. Please provide:
+In addition to all of the above, Adso supports an XML language for providing additional rules to the engine. If you see a general grammatical rule Adso does not support, or a word that is routinely translated incorrectly in a very specific context, we can fix it. Please provide:
+
+The software comes with a default set of grammar rules: if you spot an error or missegmentation, please email us so that we can fix it. Missing entries can be added through our dictionary interface (http://www.adsotrans.com or http://dict.chinesepod.com) as well. We require contributors to provide us with joint copyright over contributions to our database, but respect the rights of major contributors to release materials under alternate licenses if desired (contact us for details). All contributions and edits are reviewed more or less monthly for quality control purposes.
 
 * a description of the unsupported grammatical rule
 * at least one sample sentence illustrating the rule (UTF-8 or GB2312) 

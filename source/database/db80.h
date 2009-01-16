@@ -9,26 +9,26 @@ class Db80 {
 		Db80();
 		~Db80();
 
-	const char * table_1581[85][11];
-	const char * table_1582[4][11];
-	const char * table_1583[116][11];
-	const char * table_1584[6][11];
-	const char * table_1585[3][11];
-	const char * table_1586[20][11];
-	const char * table_1587[46][11];
-	const char * table_1588[70][11];
-	const char * table_1589[66][11];
-	const char * table_1590[56][11];
-	const char * table_1591[11][11];
-	const char * table_1592[8][11];
-	const char * table_1593[47][11];
-	const char * table_1594[42][11];
-	const char * table_1595[22][11];
-	const char * table_1596[91][11];
-	const char * table_1597[4][11];
-	const char * table_1598[300][11];
-	const char * table_1599[50][11];
-	const char * table_1600[112][11];
+	const char * table_1581[52][11];
+	const char * table_1582[196][11];
+	const char * table_1583[158][11];
+	const char * table_1584[37][11];
+	const char * table_1585[11][11];
+	const char * table_1586[9][11];
+	const char * table_1587[8][11];
+	const char * table_1588[42][11];
+	const char * table_1589[32][11];
+	const char * table_1590[20][11];
+	const char * table_1591[14][11];
+	const char * table_1592[32][11];
+	const char * table_1593[45][11];
+	const char * table_1594[45][11];
+	const char * table_1595[312][11];
+	const char * table_1596[3][11];
+	const char * table_1597[10][11];
+	const char * table_1598[458][11];
+	const char * table_1599[11][11];
+	const char * table_1600[41][11];
 
 };
 #endif

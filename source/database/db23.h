@@ -9,26 +9,26 @@ class Db23 {
 		Db23();
 		~Db23();
 
-	const char * table_441[53][11];
-	const char * table_442[106][11];
-	const char * table_443[12][11];
-	const char * table_444[104][11];
-	const char * table_445[14][11];
-	const char * table_446[89][11];
-	const char * table_447[248][11];
-	const char * table_448[52][11];
-	const char * table_449[18][11];
-	const char * table_450[44][11];
-	const char * table_451[191][11];
-	const char * table_452[91][11];
-	const char * table_453[13][11];
-	const char * table_454[122][11];
-	const char * table_455[24][11];
-	const char * table_456[3][11];
-	const char * table_457[31][11];
-	const char * table_458[62][11];
-	const char * table_459[139][11];
-	const char * table_460[11][11];
+	const char * table_441[682][11];
+	const char * table_442[161][11];
+	const char * table_443[197][11];
+	const char * table_444[100][11];
+	const char * table_445[222][11];
+	const char * table_446[96][11];
+	const char * table_447[64][11];
+	const char * table_448[16][11];
+	const char * table_449[104][11];
+	const char * table_450[31][11];
+	const char * table_451[67][11];
+	const char * table_452[196][11];
+	const char * table_453[35][11];
+	const char * table_454[40][11];
+	const char * table_455[37][11];
+	const char * table_456[36][11];
+	const char * table_457[32][11];
+	const char * table_458[13][11];
+	const char * table_459[32][11];
+	const char * table_460[34][11];
 
 };
 #endif

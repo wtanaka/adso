@@ -9,26 +9,26 @@ class Db159 {
 		Db159();
 		~Db159();
 
-	const char * table_3161[2][11];
-	const char * table_3162[10][11];
-	const char * table_3163[6][11];
-	const char * table_3164[19][11];
-	const char * table_3165[2][11];
-	const char * table_3166[10][11];
-	const char * table_3167[3][11];
-	const char * table_3168[2][11];
-	const char * table_3169[4][11];
-	const char * table_3170[2][11];
-	const char * table_3171[4][11];
-	const char * table_3172[4][11];
-	const char * table_3173[16][11];
-	const char * table_3174[8][11];
-	const char * table_3175[21][11];
-	const char * table_3176[3][11];
-	const char * table_3177[49][11];
-	const char * table_3178[52][11];
-	const char * table_3179[69][11];
-	const char * table_3180[40][11];
+	const char * table_3161[5][11];
+	const char * table_3162[3][11];
+	const char * table_3163[2][11];
+	const char * table_3164[3][11];
+	const char * table_3165[28][11];
+	const char * table_3166[7][11];
+	const char * table_3167[5][11];
+	const char * table_3168[4][11];
+	const char * table_3169[5][11];
+	const char * table_3170[46][11];
+	const char * table_3171[12][11];
+	const char * table_3172[15][11];
+	const char * table_3173[2][11];
+	const char * table_3174[17][11];
+	const char * table_3175[13][11];
+	const char * table_3176[4][11];
+	const char * table_3177[7][11];
+	const char * table_3178[3][11];
+	const char * table_3179[4][11];
+	const char * table_3180[9][11];
 
 };
 #endif

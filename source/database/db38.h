@@ -9,26 +9,26 @@ class Db38 {
 		Db38();
 		~Db38();
 
-	const char * table_741[102][11];
-	const char * table_742[17][11];
-	const char * table_743[6][11];
-	const char * table_744[65][11];
-	const char * table_745[3][11];
-	const char * table_746[23][11];
-	const char * table_747[12][11];
-	const char * table_748[4][11];
-	const char * table_749[62][11];
-	const char * table_750[7][11];
-	const char * table_751[5][11];
-	const char * table_752[8][11];
-	const char * table_753[56][11];
-	const char * table_754[6][11];
-	const char * table_755[10][11];
-	const char * table_756[279][11];
-	const char * table_757[24][11];
-	const char * table_758[66][11];
-	const char * table_759[18][11];
-	const char * table_760[15][11];
+	const char * table_741[42][11];
+	const char * table_742[14][11];
+	const char * table_743[23][11];
+	const char * table_744[36][11];
+	const char * table_745[52][11];
+	const char * table_746[30][11];
+	const char * table_747[92][11];
+	const char * table_748[23][11];
+	const char * table_749[23][11];
+	const char * table_750[43][11];
+	const char * table_751[164][11];
+	const char * table_752[17][11];
+	const char * table_753[78][11];
+	const char * table_754[151][11];
+	const char * table_755[75][11];
+	const char * table_756[28][11];
+	const char * table_757[863][11];
+	const char * table_758[22][11];
+	const char * table_759[819][11];
+	const char * table_760[82][11];
 
 };
 #endif

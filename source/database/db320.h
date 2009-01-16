@@ -18,17 +18,17 @@ class Db320 {
 	const char * table_6387[2][11];
 	const char * table_6388[2][11];
 	const char * table_6389[2][11];
-	const char * table_6390[3][11];
-	const char * table_6391[3][11];
-	const char * table_6392[3][11];
-	const char * table_6393[9][11];
-	const char * table_6394[2][11];
-	const char * table_6395[2][11];
-	const char * table_6396[3][11];
+	const char * table_6390[2][11];
+	const char * table_6391[2][11];
+	const char * table_6392[2][11];
+	const char * table_6393[3][11];
+	const char * table_6394[3][11];
+	const char * table_6395[3][11];
+	const char * table_6396[2][11];
 	const char * table_6397[2][11];
-	const char * table_6398[2][11];
+	const char * table_6398[3][11];
 	const char * table_6399[2][11];
-	const char * table_6400[3][11];
+	const char * table_6400[2][11];
 
 };
 #endif

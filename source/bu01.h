@@ -9,6 +9,9 @@ class Bu01: public Special {
 		Bu01(Text *t);
 		~Bu01();
 
+		int adjust_confidence(Text *t, int a, int b, int c);
+
+
 };
 
 

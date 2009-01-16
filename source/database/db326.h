@@ -10,7 +10,7 @@ class Db326 {
 		~Db326();
 
 	const char * table_6501[2][11];
-	const char * table_6502[2][11];
+	const char * table_6502[3][11];
 	const char * table_6503[2][11];
 	const char * table_6504[2][11];
 	const char * table_6505[2][11];

@@ -9,26 +9,26 @@ class Db9 {
 		Db9();
 		~Db9();
 
-	const char * table_161[56][11];
-	const char * table_162[283][11];
-	const char * table_163[43][11];
-	const char * table_164[17][11];
-	const char * table_165[64][11];
-	const char * table_166[5][11];
-	const char * table_167[23][11];
-	const char * table_168[44][11];
-	const char * table_169[133][11];
-	const char * table_170[83][11];
-	const char * table_171[110][11];
-	const char * table_172[86][11];
-	const char * table_173[67][11];
-	const char * table_174[370][11];
-	const char * table_175[360][11];
-	const char * table_176[29][11];
-	const char * table_177[13][11];
-	const char * table_178[12][11];
-	const char * table_179[108][11];
-	const char * table_180[73][11];
+	const char * table_161[30][11];
+	const char * table_162[68][11];
+	const char * table_163[36][11];
+	const char * table_164[56][11];
+	const char * table_165[156][11];
+	const char * table_166[107][11];
+	const char * table_167[34][11];
+	const char * table_168[192][11];
+	const char * table_169[132][11];
+	const char * table_170[70][11];
+	const char * table_171[180][11];
+	const char * table_172[46][11];
+	const char * table_173[75][11];
+	const char * table_174[33][11];
+	const char * table_175[254][11];
+	const char * table_176[202][11];
+	const char * table_177[262][11];
+	const char * table_178[99][11];
+	const char * table_179[233][11];
+	const char * table_180[170][11];
 
 };
 #endif

@@ -14,9 +14,9 @@ class Db325 {
 	const char * table_6483[2][11];
 	const char * table_6484[2][11];
 	const char * table_6485[2][11];
-	const char * table_6486[3][11];
+	const char * table_6486[2][11];
 	const char * table_6487[2][11];
-	const char * table_6488[2][11];
+	const char * table_6488[4][11];
 	const char * table_6489[2][11];
 	const char * table_6490[2][11];
 	const char * table_6491[2][11];
@@ -28,7 +28,7 @@ class Db325 {
 	const char * table_6497[2][11];
 	const char * table_6498[2][11];
 	const char * table_6499[2][11];
-	const char * table_6500[3][11];
+	const char * table_6500[2][11];
 
 };
 #endif

@@ -27,7 +27,7 @@ class Db330 {
 	const char * table_6596[2][11];
 	const char * table_6597[2][11];
 	const char * table_6598[2][11];
-	const char * table_6599[3][11];
+	const char * table_6599[2][11];
 	const char * table_6600[2][11];
 
 };

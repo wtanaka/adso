@@ -1,0 +1,75 @@
+#
+# This directory demonstrates how to compile software against Adso
+# using the compiled library you get by compiling the software 
+# and installing it:
+#
+# make
+# make install
+#
+# If you are interested in making 3rd party software, this is the 
+# recommended way of doing it. Look at the main function inside the
+# file "main.cpp" to see how things work. It is not that difficult, 
+# but you may want to get in touch by email for specifics.
+#
+# Remember to link to the Adso library with -ladso in your Makefile
+
+Steps to getting things working in your own source code:
+
+(1) Initialize the necessary variables:
+
+
+        // Initialize Variables
+        Adso *adso = new Adso(dbusername, dbpassword, dbdatabase);
+        Code *code = new Code();
+        Encoding *encoding = new Encoding();
+        Feedback *feedback = new Feedback();
+        Memory *memory = new Memory();
+        Ontology *ontology = new Ontology();
+        Parser *parser = new Parser();
+        Polisher *polisher = new Polisher();
+
+        Text *text = new Text(adso, code, encoding, feedback, memory, ontology, parser, polisher);
+
+
+(2) Feed the text you want to analyse into the Text object we have just created:
+
+         text->init_text(chinese_text_as_a_string);
+
+
+(3) Invoke whatever analytic steps you wish to invoke.
+
+	// Our algorithms are recursive, so we feed in a void reference at the top level
+	void *xx;
+
+        // The Basics
+        if (skip_stage_pre_unify == 0)         { text->pre_unify((Text *) xx);  }
+        if (skip_stage_unify == 0)             { text->unify((Text *) xx);      }
+        if (skip_stage_post_unify == 0)        { text->post_unify((Text *) xx); }
+        if (skip_stage_adjust_confidence == 0) { text->adjust_confidence((Text *) xx); }
+
+        // Various Entities
+        if (html_entities == 1) { text->identify_html_entities((Text *) xx); }
+
+        // XML Stored in Database
+        if (run_code == 1) { text->run_code((Text *) xx); }
+
+        // Identifying More Abstract Combinations
+        if (skip_stage_combine1 == 0) { text->combine((Text *) xx); }
+        if (skip_stage_combine2 == 0) { text->combine2((Text *) xx); }
+        if (skip_stage_advanced == 0) { text->advanced((Text *) xx); }
+        if (rscript == 1) { results += text->encoding->report_script(); }
+        if (rcode == 1) { results += text->encoding->report_encoding(); }
+
+
+(4) Get the data you want in the form you want:
+
+	text->return_pinyin();
+
+
+
+
+(5) Be sure to run init_text() again if you want to process new text.
+
+
+
+

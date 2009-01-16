@@ -9,15 +9,15 @@ class Db220 {
 		Db220();
 		~Db220();
 
-	const char * table_4381[3][11];
-	const char * table_4382[3][11];
+	const char * table_4381[2][11];
+	const char * table_4382[2][11];
 	const char * table_4383[2][11];
-	const char * table_4384[2][11];
+	const char * table_4384[3][11];
 	const char * table_4385[2][11];
 	const char * table_4386[2][11];
 	const char * table_4387[2][11];
 	const char * table_4388[2][11];
-	const char * table_4389[3][11];
+	const char * table_4389[9][11];
 	const char * table_4390[2][11];
 	const char * table_4391[2][11];
 	const char * table_4392[2][11];
@@ -28,7 +28,7 @@ class Db220 {
 	const char * table_4397[2][11];
 	const char * table_4398[2][11];
 	const char * table_4399[2][11];
-	const char * table_4400[2][11];
+	const char * table_4400[3][11];
 
 };
 #endif

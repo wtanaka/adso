@@ -9,26 +9,26 @@ class Db5 {
 		Db5();
 		~Db5();
 
-	const char * table_81[16][11];
-	const char * table_82[116][11];
-	const char * table_83[1468][11];
-	const char * table_84[43][11];
-	const char * table_85[42][11];
-	const char * table_86[32][11];
-	const char * table_87[41][11];
-	const char * table_88[47][11];
-	const char * table_89[177][11];
-	const char * table_90[722][11];
-	const char * table_91[187][11];
-	const char * table_92[175][11];
-	const char * table_93[40][11];
-	const char * table_94[287][11];
-	const char * table_95[393][11];
-	const char * table_96[211][11];
-	const char * table_97[281][11];
-	const char * table_98[341][11];
-	const char * table_99[149][11];
-	const char * table_100[171][11];
+	const char * table_81[654][11];
+	const char * table_82[85][11];
+	const char * table_83[117][11];
+	const char * table_84[123][11];
+	const char * table_85[63][11];
+	const char * table_86[55][11];
+	const char * table_87[1250][11];
+	const char * table_88[46][11];
+	const char * table_89[565][11];
+	const char * table_90[185][11];
+	const char * table_91[22][11];
+	const char * table_92[288][11];
+	const char * table_93[39][11];
+	const char * table_94[68][11];
+	const char * table_95[116][11];
+	const char * table_96[33][11];
+	const char * table_97[289][11];
+	const char * table_98[333][11];
+	const char * table_99[414][11];
+	const char * table_100[120][11];
 
 };
 #endif

@@ -9,26 +9,26 @@ class Db87 {
 		Db87();
 		~Db87();
 
-	const char * table_1721[182][11];
-	const char * table_1722[3][11];
-	const char * table_1723[8][11];
-	const char * table_1724[3][11];
-	const char * table_1725[3][11];
-	const char * table_1726[7][11];
-	const char * table_1727[5][11];
-	const char * table_1728[3][11];
-	const char * table_1729[13][11];
-	const char * table_1730[3][11];
-	const char * table_1731[3][11];
-	const char * table_1732[78][11];
-	const char * table_1733[4][11];
-	const char * table_1734[3][11];
-	const char * table_1735[3][11];
-	const char * table_1736[4][11];
-	const char * table_1737[3][11];
-	const char * table_1738[3][11];
-	const char * table_1739[5][11];
-	const char * table_1740[5][11];
+	const char * table_1721[63][11];
+	const char * table_1722[32][11];
+	const char * table_1723[11][11];
+	const char * table_1724[24][11];
+	const char * table_1725[11][11];
+	const char * table_1726[15][11];
+	const char * table_1727[23][11];
+	const char * table_1728[9][11];
+	const char * table_1729[11][11];
+	const char * table_1730[119][11];
+	const char * table_1731[13][11];
+	const char * table_1732[13][11];
+	const char * table_1733[128][11];
+	const char * table_1734[66][11];
+	const char * table_1735[11][11];
+	const char * table_1736[18][11];
+	const char * table_1737[9][11];
+	const char * table_1738[96][11];
+	const char * table_1739[3][11];
+	const char * table_1740[17][11];
 
 };
 #endif

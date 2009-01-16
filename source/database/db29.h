@@ -9,26 +9,26 @@ class Db29 {
 		Db29();
 		~Db29();
 
-	const char * table_561[262][11];
-	const char * table_562[9][11];
-	const char * table_563[12][11];
-	const char * table_564[10][11];
-	const char * table_565[24][11];
-	const char * table_566[32][11];
-	const char * table_567[5][11];
-	const char * table_568[45][11];
-	const char * table_569[52][11];
-	const char * table_570[11][11];
-	const char * table_571[7][11];
-	const char * table_572[86][11];
-	const char * table_573[185][11];
-	const char * table_574[161][11];
-	const char * table_575[13][11];
-	const char * table_576[92][11];
-	const char * table_577[10][11];
-	const char * table_578[5][11];
+	const char * table_561[18][11];
+	const char * table_562[20][11];
+	const char * table_563[120][11];
+	const char * table_564[21][11];
+	const char * table_565[75][11];
+	const char * table_566[15][11];
+	const char * table_567[40][11];
+	const char * table_568[10][11];
+	const char * table_569[17][11];
+	const char * table_570[33][11];
+	const char * table_571[103][11];
+	const char * table_572[20][11];
+	const char * table_573[35][11];
+	const char * table_574[79][11];
+	const char * table_575[33][11];
+	const char * table_576[23][11];
+	const char * table_577[6][11];
+	const char * table_578[84][11];
 	const char * table_579[8][11];
-	const char * table_580[3][11];
+	const char * table_580[27][11];
 
 };
 #endif

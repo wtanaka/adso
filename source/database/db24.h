@@ -9,26 +9,26 @@ class Db24 {
 		Db24();
 		~Db24();
 
-	const char * table_461[179][11];
-	const char * table_462[25][11];
-	const char * table_463[127][11];
-	const char * table_464[40][11];
-	const char * table_465[37][11];
-	const char * table_466[192][11];
-	const char * table_467[53][11];
-	const char * table_468[794][11];
-	const char * table_469[21][11];
-	const char * table_470[30][11];
-	const char * table_471[27][11];
-	const char * table_472[10][11];
-	const char * table_473[284][11];
-	const char * table_474[6][11];
-	const char * table_475[65][11];
-	const char * table_476[129][11];
-	const char * table_477[25][11];
-	const char * table_478[51][11];
-	const char * table_479[231][11];
-	const char * table_480[22][11];
+	const char * table_461[108][11];
+	const char * table_462[381][11];
+	const char * table_463[188][11];
+	const char * table_464[31][11];
+	const char * table_465[31][11];
+	const char * table_466[10][11];
+	const char * table_467[29][11];
+	const char * table_468[106][11];
+	const char * table_469[128][11];
+	const char * table_470[4][11];
+	const char * table_471[43][11];
+	const char * table_472[36][11];
+	const char * table_473[11][11];
+	const char * table_474[8][11];
+	const char * table_475[124][11];
+	const char * table_476[5][11];
+	const char * table_477[423][11];
+	const char * table_478[12][11];
+	const char * table_479[21][11];
+	const char * table_480[72][11];
 
 };
 #endif

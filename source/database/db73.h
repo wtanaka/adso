@@ -9,26 +9,26 @@ class Db73 {
 		Db73();
 		~Db73();
 
-	const char * table_1441[62][11];
-	const char * table_1442[160][11];
-	const char * table_1443[17][11];
-	const char * table_1444[97][11];
-	const char * table_1445[21][11];
+	const char * table_1441[35][11];
+	const char * table_1442[97][11];
+	const char * table_1443[6][11];
+	const char * table_1444[190][11];
+	const char * table_1445[15][11];
 	const char * table_1446[29][11];
-	const char * table_1447[105][11];
-	const char * table_1448[108][11];
-	const char * table_1449[159][11];
-	const char * table_1450[11][11];
-	const char * table_1451[17][11];
-	const char * table_1452[37][11];
-	const char * table_1453[45][11];
-	const char * table_1454[13][11];
-	const char * table_1455[19][11];
-	const char * table_1456[64][11];
-	const char * table_1457[59][11];
-	const char * table_1458[95][11];
-	const char * table_1459[141][11];
-	const char * table_1460[8][11];
+	const char * table_1447[25][11];
+	const char * table_1448[18][11];
+	const char * table_1449[61][11];
+	const char * table_1450[12][11];
+	const char * table_1451[11][11];
+	const char * table_1452[48][11];
+	const char * table_1453[40][11];
+	const char * table_1454[50][11];
+	const char * table_1455[39][11];
+	const char * table_1456[6][11];
+	const char * table_1457[45][11];
+	const char * table_1458[15][11];
+	const char * table_1459[18][11];
+	const char * table_1460[25][11];
 
 };
 #endif

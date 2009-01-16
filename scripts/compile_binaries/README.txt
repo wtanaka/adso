@@ -1,3 +1,3 @@
 
-Compiles hot, fresh and delicious machine translation binaries.
+Compiles hot, fresh and delicious Adso binary.
 

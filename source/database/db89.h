@@ -9,26 +9,26 @@ class Db89 {
 		Db89();
 		~Db89();
 
-	const char * table_1761[3][11];
-	const char * table_1762[3][11];
-	const char * table_1763[3][11];
-	const char * table_1764[4][11];
-	const char * table_1765[3][11];
-	const char * table_1766[16][11];
-	const char * table_1767[3][11];
-	const char * table_1768[14][11];
-	const char * table_1769[7][11];
-	const char * table_1770[3][11];
-	const char * table_1771[5][11];
-	const char * table_1772[7][11];
-	const char * table_1773[3][11];
-	const char * table_1774[3][11];
-	const char * table_1775[3][11];
-	const char * table_1776[4][11];
-	const char * table_1777[5][11];
-	const char * table_1778[3][11];
-	const char * table_1779[3][11];
-	const char * table_1780[3][11];
+	const char * table_1761[33][11];
+	const char * table_1762[23][11];
+	const char * table_1763[8][11];
+	const char * table_1764[6][11];
+	const char * table_1765[38][11];
+	const char * table_1766[93][11];
+	const char * table_1767[29][11];
+	const char * table_1768[85][11];
+	const char * table_1769[4][11];
+	const char * table_1770[118][11];
+	const char * table_1771[6][11];
+	const char * table_1772[3][11];
+	const char * table_1773[20][11];
+	const char * table_1774[66][11];
+	const char * table_1775[56][11];
+	const char * table_1776[11][11];
+	const char * table_1777[8][11];
+	const char * table_1778[47][11];
+	const char * table_1779[42][11];
+	const char * table_1780[22][11];
 
 };
 #endif

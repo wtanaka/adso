@@ -11,9 +11,9 @@ class Db327 {
 
 	const char * table_6521[2][11];
 	const char * table_6522[2][11];
-	const char * table_6523[3][11];
+	const char * table_6523[2][11];
 	const char * table_6524[2][11];
-	const char * table_6525[2][11];
+	const char * table_6525[3][11];
 	const char * table_6526[2][11];
 	const char * table_6527[2][11];
 	const char * table_6528[2][11];

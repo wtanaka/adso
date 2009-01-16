@@ -22,13 +22,13 @@ class Db340 {
 	const char * table_6791[2][11];
 	const char * table_6792[2][11];
 	const char * table_6793[2][11];
-	const char * table_6794[3][11];
+	const char * table_6794[2][11];
 	const char * table_6795[2][11];
-	const char * table_6796[2][11];
+	const char * table_6796[3][11];
 	const char * table_6797[2][11];
 	const char * table_6798[2][11];
 	const char * table_6799[2][11];
-	const char * table_6800[3][11];
+	const char * table_6800[2][11];
 
 };
 #endif

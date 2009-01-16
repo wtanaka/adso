@@ -9,26 +9,26 @@ class Db15 {
 		Db15();
 		~Db15();
 
-	const char * table_281[40][11];
-	const char * table_282[38][11];
-	const char * table_283[167][11];
-	const char * table_284[21][11];
-	const char * table_285[15][11];
-	const char * table_286[19][11];
-	const char * table_287[25][11];
-	const char * table_288[6][11];
-	const char * table_289[190][11];
-	const char * table_290[73][11];
-	const char * table_291[192][11];
-	const char * table_292[17][11];
-	const char * table_293[267][11];
-	const char * table_294[17][11];
-	const char * table_295[12][11];
-	const char * table_296[6][11];
-	const char * table_297[20][11];
-	const char * table_298[78][11];
-	const char * table_299[135][11];
-	const char * table_300[22][11];
+	const char * table_281[150][11];
+	const char * table_282[215][11];
+	const char * table_283[35][11];
+	const char * table_284[7][11];
+	const char * table_285[213][11];
+	const char * table_286[136][11];
+	const char * table_287[52][11];
+	const char * table_288[185][11];
+	const char * table_289[734][11];
+	const char * table_290[45][11];
+	const char * table_291[76][11];
+	const char * table_292[376][11];
+	const char * table_293[145][11];
+	const char * table_294[167][11];
+	const char * table_295[134][11];
+	const char * table_296[735][11];
+	const char * table_297[19][11];
+	const char * table_298[10][11];
+	const char * table_299[27][11];
+	const char * table_300[43][11];
 
 };
 #endif

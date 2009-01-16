@@ -26,9 +26,9 @@ class Db322 {
 	const char * table_6435[2][11];
 	const char * table_6436[2][11];
 	const char * table_6437[2][11];
-	const char * table_6438[3][11];
-	const char * table_6439[4][11];
-	const char * table_6440[2][11];
+	const char * table_6438[2][11];
+	const char * table_6439[2][11];
+	const char * table_6440[3][11];
 
 };
 #endif

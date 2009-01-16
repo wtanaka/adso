@@ -9,26 +9,26 @@ class Db95 {
 		Db95();
 		~Db95();
 
-	const char * table_1881[4][11];
-	const char * table_1882[623][11];
-	const char * table_1883[60][11];
-	const char * table_1884[10][11];
-	const char * table_1885[35][11];
-	const char * table_1886[10][11];
+	const char * table_1881[3][11];
+	const char * table_1882[3][11];
+	const char * table_1883[7][11];
+	const char * table_1884[3][11];
+	const char * table_1885[3][11];
+	const char * table_1886[3][11];
 	const char * table_1887[4][11];
-	const char * table_1888[202][11];
-	const char * table_1889[25][11];
-	const char * table_1890[39][11];
-	const char * table_1891[25][11];
-	const char * table_1892[133][11];
-	const char * table_1893[10][11];
-	const char * table_1894[121][11];
-	const char * table_1895[153][11];
-	const char * table_1896[50][11];
-	const char * table_1897[36][11];
-	const char * table_1898[15][11];
-	const char * table_1899[952][11];
-	const char * table_1900[11][11];
+	const char * table_1888[3][11];
+	const char * table_1889[3][11];
+	const char * table_1890[4][11];
+	const char * table_1891[3][11];
+	const char * table_1892[3][11];
+	const char * table_1893[5][11];
+	const char * table_1894[5][11];
+	const char * table_1895[3][11];
+	const char * table_1896[3][11];
+	const char * table_1897[3][11];
+	const char * table_1898[3][11];
+	const char * table_1899[3][11];
+	const char * table_1900[3][11];
 
 };
 #endif

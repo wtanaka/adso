@@ -9,26 +9,26 @@ class Db91 {
 		Db91();
 		~Db91();
 
-	const char * table_1801[6][11];
-	const char * table_1802[8][11];
-	const char * table_1803[3][11];
-	const char * table_1804[4][11];
-	const char * table_1805[4][11];
-	const char * table_1806[172][11];
-	const char * table_1807[3][11];
-	const char * table_1808[3][11];
-	const char * table_1809[4][11];
-	const char * table_1810[3][11];
-	const char * table_1811[3][11];
-	const char * table_1812[16][11];
-	const char * table_1813[9][11];
-	const char * table_1814[3][11];
-	const char * table_1815[3][11];
-	const char * table_1816[3][11];
-	const char * table_1817[3][11];
-	const char * table_1818[38][11];
-	const char * table_1819[5][11];
-	const char * table_1820[27][11];
+	const char * table_1801[37][11];
+	const char * table_1802[30][11];
+	const char * table_1803[102][11];
+	const char * table_1804[16][11];
+	const char * table_1805[27][11];
+	const char * table_1806[71][11];
+	const char * table_1807[11][11];
+	const char * table_1808[89][11];
+	const char * table_1809[7][11];
+	const char * table_1810[7][11];
+	const char * table_1811[49][11];
+	const char * table_1812[41][11];
+	const char * table_1813[104][11];
+	const char * table_1814[15][11];
+	const char * table_1815[36][11];
+	const char * table_1816[17][11];
+	const char * table_1817[26][11];
+	const char * table_1818[10][11];
+	const char * table_1819[23][11];
+	const char * table_1820[78][11];
 
 };
 #endif

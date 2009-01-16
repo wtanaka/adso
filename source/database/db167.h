@@ -9,26 +9,26 @@ class Db167 {
 		Db167();
 		~Db167();
 
-	const char * table_3321[12][11];
-	const char * table_3322[7][11];
-	const char * table_3323[4][11];
-	const char * table_3324[14][11];
-	const char * table_3325[7][11];
-	const char * table_3326[4][11];
-	const char * table_3327[8][11];
-	const char * table_3328[6][11];
-	const char * table_3329[13][11];
-	const char * table_3330[7][11];
-	const char * table_3331[203][11];
-	const char * table_3332[8][11];
-	const char * table_3333[5][11];
+	const char * table_3321[8][11];
+	const char * table_3322[3][11];
+	const char * table_3323[13][11];
+	const char * table_3324[5][11];
+	const char * table_3325[4][11];
+	const char * table_3326[62][11];
+	const char * table_3327[17][11];
+	const char * table_3328[48][11];
+	const char * table_3329[6][11];
+	const char * table_3330[2][11];
+	const char * table_3331[4][11];
+	const char * table_3332[54][11];
+	const char * table_3333[4][11];
 	const char * table_3334[3][11];
-	const char * table_3335[5][11];
-	const char * table_3336[9][11];
-	const char * table_3337[6][11];
-	const char * table_3338[9][11];
-	const char * table_3339[35][11];
-	const char * table_3340[2][11];
+	const char * table_3335[8][11];
+	const char * table_3336[3][11];
+	const char * table_3337[4][11];
+	const char * table_3338[2][11];
+	const char * table_3339[23][11];
+	const char * table_3340[20][11];
 
 };
 #endif

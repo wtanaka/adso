@@ -9,26 +9,26 @@ class Db93 {
 		Db93();
 		~Db93();
 
-	const char * table_1841[50][11];
-	const char * table_1842[8][11];
-	const char * table_1843[54][11];
-	const char * table_1844[21][11];
-	const char * table_1845[138][11];
-	const char * table_1846[176][11];
-	const char * table_1847[32][11];
-	const char * table_1848[6][11];
-	const char * table_1849[7][11];
-	const char * table_1850[17][11];
-	const char * table_1851[73][11];
-	const char * table_1852[7][11];
-	const char * table_1853[11][11];
-	const char * table_1854[51][11];
-	const char * table_1855[28][11];
-	const char * table_1856[8][11];
-	const char * table_1857[43][11];
-	const char * table_1858[35][11];
-	const char * table_1859[13][11];
-	const char * table_1860[20][11];
+	const char * table_1841[65][11];
+	const char * table_1842[3][11];
+	const char * table_1843[3][11];
+	const char * table_1844[3][11];
+	const char * table_1845[3][11];
+	const char * table_1846[3][11];
+	const char * table_1847[3][11];
+	const char * table_1848[4][11];
+	const char * table_1849[5][11];
+	const char * table_1850[4][11];
+	const char * table_1851[3][11];
+	const char * table_1852[3][11];
+	const char * table_1853[3][11];
+	const char * table_1854[4][11];
+	const char * table_1855[25][11];
+	const char * table_1856[3][11];
+	const char * table_1857[5][11];
+	const char * table_1858[3][11];
+	const char * table_1859[3][11];
+	const char * table_1860[5][11];
 
 };
 #endif

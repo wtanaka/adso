@@ -22,9 +22,9 @@ class Db338 {
 	const char * table_6751[2][11];
 	const char * table_6752[2][11];
 	const char * table_6753[2][11];
-	const char * table_6754[3][11];
+	const char * table_6754[2][11];
 	const char * table_6755[2][11];
-	const char * table_6756[2][11];
+	const char * table_6756[3][11];
 	const char * table_6757[2][11];
 	const char * table_6758[2][11];
 	const char * table_6759[2][11];

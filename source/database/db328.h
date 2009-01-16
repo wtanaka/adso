@@ -22,9 +22,9 @@ class Db328 {
 	const char * table_6551[2][11];
 	const char * table_6552[2][11];
 	const char * table_6553[2][11];
-	const char * table_6554[3][11];
+	const char * table_6554[2][11];
 	const char * table_6555[2][11];
-	const char * table_6556[2][11];
+	const char * table_6556[3][11];
 	const char * table_6557[2][11];
 	const char * table_6558[2][11];
 	const char * table_6559[2][11];

@@ -34,10 +34,10 @@ std::string Number::return_pinyin() {
 std::string Number::return_pinyin_no_spacing() {
 
   std::string temp_pinyin = pinyin;
-  if (pre_chinese != NULL) { temp_pinyin  = pre_chinese->return_pinyin() + pinyin; }
-  if (post_chinese != NULL) { temp_pinyin = pinyin + post_chinese->return_pinyin(); }
+  if (pre_chinese != NULL) { temp_pinyin  = pre_chinese->return_pinyin_no_spacing() + pinyin; }
+  if (post_chinese != NULL) { temp_pinyin = pinyin + post_chinese->return_pinyin_no_spacing(); }
 
-  return pinyin;
+  return temp_pinyin;
 
 }
 int Number::adjust_confidence(Text *parent, int a, int b, int c) {

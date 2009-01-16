@@ -9,26 +9,26 @@ class Db94 {
 		Db94();
 		~Db94();
 
-	const char * table_1861[8][11];
-	const char * table_1862[20][11];
-	const char * table_1863[20][11];
-	const char * table_1864[24][11];
-	const char * table_1865[24][11];
-	const char * table_1866[6][11];
-	const char * table_1867[126][11];
-	const char * table_1868[487][11];
-	const char * table_1869[33][11];
+	const char * table_1861[3][11];
+	const char * table_1862[3][11];
+	const char * table_1863[5][11];
+	const char * table_1864[4][11];
+	const char * table_1865[10][11];
+	const char * table_1866[7][11];
+	const char * table_1867[4][11];
+	const char * table_1868[3][11];
+	const char * table_1869[10][11];
 	const char * table_1870[7][11];
-	const char * table_1871[7][11];
-	const char * table_1872[20][11];
-	const char * table_1873[90][11];
-	const char * table_1874[5][11];
-	const char * table_1875[350][11];
-	const char * table_1876[174][11];
-	const char * table_1877[39][11];
-	const char * table_1878[204][11];
-	const char * table_1879[4][11];
-	const char * table_1880[19][11];
+	const char * table_1871[3][11];
+	const char * table_1872[3][11];
+	const char * table_1873[3][11];
+	const char * table_1874[10][11];
+	const char * table_1875[3][11];
+	const char * table_1876[5][11];
+	const char * table_1877[5][11];
+	const char * table_1878[3][11];
+	const char * table_1879[3][11];
+	const char * table_1880[8][11];
 
 };
 #endif

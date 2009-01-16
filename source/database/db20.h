@@ -9,26 +9,26 @@ class Db20 {
 		Db20();
 		~Db20();
 
-	const char * table_381[101][11];
-	const char * table_382[28][11];
-	const char * table_383[39][11];
-	const char * table_384[16][11];
-	const char * table_385[406][11];
-	const char * table_386[25][11];
-	const char * table_387[220][11];
-	const char * table_388[42][11];
-	const char * table_389[14][11];
-	const char * table_390[23][11];
-	const char * table_391[36][11];
-	const char * table_392[52][11];
-	const char * table_393[29][11];
-	const char * table_394[35][11];
-	const char * table_395[87][11];
-	const char * table_396[92][11];
-	const char * table_397[413][11];
-	const char * table_398[42][11];
-	const char * table_399[163][11];
-	const char * table_400[77][11];
+	const char * table_381[6][11];
+	const char * table_382[123][11];
+	const char * table_383[397][11];
+	const char * table_384[242][11];
+	const char * table_385[74][11];
+	const char * table_386[24][11];
+	const char * table_387[19][11];
+	const char * table_388[411][11];
+	const char * table_389[102][11];
+	const char * table_390[48][11];
+	const char * table_391[41][11];
+	const char * table_392[32][11];
+	const char * table_393[76][11];
+	const char * table_394[213][11];
+	const char * table_395[53][11];
+	const char * table_396[61][11];
+	const char * table_397[502][11];
+	const char * table_398[133][11];
+	const char * table_399[54][11];
+	const char * table_400[343][11];
 
 };
 #endif

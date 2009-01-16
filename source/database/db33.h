@@ -9,26 +9,26 @@ class Db33 {
 		Db33();
 		~Db33();
 
-	const char * table_641[44][11];
-	const char * table_642[57][11];
-	const char * table_643[2][11];
-	const char * table_644[7][11];
-	const char * table_645[27][11];
-	const char * table_646[369][11];
-	const char * table_647[154][11];
-	const char * table_648[208][11];
-	const char * table_649[129][11];
-	const char * table_650[187][11];
-	const char * table_651[32][11];
-	const char * table_652[8][11];
-	const char * table_653[18][11];
-	const char * table_654[219][11];
-	const char * table_655[27][11];
-	const char * table_656[171][11];
-	const char * table_657[21][11];
-	const char * table_658[676][11];
-	const char * table_659[9][11];
-	const char * table_660[32][11];
+	const char * table_641[73][11];
+	const char * table_642[17][11];
+	const char * table_643[43][11];
+	const char * table_644[27][11];
+	const char * table_645[269][11];
+	const char * table_646[296][11];
+	const char * table_647[17][11];
+	const char * table_648[12][11];
+	const char * table_649[6][11];
+	const char * table_650[20][11];
+	const char * table_651[138][11];
+	const char * table_652[377][11];
+	const char * table_653[109][11];
+	const char * table_654[120][11];
+	const char * table_655[22][11];
+	const char * table_656[5][11];
+	const char * table_657[38][11];
+	const char * table_658[149][11];
+	const char * table_659[82][11];
+	const char * table_660[170][11];
 
 };
 #endif

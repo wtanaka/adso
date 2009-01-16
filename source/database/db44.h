@@ -9,26 +9,26 @@ class Db44 {
 		Db44();
 		~Db44();
 
-	const char * table_861[5][11];
-	const char * table_862[249][11];
-	const char * table_863[17][11];
-	const char * table_864[5][11];
-	const char * table_865[13][11];
-	const char * table_866[125][11];
-	const char * table_867[46][11];
-	const char * table_868[53][11];
-	const char * table_869[210][11];
-	const char * table_870[5][11];
-	const char * table_871[32][11];
-	const char * table_872[11][11];
-	const char * table_873[4][11];
-	const char * table_874[43][11];
-	const char * table_875[37][11];
-	const char * table_876[176][11];
-	const char * table_877[67][11];
-	const char * table_878[8][11];
-	const char * table_879[3][11];
-	const char * table_880[5][11];
+	const char * table_861[15][11];
+	const char * table_862[4][11];
+	const char * table_863[19][11];
+	const char * table_864[78][11];
+	const char * table_865[29][11];
+	const char * table_866[9][11];
+	const char * table_867[5][11];
+	const char * table_868[55][11];
+	const char * table_869[15][11];
+	const char * table_870[8][11];
+	const char * table_871[12][11];
+	const char * table_872[44][11];
+	const char * table_873[26][11];
+	const char * table_874[113][11];
+	const char * table_875[30][11];
+	const char * table_876[74][11];
+	const char * table_877[93][11];
+	const char * table_878[20][11];
+	const char * table_879[9][11];
+	const char * table_880[14][11];
 
 };
 #endif

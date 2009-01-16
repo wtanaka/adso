@@ -9,7 +9,7 @@ class Db331 {
 		Db331();
 		~Db331();
 
-	const char * table_6601[2][11];
+	const char * table_6601[3][11];
 	const char * table_6602[2][11];
 	const char * table_6603[2][11];
 	const char * table_6604[2][11];

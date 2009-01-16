@@ -9,26 +9,26 @@ class Db3 {
 		Db3();
 		~Db3();
 
-	const char * table_41[35][11];
-	const char * table_42[60][11];
-	const char * table_43[464][11];
-	const char * table_44[117][11];
-	const char * table_45[153][11];
-	const char * table_46[265][11];
-	const char * table_47[1187][11];
-	const char * table_48[15][11];
-	const char * table_49[309][11];
-	const char * table_50[120][11];
-	const char * table_51[82][11];
-	const char * table_52[79][11];
-	const char * table_53[188][11];
-	const char * table_54[250][11];
-	const char * table_55[614][11];
-	const char * table_56[43][11];
-	const char * table_57[44][11];
-	const char * table_58[207][11];
-	const char * table_59[22][11];
-	const char * table_60[90][11];
+	const char * table_41[177][11];
+	const char * table_42[192][11];
+	const char * table_43[197][11];
+	const char * table_44[62][11];
+	const char * table_45[112][11];
+	const char * table_46[156][11];
+	const char * table_47[239][11];
+	const char * table_48[26][11];
+	const char * table_49[139][11];
+	const char * table_50[68][11];
+	const char * table_51[456][11];
+	const char * table_52[186][11];
+	const char * table_53[286][11];
+	const char * table_54[19][11];
+	const char * table_55[668][11];
+	const char * table_56[381][11];
+	const char * table_57[86][11];
+	const char * table_58[512][11];
+	const char * table_59[53][11];
+	const char * table_60[189][11];
 
 };
 #endif

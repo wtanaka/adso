@@ -9,26 +9,26 @@ class Db92 {
 		Db92();
 		~Db92();
 
-	const char * table_1821[47][11];
-	const char * table_1822[309][11];
-	const char * table_1823[8][11];
-	const char * table_1824[21][11];
-	const char * table_1825[212][11];
-	const char * table_1826[80][11];
-	const char * table_1827[39][11];
-	const char * table_1828[7][11];
-	const char * table_1829[113][11];
-	const char * table_1830[18][11];
-	const char * table_1831[74][11];
-	const char * table_1832[27][11];
-	const char * table_1833[10][11];
-	const char * table_1834[10][11];
-	const char * table_1835[1218][11];
-	const char * table_1836[8][11];
-	const char * table_1837[131][11];
-	const char * table_1838[48][11];
-	const char * table_1839[30][11];
-	const char * table_1840[26][11];
+	const char * table_1821[183][11];
+	const char * table_1822[18][11];
+	const char * table_1823[4][11];
+	const char * table_1824[3][11];
+	const char * table_1825[4][11];
+	const char * table_1826[4][11];
+	const char * table_1827[4][11];
+	const char * table_1828[9][11];
+	const char * table_1829[4][11];
+	const char * table_1830[4][11];
+	const char * table_1831[11][11];
+	const char * table_1832[3][11];
+	const char * table_1833[3][11];
+	const char * table_1834[4][11];
+	const char * table_1835[3][11];
+	const char * table_1836[3][11];
+	const char * table_1837[3][11];
+	const char * table_1838[3][11];
+	const char * table_1839[3][11];
+	const char * table_1840[3][11];
 
 };
 #endif
