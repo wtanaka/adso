@@ -12,8 +12,8 @@ class Db51 {
 	const char * table_1001[106][11];
 	const char * table_1002[20][11];
 	const char * table_1003[3][11];
-	const char * table_1004[121][11];
-	const char * table_1005[168][11];
+	const char * table_1004[120][11];
+	const char * table_1005[161][11];
 	const char * table_1006[13][11];
 	const char * table_1007[3][11];
 	const char * table_1008[32][11];
@@ -24,7 +24,7 @@ class Db51 {
 	const char * table_1013[15][11];
 	const char * table_1014[17][11];
 	const char * table_1015[22][11];
-	const char * table_1016[74][11];
+	const char * table_1016[71][11];
 	const char * table_1017[23][11];
 	const char * table_1018[9][11];
 	const char * table_1019[11][11];

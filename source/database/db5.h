@@ -10,25 +10,25 @@ class Db5 {
 		~Db5();
 
 	const char * table_81[16][11];
-	const char * table_82[114][11];
-	const char * table_83[1645][11];
+	const char * table_82[116][11];
+	const char * table_83[1468][11];
 	const char * table_84[43][11];
 	const char * table_85[42][11];
 	const char * table_86[32][11];
 	const char * table_87[41][11];
-	const char * table_88[45][11];
-	const char * table_89[178][11];
-	const char * table_90[725][11];
-	const char * table_91[192][11];
-	const char * table_92[186][11];
-	const char * table_93[39][11];
-	const char * table_94[314][11];
-	const char * table_95[414][11];
-	const char * table_96[208][11];
-	const char * table_97[292][11];
-	const char * table_98[344][11];
+	const char * table_88[47][11];
+	const char * table_89[177][11];
+	const char * table_90[722][11];
+	const char * table_91[187][11];
+	const char * table_92[175][11];
+	const char * table_93[40][11];
+	const char * table_94[287][11];
+	const char * table_95[393][11];
+	const char * table_96[211][11];
+	const char * table_97[281][11];
+	const char * table_98[341][11];
 	const char * table_99[149][11];
-	const char * table_100[169][11];
+	const char * table_100[171][11];
 
 };
 #endif

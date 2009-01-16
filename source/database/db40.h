@@ -10,13 +10,13 @@ class Db40 {
 		~Db40();
 
 	const char * table_781[3][11];
-	const char * table_782[148][11];
-	const char * table_783[21][11];
+	const char * table_782[146][11];
+	const char * table_783[22][11];
 	const char * table_784[10][11];
 	const char * table_785[30][11];
 	const char * table_786[37][11];
 	const char * table_787[48][11];
-	const char * table_788[175][11];
+	const char * table_788[170][11];
 	const char * table_789[21][11];
 	const char * table_790[21][11];
 	const char * table_791[58][11];

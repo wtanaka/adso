@@ -11,9 +11,9 @@ class Db27 {
 
 	const char * table_521[44][11];
 	const char * table_522[25][11];
-	const char * table_523[113][11];
+	const char * table_523[112][11];
 	const char * table_524[30][11];
-	const char * table_525[72][11];
+	const char * table_525[74][11];
 	const char * table_526[93][11];
 	const char * table_527[20][11];
 	const char * table_528[9][11];
@@ -25,7 +25,7 @@ class Db27 {
 	const char * table_534[48][11];
 	const char * table_535[69][11];
 	const char * table_536[25][11];
-	const char * table_537[23][11];
+	const char * table_537[24][11];
 	const char * table_538[34][11];
 	const char * table_539[7][11];
 	const char * table_540[82][11];

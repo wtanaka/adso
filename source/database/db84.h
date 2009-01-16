@@ -9,7 +9,7 @@ class Db84 {
 		Db84();
 		~Db84();
 
-	const char * table_1661[185][11];
+	const char * table_1661[182][11];
 	const char * table_1662[53][11];
 	const char * table_1663[18][11];
 	const char * table_1664[4][11];

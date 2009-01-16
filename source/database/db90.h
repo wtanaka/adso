@@ -9,7 +9,7 @@ class Db90 {
 		Db90();
 		~Db90();
 
-	const char * table_1781[80][11];
+	const char * table_1781[79][11];
 	const char * table_1782[5][11];
 	const char * table_1783[10][11];
 	const char * table_1784[3][11];

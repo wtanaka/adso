@@ -14,7 +14,7 @@ class Db321 {
 	const char * table_6403[2][11];
 	const char * table_6404[2][11];
 	const char * table_6405[2][11];
-	const char * table_6406[16][11];
+	const char * table_6406[4][11];
 	const char * table_6407[3][11];
 	const char * table_6408[2][11];
 	const char * table_6409[2][11];

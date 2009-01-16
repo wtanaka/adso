@@ -10,8 +10,8 @@ class Db101 {
 		~Db101();
 
 	const char * table_2001[12][11];
-	const char * table_2002[191][11];
-	const char * table_2003[26][11];
+	const char * table_2002[190][11];
+	const char * table_2003[25][11];
 	const char * table_2004[23][11];
 	const char * table_2005[77][11];
 	const char * table_2006[43][11];

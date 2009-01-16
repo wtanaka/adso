@@ -27,6 +27,7 @@ class Adso {
 		Encoding *encoding;	
 		Text *text;
 
+		int no_phrases;
 		int connected_to_verb_db;
 		int connected_to_ontology_db;
 

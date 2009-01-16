@@ -24,7 +24,7 @@ class Db48 {
 	const char * table_953[12][11];
 	const char * table_954[101][11];
 	const char * table_955[11][11];
-	const char * table_956[39][11];
+	const char * table_956[40][11];
 	const char * table_957[35][11];
 	const char * table_958[17][11];
 	const char * table_959[12][11];

@@ -14,7 +14,7 @@ class Db91 {
 	const char * table_1803[3][11];
 	const char * table_1804[4][11];
 	const char * table_1805[4][11];
-	const char * table_1806[181][11];
+	const char * table_1806[172][11];
 	const char * table_1807[3][11];
 	const char * table_1808[3][11];
 	const char * table_1809[4][11];

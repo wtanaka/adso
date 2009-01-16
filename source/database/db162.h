@@ -9,26 +9,26 @@ class Db162 {
 		Db162();
 		~Db162();
 
-	const char * table_3221[4][11];
-	const char * table_3222[3][11];
-	const char * table_3223[2][11];
-	const char * table_3224[19][11];
-	const char * table_3225[5][11];
+	const char * table_3221[2][11];
+	const char * table_3222[6][11];
+	const char * table_3223[3][11];
+	const char * table_3224[9][11];
+	const char * table_3225[10][11];
 	const char * table_3226[4][11];
-	const char * table_3227[2][11];
-	const char * table_3228[3][11];
-	const char * table_3229[4][11];
-	const char * table_3230[25][11];
-	const char * table_3231[9][11];
-	const char * table_3232[2][11];
-	const char * table_3233[11][11];
-	const char * table_3234[4][11];
-	const char * table_3235[7][11];
-	const char * table_3236[27][11];
-	const char * table_3237[27][11];
-	const char * table_3238[11][11];
-	const char * table_3239[10][11];
-	const char * table_3240[18][11];
+	const char * table_3227[8][11];
+	const char * table_3228[7][11];
+	const char * table_3229[6][11];
+	const char * table_3230[12][11];
+	const char * table_3231[2][11];
+	const char * table_3232[8][11];
+	const char * table_3233[4][11];
+	const char * table_3234[3][11];
+	const char * table_3235[2][11];
+	const char * table_3236[18][11];
+	const char * table_3237[5][11];
+	const char * table_3238[4][11];
+	const char * table_3239[2][11];
+	const char * table_3240[3][11];
 
 };
 #endif

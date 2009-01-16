@@ -9,17 +9,17 @@ class Db37 {
 		Db37();
 		~Db37();
 
-	const char * table_721[191][11];
+	const char * table_721[190][11];
 	const char * table_722[14][11];
 	const char * table_723[17][11];
 	const char * table_724[49][11];
 	const char * table_725[9][11];
 	const char * table_726[6][11];
-	const char * table_727[192][11];
-	const char * table_728[183][11];
+	const char * table_727[189][11];
+	const char * table_728[182][11];
 	const char * table_729[6][11];
-	const char * table_730[60][11];
-	const char * table_731[28][11];
+	const char * table_730[59][11];
+	const char * table_731[26][11];
 	const char * table_732[3][11];
 	const char * table_733[43][11];
 	const char * table_734[5][11];

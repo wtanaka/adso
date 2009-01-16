@@ -15,13 +15,13 @@ class Db17 {
 	const char * table_324[212][11];
 	const char * table_325[15][11];
 	const char * table_326[276][11];
-	const char * table_327[374][11];
+	const char * table_327[370][11];
 	const char * table_328[47][11];
 	const char * table_329[6][11];
 	const char * table_330[17][11];
 	const char * table_331[223][11];
-	const char * table_332[83][11];
-	const char * table_333[500][11];
+	const char * table_332[79][11];
+	const char * table_333[496][11];
 	const char * table_334[7][11];
 	const char * table_335[4][11];
 	const char * table_336[14][11];

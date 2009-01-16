@@ -11,7 +11,7 @@ class Db319 {
 
 	const char * table_6361[2][11];
 	const char * table_6362[4][11];
-	const char * table_6363[23][11];
+	const char * table_6363[8][11];
 	const char * table_6364[3][11];
 	const char * table_6365[2][11];
 	const char * table_6366[3][11];

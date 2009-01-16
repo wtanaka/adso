@@ -10,10 +10,10 @@ class Db34 {
 		~Db34();
 
 	const char * table_661[18][11];
-	const char * table_662[86][11];
+	const char * table_662[83][11];
 	const char * table_663[12][11];
-	const char * table_664[39][11];
-	const char * table_665[230][11];
+	const char * table_664[36][11];
+	const char * table_665[228][11];
 	const char * table_666[12][11];
 	const char * table_667[3][11];
 	const char * table_668[64][11];
@@ -27,7 +27,7 @@ class Db34 {
 	const char * table_676[8][11];
 	const char * table_677[14][11];
 	const char * table_678[33][11];
-	const char * table_679[55][11];
+	const char * table_679[54][11];
 	const char * table_680[22][11];
 
 };

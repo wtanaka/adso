@@ -27,10 +27,11 @@ class Adso {
 		Encoding *encoding;	
 		Text *text;
 
+		int no_phrases;
 		int connected_to_verb_db;
 		int connected_to_ontology_db;
 
-		Adso(std::string dbusername, std::string dbpassword, std::string dbdatabase);
+		Adso(std::string a, std::string b, std::string c);
 		~Adso();
 
 

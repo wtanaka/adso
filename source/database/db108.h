@@ -9,26 +9,26 @@ class Db108 {
 		Db108();
 		~Db108();
 
-	const char * table_2141[5][11];
-	const char * table_2142[33][11];
-	const char * table_2143[25][11];
-	const char * table_2144[7][11];
-	const char * table_2145[3][11];
-	const char * table_2146[5][11];
-	const char * table_2147[2][11];
+	const char * table_2141[6][11];
+	const char * table_2142[3][11];
+	const char * table_2143[12][11];
+	const char * table_2144[2][11];
+	const char * table_2145[10][11];
+	const char * table_2146[34][11];
+	const char * table_2147[5][11];
 	const char * table_2148[4][11];
-	const char * table_2149[5][11];
-	const char * table_2150[39][11];
-	const char * table_2151[3][11];
-	const char * table_2152[71][11];
-	const char * table_2153[18][11];
-	const char * table_2154[5][11];
+	const char * table_2149[8][11];
+	const char * table_2150[95][11];
+	const char * table_2151[7][11];
+	const char * table_2152[7][11];
+	const char * table_2153[14][11];
+	const char * table_2154[2][11];
 	const char * table_2155[2][11];
-	const char * table_2156[4][11];
-	const char * table_2157[5][11];
+	const char * table_2156[156][11];
+	const char * table_2157[22][11];
 	const char * table_2158[2][11];
-	const char * table_2159[12][11];
-	const char * table_2160[57][11];
+	const char * table_2159[5][11];
+	const char * table_2160[33][11];
 
 };
 #endif

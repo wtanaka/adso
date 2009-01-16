@@ -21,10 +21,10 @@ class Db29 {
 	const char * table_570[11][11];
 	const char * table_571[7][11];
 	const char * table_572[86][11];
-	const char * table_573[197][11];
-	const char * table_574[159][11];
+	const char * table_573[185][11];
+	const char * table_574[161][11];
 	const char * table_575[13][11];
-	const char * table_576[90][11];
+	const char * table_576[92][11];
 	const char * table_577[10][11];
 	const char * table_578[5][11];
 	const char * table_579[8][11];

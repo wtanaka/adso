@@ -9,26 +9,26 @@ class Db128 {
 		Db128();
 		~Db128();
 
-	const char * table_2541[2][11];
-	const char * table_2542[3][11];
-	const char * table_2543[111][11];
-	const char * table_2544[3][11];
-	const char * table_2545[4][11];
-	const char * table_2546[39][11];
-	const char * table_2547[2][11];
-	const char * table_2548[4][11];
-	const char * table_2549[3][11];
-	const char * table_2550[3][11];
-	const char * table_2551[14][11];
-	const char * table_2552[5][11];
-	const char * table_2553[2][11];
-	const char * table_2554[2][11];
-	const char * table_2555[122][11];
-	const char * table_2556[7][11];
-	const char * table_2557[5][11];
-	const char * table_2558[2][11];
-	const char * table_2559[2][11];
-	const char * table_2560[3][11];
+	const char * table_2541[43][11];
+	const char * table_2542[9][11];
+	const char * table_2543[3][11];
+	const char * table_2544[16][11];
+	const char * table_2545[2][11];
+	const char * table_2546[6][11];
+	const char * table_2547[13][11];
+	const char * table_2548[6][11];
+	const char * table_2549[17][11];
+	const char * table_2550[36][11];
+	const char * table_2551[11][11];
+	const char * table_2552[22][11];
+	const char * table_2553[23][11];
+	const char * table_2554[40][11];
+	const char * table_2555[12][11];
+	const char * table_2556[2][11];
+	const char * table_2557[44][11];
+	const char * table_2558[61][11];
+	const char * table_2559[4][11];
+	const char * table_2560[2][11];
 
 };
 #endif

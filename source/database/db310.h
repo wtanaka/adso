@@ -20,14 +20,14 @@ class Db310 {
 	const char * table_6189[10][11];
 	const char * table_6190[4][11];
 	const char * table_6191[4][11];
-	const char * table_6192[5][11];
+	const char * table_6192[4][11];
 	const char * table_6193[4][11];
 	const char * table_6194[6][11];
 	const char * table_6195[3][11];
 	const char * table_6196[3][11];
 	const char * table_6197[3][11];
 	const char * table_6198[5][11];
-	const char * table_6199[7][11];
+	const char * table_6199[6][11];
 	const char * table_6200[3][11];
 
 };

@@ -10,17 +10,17 @@ class Db31 {
 		~Db31();
 
 	const char * table_601[36][11];
-	const char * table_602[62][11];
+	const char * table_602[61][11];
 	const char * table_603[8][11];
 	const char * table_604[97][11];
-	const char * table_605[48][11];
+	const char * table_605[49][11];
 	const char * table_606[24][11];
 	const char * table_607[25][11];
 	const char * table_608[3][11];
-	const char * table_609[47][11];
-	const char * table_610[22][11];
+	const char * table_609[48][11];
+	const char * table_610[24][11];
 	const char * table_611[9][11];
-	const char * table_612[1123][11];
+	const char * table_612[1102][11];
 	const char * table_613[24][11];
 	const char * table_614[16][11];
 	const char * table_615[65][11];

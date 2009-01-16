@@ -20,7 +20,7 @@ class Db294 {
 	const char * table_5869[2][11];
 	const char * table_5870[3][11];
 	const char * table_5871[2][11];
-	const char * table_5872[3][11];
+	const char * table_5872[2][11];
 	const char * table_5873[7][11];
 	const char * table_5874[2][11];
 	const char * table_5875[6][11];

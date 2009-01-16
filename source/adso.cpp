@@ -3,9 +3,9 @@
 #include "text.h"
 
 
-//#define USE_COMPILED 1
+#define USE_COMPILED 1
 //#define USE_SQLITE 1
-#define USE_MYSQL 1
+//#define USE_MYSQL 1
 
 #ifdef USE_COMPILED
   	#include "ghost_database.h"
@@ -44,11 +44,12 @@ struct Adso::AdsoImpl
 	
 };
 
-Adso::Adso(std::string dbusername, std::string dbpassword, std::string dbdatabase)
-: my_impl( new Adso::AdsoImpl( dbusername, dbpassword, dbdatabase, "verbs" ) ) {
+Adso::Adso(std::string a, std::string b, std::string c)
+: my_impl( new Adso::AdsoImpl( "adso", "adso", "expanded", "verbs" ) ) {
 
 	query_results = new std::vector<std::string>;
 	query_headers = new std::vector<std::string>;
+	no_phrases = 0;
 	connected_to_verb_db = 0;
 	connected_to_ontology_db = 0;
 	sqlite_database_location = "./";
@@ -132,6 +133,7 @@ std::vector<std::string> Adso::select_query_wildcard(std::string fields, std::st
   #else
   temp_query = "SELECT " + fields + " FROM " + table + " WHERE " + where1 + " LIKE BINARY \"" + where2 + "%\"";
   #endif
+  if (no_phrases == 1) { if (table[0] == '_') { temp_query += " AND FLAG NOT REGEXP \"PHRASE\""; } }
   return query_string(temp_query);
 }
 
@@ -173,20 +175,8 @@ int Adso::connect_ontology() {
 
 	return 1;
 }
-void Adso::command_string(std::string str) {
-	query_results->clear();
-
-	try {
-	    my_impl->my_database->command( str );
-	} 
-	catch (...) { 
-		throw "Error Accessing Database"; 
-	}
-	return;
-}
 std::vector<std::string> Adso::query_string(std::string str) {
 	query_results->clear();
-
 	try {
 	    my_impl->my_database->query( str, *query_results );
 	} 

@@ -19,15 +19,15 @@ class Db199 {
 	const char * table_3968[2][11];
 	const char * table_3969[2][11];
 	const char * table_3970[2][11];
-	const char * table_3971[5][11];
-	const char * table_3972[5][11];
-	const char * table_3973[6][11];
+	const char * table_3971[2][11];
+	const char * table_3972[2][11];
+	const char * table_3973[2][11];
 	const char * table_3974[2][11];
-	const char * table_3975[2][11];
-	const char * table_3976[2][11];
-	const char * table_3977[2][11];
-	const char * table_3978[6][11];
-	const char * table_3979[5][11];
+	const char * table_3975[5][11];
+	const char * table_3976[5][11];
+	const char * table_3977[6][11];
+	const char * table_3978[2][11];
+	const char * table_3979[2][11];
 	const char * table_3980[2][11];
 
 };

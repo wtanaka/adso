@@ -9,7 +9,7 @@ class Db41 {
 		Db41();
 		~Db41();
 
-	const char * table_801[117][11];
+	const char * table_801[116][11];
 	const char * table_802[30][11];
 	const char * table_803[18][11];
 	const char * table_804[84][11];
@@ -18,9 +18,9 @@ class Db41 {
 	const char * table_807[37][11];
 	const char * table_808[27][11];
 	const char * table_809[10][11];
-	const char * table_810[124][11];
+	const char * table_810[120][11];
 	const char * table_811[7][11];
-	const char * table_812[28][11];
+	const char * table_812[27][11];
 	const char * table_813[58][11];
 	const char * table_814[13][11];
 	const char * table_815[32][11];

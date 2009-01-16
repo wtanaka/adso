@@ -16,16 +16,16 @@ class Db1 {
 
       	const char * table_1[20][11];
 	const char * table_2[1686][11];
-	const char * table_3[132][11];
-	const char * table_4[816][11];
-	const char * table_5[496][11];
+	const char * table_3[133][11];
+	const char * table_4[825][11];
+	const char * table_5[495][11];
 	const char * table_6[224][11];
 	const char * table_7[38][11];
 	const char * table_8[128][11];
 	const char * table_9[177][11];
 	const char * table_10[24][11];
-	const char * table_11[800][11];
-	const char * table_12[264][11];
+	const char * table_11[799][11];
+	const char * table_12[265][11];
 	const char * table_13[324][11];
 	const char * table_14[88][11];
 	const char * table_15[127][11];

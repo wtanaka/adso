@@ -13,11 +13,11 @@ class Db33 {
 	const char * table_642[57][11];
 	const char * table_643[2][11];
 	const char * table_644[7][11];
-	const char * table_645[34][11];
-	const char * table_646[374][11];
-	const char * table_647[155][11];
-	const char * table_648[209][11];
-	const char * table_649[130][11];
+	const char * table_645[27][11];
+	const char * table_646[369][11];
+	const char * table_647[154][11];
+	const char * table_648[208][11];
+	const char * table_649[129][11];
 	const char * table_650[187][11];
 	const char * table_651[32][11];
 	const char * table_652[8][11];
@@ -26,7 +26,7 @@ class Db33 {
 	const char * table_655[27][11];
 	const char * table_656[171][11];
 	const char * table_657[21][11];
-	const char * table_658[697][11];
+	const char * table_658[676][11];
 	const char * table_659[9][11];
 	const char * table_660[32][11];
 

@@ -13,7 +13,7 @@ class Db86 {
 	const char * table_1702[3][11];
 	const char * table_1703[3][11];
 	const char * table_1704[5][11];
-	const char * table_1705[233][11];
+	const char * table_1705[230][11];
 	const char * table_1706[4][11];
 	const char * table_1707[10][11];
 	const char * table_1708[7][11];

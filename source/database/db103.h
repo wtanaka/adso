@@ -18,12 +18,12 @@ class Db103 {
 	const char * table_2047[32][11];
 	const char * table_2048[14][11];
 	const char * table_2049[22][11];
-	const char * table_2050[597][11];
-	const char * table_2051[73][11];
+	const char * table_2050[531][11];
+	const char * table_2051[72][11];
 	const char * table_2052[25][11];
 	const char * table_2053[17][11];
-	const char * table_2054[83][11];
-	const char * table_2055[112][11];
+	const char * table_2054[36][11];
+	const char * table_2055[108][11];
 	const char * table_2056[16][11];
 	const char * table_2057[27][11];
 	const char * table_2058[79][11];

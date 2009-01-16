@@ -9,26 +9,26 @@ class Db145 {
 		Db145();
 		~Db145();
 
-	const char * table_2881[12][11];
-	const char * table_2882[12][11];
-	const char * table_2883[4][11];
-	const char * table_2884[58][11];
-	const char * table_2885[4][11];
-	const char * table_2886[7][11];
-	const char * table_2887[3][11];
-	const char * table_2888[34][11];
-	const char * table_2889[66][11];
-	const char * table_2890[4][11];
-	const char * table_2891[138][11];
-	const char * table_2892[58][11];
-	const char * table_2893[2][11];
-	const char * table_2894[33][11];
-	const char * table_2895[14][11];
-	const char * table_2896[12][11];
+	const char * table_2881[2][11];
+	const char * table_2882[2][11];
+	const char * table_2883[133][11];
+	const char * table_2884[12][11];
+	const char * table_2885[2][11];
+	const char * table_2886[3][11];
+	const char * table_2887[4][11];
+	const char * table_2888[2][11];
+	const char * table_2889[3][11];
+	const char * table_2890[5][11];
+	const char * table_2891[2][11];
+	const char * table_2892[12][11];
+	const char * table_2893[65][11];
+	const char * table_2894[15][11];
+	const char * table_2895[2][11];
+	const char * table_2896[5][11];
 	const char * table_2897[4][11];
-	const char * table_2898[17][11];
-	const char * table_2899[16][11];
-	const char * table_2900[3][11];
+	const char * table_2898[232][11];
+	const char * table_2899[12][11];
+	const char * table_2900[12][11];
 
 };
 #endif

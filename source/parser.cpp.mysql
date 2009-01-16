@@ -141,6 +141,7 @@
 
 Parser::Parser() {
 	results = new std::vector<std::string>;
+	no_phrases = 0;
 #ifdef USE_COMPILED
 	compiled_database = new Compiled_Database();
 #endif
@@ -433,7 +434,7 @@ void Parser::populate_text_elements(std::string str, Text *text, std::string myt
 		//*results = text->adso->select_query("ENGLISH, PINYIN, FLAG, CODE, pkey, CHINESE, CHINESE_UTF8_S, CHINESE_UTF8_C, CHINESE_BIG5, NEWSTRACK, FREQ", mytable, search_field, str);
 		*results = text->adso->select_query("ENGLISH, PINYIN, FLAG, CODE, pkey, CHINESE, CHINESE_UTF8_S, CHINESE_UTF8_C, FREQ", mytable, search_field, str);
 
-		for (unsigned int i = 0, c = 0; c <= results->size()/11; c++, i+=11) {
+		for (unsigned int i = 0, c = 0; c <= results->size()/9; c++, i+=9) {
 
 			int added = 0;
 
@@ -696,6 +697,7 @@ void Parser::parse_against_compiled_database(Text *text) {
 	std::string current_match = "";
 	std::string tempstr = "";
 	std::string pkey = "";
+	std::string pos = "";
 
 	int new_item = 1;
 	int table = -1;
@@ -744,7 +746,17 @@ void Parser::parse_against_compiled_database(Text *text) {
 					if (tempstr.length() > current_match_size) {
 						if (tempstr.length() <= temp.length()) {
 							if (tempstr == temp.substr(0, tempstr.length())) {
-								current_match_size = tempstr.length();
+
+
+                                                                if (no_phrases == 0) {
+                                                                        current_match_size = tempstr.length();
+                                                                } else {
+                                                                        pos = answer[i][5];
+                                                                        if (pos.find("PHRASE") == std::string::npos) {
+                                                                                current_match_size = tempstr.length();
+                                                                        }
+                                                                }
+
 							}
 						}
 					}
@@ -805,9 +817,16 @@ void Parser::parse_against_compiled_database(Text *text) {
 							if (tempstr.length() > current_match_size) {
 								if (tempstr.length() <= temp.length()) {
 									if (tempstr == temp.substr(0, tempstr.length())) {
-										current_match_size = tempstr.length();
-									}
-								}
+
+                                                                if (no_phrases == 0) {
+                                                                        current_match_size = tempstr.length();
+                                                                } else {
+                                                                        pos = answer[i][5];
+                                                                        if (pos.find("PHRASE") == std::string::npos) {
+                                                                                current_match_size = tempstr.length();
+                                                                        }
+                                                                }
+
 							}
 						}
 					}

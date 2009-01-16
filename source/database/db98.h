@@ -11,8 +11,8 @@ class Db98 {
 
 	const char * table_1941[34][11];
 	const char * table_1942[10][11];
-	const char * table_1943[17][11];
-	const char * table_1944[121][11];
+	const char * table_1943[18][11];
+	const char * table_1944[120][11];
 	const char * table_1945[28][11];
 	const char * table_1946[58][11];
 	const char * table_1947[10][11];
@@ -23,12 +23,12 @@ class Db98 {
 	const char * table_1952[75][11];
 	const char * table_1953[9][11];
 	const char * table_1954[10][11];
-	const char * table_1955[125][11];
+	const char * table_1955[123][11];
 	const char * table_1956[4][11];
 	const char * table_1957[19][11];
-	const char * table_1958[116][11];
+	const char * table_1958[110][11];
 	const char * table_1959[5][11];
-	const char * table_1960[71][11];
+	const char * table_1960[70][11];
 
 };
 #endif

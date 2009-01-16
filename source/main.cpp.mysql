@@ -34,7 +34,6 @@ int inlinetext = 0;
 int conjugate = 0;
 int g1 = 1;
 int g2 = 0;
-int no_phrases = 0;
 int html_entities = 0;
 int freq_count = 0;
 int freq_reset = 0;
@@ -178,6 +177,10 @@ int main(int argc, char **argv) {
 		/* Ontologies */
 		if (strcmp(argv[z], "--ontology") == 0) { if (argc-1 > z+1) { ontology_name = argv[z+1]; ontology_filename = argv[z+2]; z+=2; int c = ontology->add_ontology(ontology_name, ontology_filename); } else { help(); exit(0); } }
 
+                /* Stopwords */
+                if (strcmp(argv[z], "--stoplist") == 0) { if (argc > z+1) { ontology_name = "STOPWORD"; ontology_filename = argv[z+1]; int c = ontology->add_ontology(ontology_name, ontology_filename); extra_code = "<REDUCE><IF><NOTCLASS STOPWORD></IF><THEN><PRINT chinese_utf8s><PRINT  ></THEN>";} else { help(); exit(0); } }
+
+
 		/* Inline */
 		if (strcmp(argv[z], "-i") == 0) { if (argc-1 > z) { inlinetext = 1; inline_text = argv[z+1]; z++; } else { help(); exit(0); } }
 
@@ -213,7 +216,7 @@ int main(int argc, char **argv) {
 		if (strcmp(argv[z], "--frequency-reset") == 0) { freq_reset = 1; }
 
 		/* No Phrases */
-		if (strcmp(argv[z], "--no-phrases") == 0) { no_phrases = 1; }
+		if (strcmp(argv[z], "--no-phrases") == 0) { adso->no_phrases = 1; parser->no_phrases = 1; }
 
 		/* Grammar */
 		if (strcmp(argv[z], "-g") == 0 || strcmp(argv[z], "-g1") == 0 || strcmp(argv[z], "-g2") == 0) { 

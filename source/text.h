@@ -69,13 +69,12 @@ class Text {
 		int beginning;			// beginning of sentence
 		int ending;			// ending of sentence
 		int capitalize;
-		int full_definitions;
 
 		int pre_english_spacing;
 		int post_english_spacing;
 		int pre_pinyin_spacing;
 		int post_pinyin_spacing;
-
+	
 
 		// HTML Markup
 		std::string html_class;
@@ -127,6 +126,9 @@ class Text {
 		int init(Adso *a, Code *c, Encoding *e, Feedback *f, Memory *m, Ontology *o, Parser *pa, Polisher *po);
 
 
+		virtual std::string return_segmented_chinese();
+		virtual std::string return_vocab_list();
+
 
 		Text(Adso *a, Code *c, Encoding *e, Feedback *f, Memory *m, Ontology *o, Parser *pa, Polisher *po);
 		Text(Text *t);
@@ -134,8 +136,8 @@ class Text {
 		virtual ~Text();
 
 		
+		int init_markup(std::string t);
 		int init_text(std::string t);
-		int init_markup(std::string m);
 		int append_text(Text *x, int a, int b);
 		void clone_values(Text *x);
 		void append_clone_values(Text *x);
@@ -288,22 +290,12 @@ class Text {
 		virtual std::string return_chinese_output_encoding();
 		virtual std::string return_chinese_input_encoding();
 		virtual std::string return_english();
-		virtual std::string return_segmented_chinese();
-		virtual std::string return_vocab_list();
-		virtual std::string return_vocab_list_with_traditional();
 		virtual std::string return_english_no_spacing();
-		virtual std::string return_gb2312_popup();
-		virtual std::string return_gb2312_popup_for_editing(int edit_element_id);
 		virtual std::string return_popup();
-		virtual std::string return_popup_for_editing(int edit_element_id);
-		virtual std::string return_popup_for_editing_five_fields(int edit_element_id);
 		virtual std::string return_pinyin_no_spacing();
 		virtual std::string return_pinyin();
 		virtual std::string return_jyutpin_no_spacing();
 		virtual std::string return_jyutpin();
-
-		virtual std::string escape_apostrophes(std::string fulltext);
-		virtual std::string apostrophes_to_html(std::string fulltext);
 
 
 };

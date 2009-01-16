@@ -21,13 +21,13 @@ class Db318 {
 	const char * table_6350[2][11];
 	const char * table_6351[3][11];
 	const char * table_6352[2][11];
-	const char * table_6353[4][11];
+	const char * table_6353[3][11];
 	const char * table_6354[2][11];
 	const char * table_6355[2][11];
 	const char * table_6356[2][11];
 	const char * table_6357[2][11];
-	const char * table_6358[3][11];
-	const char * table_6359[4][11];
+	const char * table_6358[2][11];
+	const char * table_6359[3][11];
 	const char * table_6360[2][11];
 
 };

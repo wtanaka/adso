@@ -10,7 +10,7 @@ class Db85 {
 		~Db85();
 
 	const char * table_1681[3][11];
-	const char * table_1682[66][11];
+	const char * table_1682[65][11];
 	const char * table_1683[3][11];
 	const char * table_1684[3][11];
 	const char * table_1685[3][11];

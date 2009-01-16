@@ -9,7 +9,7 @@ class Db87 {
 		Db87();
 		~Db87();
 
-	const char * table_1721[183][11];
+	const char * table_1721[182][11];
 	const char * table_1722[3][11];
 	const char * table_1723[8][11];
 	const char * table_1724[3][11];
@@ -17,7 +17,7 @@ class Db87 {
 	const char * table_1726[7][11];
 	const char * table_1727[5][11];
 	const char * table_1728[3][11];
-	const char * table_1729[12][11];
+	const char * table_1729[13][11];
 	const char * table_1730[3][11];
 	const char * table_1731[3][11];
 	const char * table_1732[78][11];

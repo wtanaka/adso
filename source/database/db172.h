@@ -9,26 +9,26 @@ class Db172 {
 		Db172();
 		~Db172();
 
-	const char * table_3421[10][11];
-	const char * table_3422[2][11];
-	const char * table_3423[93][11];
-	const char * table_3424[4][11];
-	const char * table_3425[8][11];
-	const char * table_3426[2][11];
-	const char * table_3427[25][11];
-	const char * table_3428[12][11];
-	const char * table_3429[9][11];
-	const char * table_3430[88][11];
-	const char * table_3431[8][11];
-	const char * table_3432[2][11];
-	const char * table_3433[33][11];
-	const char * table_3434[19][11];
-	const char * table_3435[12][11];
+	const char * table_3421[8][11];
+	const char * table_3422[15][11];
+	const char * table_3423[8][11];
+	const char * table_3424[2][11];
+	const char * table_3425[16][11];
+	const char * table_3426[4][11];
+	const char * table_3427[3][11];
+	const char * table_3428[2][11];
+	const char * table_3429[11][11];
+	const char * table_3430[8][11];
+	const char * table_3431[27][11];
+	const char * table_3432[10][11];
+	const char * table_3433[2][11];
+	const char * table_3434[4][11];
+	const char * table_3435[8][11];
 	const char * table_3436[2][11];
-	const char * table_3437[2][11];
-	const char * table_3438[6][11];
-	const char * table_3439[14][11];
-	const char * table_3440[4][11];
+	const char * table_3437[23][11];
+	const char * table_3438[12][11];
+	const char * table_3439[9][11];
+	const char * table_3440[88][11];
 
 };
 #endif

@@ -18,16 +18,16 @@ class Db39 {
 	const char * table_767[32][11];
 	const char * table_768[34][11];
 	const char * table_769[7][11];
-	const char * table_770[79][11];
+	const char * table_770[78][11];
 	const char * table_771[9][11];
 	const char * table_772[20][11];
 	const char * table_773[50][11];
 	const char * table_774[14][11];
-	const char * table_775[18][11];
+	const char * table_775[17][11];
 	const char * table_776[5][11];
 	const char * table_777[11][11];
 	const char * table_778[15][11];
-	const char * table_779[48][11];
+	const char * table_779[47][11];
 	const char * table_780[35][11];
 
 };

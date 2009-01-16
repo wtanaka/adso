@@ -21,6 +21,8 @@ class Parser {
 		Parser();
 		~Parser();
 
+		int no_phrases;
+
 		void parse(Text *text);
 		void parse_textbook_markup(Text *text);
 		void parse_against_compiled_database(Text *text);

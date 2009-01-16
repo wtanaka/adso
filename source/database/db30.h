@@ -9,14 +9,14 @@ class Db30 {
 		Db30();
 		~Db30();
 
-	const char * table_581[177][11];
-	const char * table_582[480][11];
-	const char * table_583[55][11];
-	const char * table_584[96][11];
+	const char * table_581[176][11];
+	const char * table_582[482][11];
+	const char * table_583[26][11];
+	const char * table_584[95][11];
 	const char * table_585[9][11];
 	const char * table_586[45][11];
 	const char * table_587[11][11];
-	const char * table_588[178][11];
+	const char * table_588[176][11];
 	const char * table_589[68][11];
 	const char * table_590[15][11];
 	const char * table_591[101][11];

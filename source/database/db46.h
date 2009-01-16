@@ -24,9 +24,9 @@ class Db46 {
 	const char * table_913[27][11];
 	const char * table_914[6][11];
 	const char * table_915[21][11];
-	const char * table_916[40][11];
+	const char * table_916[39][11];
 	const char * table_917[42][11];
-	const char * table_918[141][11];
+	const char * table_918[140][11];
 	const char * table_919[44][11];
 	const char * table_920[21][11];
 

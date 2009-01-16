@@ -9,16 +9,16 @@ class Db53 {
 		Db53();
 		~Db53();
 
-	const char * table_1041[17][11];
-	const char * table_1042[204][11];
+	const char * table_1041[15][11];
+	const char * table_1042[196][11];
 	const char * table_1043[5][11];
 	const char * table_1044[12][11];
-	const char * table_1045[49][11];
+	const char * table_1045[50][11];
 	const char * table_1046[51][11];
 	const char * table_1047[17][11];
 	const char * table_1048[57][11];
 	const char * table_1049[5][11];
-	const char * table_1050[22][11];
+	const char * table_1050[23][11];
 	const char * table_1051[26][11];
 	const char * table_1052[30][11];
 	const char * table_1053[30][11];

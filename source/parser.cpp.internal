@@ -141,6 +141,7 @@
 
 Parser::Parser() {
 	results = new std::vector<std::string>;
+	no_phrases = 0;
 #ifdef USE_COMPILED
 	compiled_database = new Compiled_Database();
 #endif
@@ -647,6 +648,7 @@ void Parser::parse_against_compiled_database(Text *text) {
 	std::string current_match = "";
 	std::string tempstr = "";
 	std::string pkey = "";
+	std::string pos = "";
 
 	int new_item = 1;
 	int table = -1;
@@ -695,7 +697,16 @@ void Parser::parse_against_compiled_database(Text *text) {
 					if (tempstr.length() > current_match_size) {
 						if (tempstr.length() <= temp.length()) {
 							if (tempstr == temp.substr(0, tempstr.length())) {
-								current_match_size = tempstr.length();
+                                                                if (no_phrases == 0) {
+                                                     	                current_match_size = tempstr.length();
+                                                                } else {
+                                                                        pos = answer[i][5];
+                                                                        if (pos.find("PHRASE") == std::string::npos) {
+                                                                        	current_match_size = tempstr.length();
+                                                                	}
+                                                         	}
+ 
+
 							}
 						}
 					}
@@ -753,7 +764,14 @@ void Parser::parse_against_compiled_database(Text *text) {
 							if (tempstr.length() > current_match_size) {
 								if (tempstr.length() <= temp.length()) {
 									if (tempstr == temp.substr(0, tempstr.length())) {
-										current_match_size = tempstr.length();
+        		                                                        if (no_phrases == 0) {
+                		                                                        current_match_size = tempstr.length();
+                        		                                        } else {
+		                                                                	pos = answer[i][5];
+											if (pos.find("PHRASE") == std::string::npos) {
+                		                                                        	current_match_size = tempstr.length();
+											}
+										}
 									}
 								}
 							}

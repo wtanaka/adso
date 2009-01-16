@@ -20,13 +20,13 @@ class Db96 {
 	const char * table_1909[12][11];
 	const char * table_1910[13][11];
 	const char * table_1911[94][11];
-	const char * table_1912[25][11];
+	const char * table_1912[24][11];
 	const char * table_1913[11][11];
 	const char * table_1914[87][11];
-	const char * table_1915[67][11];
+	const char * table_1915[66][11];
 	const char * table_1916[345][11];
 	const char * table_1917[13][11];
-	const char * table_1918[73][11];
+	const char * table_1918[72][11];
 	const char * table_1919[99][11];
 	const char * table_1920[73][11];
 

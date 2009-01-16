@@ -1,3 +1,7 @@
+November 3,
+- --no-phrases command line option added. This ignores database content marked as "PHRASE" when
+  parsing content. This options works for both the mysql and internally compiled datasets.
+
 October 21,
 - database updates, improvements to the number class to better handle decimals and some 
   new command line options for segmentation (--skip-basic, --skip-advanced), and see --help
