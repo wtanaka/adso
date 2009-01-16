@@ -655,6 +655,7 @@ std::string process(std::string x, Text *text, Ontology *ontology) {
 
 	void *xx;
 
+
 	// The Basics
 	if (skip_stage_pre_unify == 0)         { text->pre_unify((Text *) xx);  }
 	if (skip_stage_unify == 0)             { text->unify((Text *) xx);      }

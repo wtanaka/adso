@@ -9,6 +9,7 @@ Preposition::~Preposition() {}
 
 int Preposition::adjust_confidence(Text *t, int a, int b, int c) {
 
+
   if (t->is_category_non_recursive("Comma",a,b-1) == 1) {
     if (t->is_category_non_recursive("Verb",a,b) == 1) {
       if (

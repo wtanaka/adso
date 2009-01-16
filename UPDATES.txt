@@ -1,3 +1,8 @@
+November 10,
+- --refined UTF8 mysql-based parsing algorithm. It now checks against the traditional database 
+  when it does not find content in the simplified space and vice-versa.This enables the software
+  to understand "mixed" simplified and traditionalUTF8 texts for the first time.
+
 November 3,
 - --no-phrases command line option added. This ignores database content marked as "PHRASE" when
   parsing content. This options works for both the mysql and internally compiled datasets.

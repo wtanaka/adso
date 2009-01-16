@@ -230,9 +230,9 @@ int Verb::adjust_confidence(Text *t, int a, int b, int c) {
 		t->make_only(a,b-1,"Noun");
 		t->make_only(a,b,"Verb");
 		t->make_only(a,b+1,"Noun");
-		if (t->is_category_non_recursive("Wei01",a,b+2) != 1) {
-			t->make_only(a,b+2,"Preposition");
-		}
+		//if (t->is_category_non_recursive("Wei01",a,b+2) != 1) {
+		//	t->make_only(a,b+2,"Preposition");
+		//}
 	}
 
   	if (t->is_category_non_recursive("Noun",a,b-1) == 1 && t->is_category_non_recursive("Measure",a,b-2) == 1) {
@@ -305,6 +305,16 @@ int Verb::adjust_confidence(Text *t, int a, int b, int c) {
 		t->make_only(a,b,this);
 	}
 
+
+	if (	
+		t->return_chinese(a,b+1,0) == "¼°"
+	) {
+		if (t->is_category_non_recursive("Verb",a,b+2) == 1) {
+			t->make_only(a,b,this);
+			t->make_only(a,b+1,"Conjunction");
+			t->make_only(a,b+2,"Verb");
+		}
+	}
 
 	if (t->return_chinese(a,b,c) == "ÁîÈË") {
 		if (t->is_category_non_recursive("Xing",a,b+1) == 1) {

@@ -112,6 +112,16 @@ int Month::combine(Text *parent, int a, int b, int c) {
 		}
 		parent->make_only(a,b,this);
 	}
+	if (parent->return_chinese(a,b+1) == "µ×") {
+		add_pre_english("the end of");
+		shift_post_chinese(parent,a,b+1,0,this);
+		parent->make_only(a,b,this);
+	}
+	if (parent->return_chinese(a,b+1) == "³õ") {
+		add_pre_english("the beginning of");
+		shift_post_chinese(parent,a,b+1,0,this);
+		parent->make_only(a,b,this);
+	}
 	if (parent->return_chinese(a,b+1) == "ÖÐÑ®") {
 		add_post_english(" the middle of");
 		shift_post_chinese(parent,a,b+1,0,this);

@@ -2161,7 +2161,14 @@ void Text::frequency_count(Text *t, Adso *original_adso) {
 
 std::string Text::escape_apostrophes(std::string fullt) {
 
-        unsigned int x = fullt.find("'");
+	/* Replace Double Apostrophes with UTF8 Apostrophe */
+        unsigned int x = fullt.find('"');
+        while (x != std::string::npos) {
+                fullt.replace(x, 3, "`");
+                x = fullt.find("'", x+2);
+        }
+
+        x = fullt.find("'");
         while (x != std::string::npos) {
                 fullt.replace(x, 1, "`");
                 x = fullt.find("'", x+2);

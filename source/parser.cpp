@@ -604,11 +604,29 @@ void Parser::longest_word_match(Text *text) {
 	std::string where2 = "";
 	std::string pkey = "pkey";
 
+	std::string reverse_search_index = "";
+	std::string reverse_pkey = "";
+	std::string reverse_search_field = "";
+
 	std::string search_field = "CHINESE";
 	std::string search_index = "character_index";
-	if (text->encoding->input_encoding == 2) { search_field = "CHINESE_UTF8_S"; search_index = "utf8s_index"; }
-	if (text->encoding->input_script == 2) { search_field = "CHINESE_UTF8_C"; search_index = "utf8c_index"; pkey = "first"; }
+	if (text->encoding->input_encoding == 2) { 
+		search_field = "CHINESE_UTF8_S"; 
+		search_index = "utf8s_index"; 
+		reverse_search_index = "utf8c_index";
+		reverse_pkey = "first";
+		reverse_search_field = "CHINESE_UTF8_C";
+	}
+	if (text->encoding->input_script == 2) { 
+		search_field = "CHINESE_UTF8_C"; 
+		search_index = "utf8c_index"; 
+		pkey = "first"; 
+		reverse_search_index = "utf8s_index";
+		reverse_search_field = "CHINESE_UTF8_S";
+		reverse_pkey = "pkey";
+	}
 
+	int reverse_search_enabled = 0;
 
 
 	int first_char_length = 0;
@@ -618,6 +636,8 @@ void Parser::longest_word_match(Text *text) {
 	first_char_length = text->encoding->first_character_length(temp);
 	
 	while (first_char_length > 0) {
+
+		reverse_search_enabled = 0;
 
 		// Default to a Single Character	
 		wordlength = first_char_length;
@@ -663,16 +683,60 @@ void Parser::longest_word_match(Text *text) {
 
 		} else {
 
-			// Not Found in Index - (ASCII?) add as single char
-			current_table = "";
-			wordlength = 1;
+			// Use Database to Identify Longer Matches
+			if (text->encoding->input_encoding == 2) {
+
+				*results = text->adso->select_query(reverse_pkey, reverse_search_index, "name", first_char);
+				if (results->size() > 0) {
+
+					key = results->at(0);
+
+					// Fetch All Possibilities
+					current_table = "_" + key;
+					current_match = first_char;
+					current_match_size = first_char_length;
+
+					*results = text->adso->select_query_wildcard(reverse_search_field, current_table, reverse_search_field, where2);
+
+					// find the largest match
+					for (unsigned int i = 0; i < results->size(); i++) {
+						if (results->at(i).length() > current_match_size) {
+							if (temp.find(results->at(i)) == 0) {
+								current_match = results->at(i);
+								current_match_size = current_match.length();
+							}
+						}
+					}
+	
+					wordlength = current_match_size;
+					reverse_search_enabled = 1;
+				} else {
+
+					// UTF8 but still not found in index on reverse check
+					current_table = "";
+					wordlength = 1;
+
+				}
+
+			} else {
+
+				// Not Found in Index - (ASCII?) add as single char
+				current_table = "";
+				wordlength = 1;
+			}
+
 		}
+
 
 
 		// Add Word 
 		word = temp.substr(0, wordlength);
 		temp = temp.substr(wordlength);
-		populate_text_elements(word, text, current_table, search_field);
+		if (reverse_search_enabled == 1) {
+			populate_text_elements(word, text, current_table, reverse_search_field);
+		} else {
+			populate_text_elements(word, text, current_table, search_field);
+		}
 
 
 		// Prepare for Next Loop
@@ -795,7 +859,6 @@ void Parser::parse_against_compiled_database(Text *text) {
 
 		} else {
 			if (search_index == 4) { 
-//				table = compiled_database->search_index_utf8s(first_char);
 				table = compiled_database->search_index_utf8s(first_char);
 				if (first_char.find("?") != std::string::npos) { table = -1; }
 				if (table != -1) {
@@ -859,6 +922,7 @@ void Parser::parse_against_compiled_database(Text *text) {
 					}
 					wordlength = current_match_size;
 				} else {
+
 					wordlength = 1;
 					word = temp.substr(0, wordlength);
 					add_option_from_compiled_database(text, "", "", "", "", "-1", word, word, word, word, "", 1,0,0,"");
