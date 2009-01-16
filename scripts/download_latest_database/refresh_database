@@ -1,0 +1,2 @@
+DROP DATABASE expanded;
+CREATE DATABASE expanded;

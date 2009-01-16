@@ -1,0 +1,98 @@
+<DOC docid=alignment_file>
+<SENT type=1-1>
+Good morning, boss! 
+老板早！
+</SENT>
+<SENT type=1-1>
+Wow, you're looking energetic today! 
+哟，您今天气色真好！
+</SENT>
+<SENT type=1-1>
+Really? 
+是吗？
+</SENT>
+<SENT type=1-1>
+I feel the same as always... 
+我觉得和平时差不多嘛。
+</SENT>
+<SENT type=1-1>
+Well, you're always pretty good, but you've been looking better and better lately. 
+平时就不错，最近是越来越好了。
+</SENT>
+<SENT type=1-1>
+Our company's results are also looking good, and getting better every day. 
+我们公司的业绩也跟您的气色一样，一天比一天好了。
+</SENT>
+<SENT type=1-1>
+Well, we have everyone's hard work to thank for that. 
+这要多谢大家的努力啊。
+</SENT>
+<SENT type=2-2>
+Boss, you're here early. These days a boss as dedicated as you is hard to come by! 
+老板，您来得真早。现在哪有像您这样认真的老板！
+</SENT>
+<SENT type=1-1>
+I've got to come early. 
+事情多嘛，肯定要早点来。
+</SENT>
+<SENT type=1-1>
+Nowadays a lot of bosses push their work onto their employees. 
+现在好多老板都把工作推给员工。
+</SENT>
+<SENT type=1-1>
+But you do it yourself, and teach us how to do it. 
+而您都是自己做，还教我们怎么做。
+</SENT>
+<SENT type=1-1>
+We've learned a lot from you these past few years. 
+这几年我们从您那儿学了不少东西。
+</SENT>
+<SENT type=1-1>
+That's my job. 
+应该的。
+</SENT>
+<SENT type=1-1>
+Only when you all make progress does the company make progress. 
+你们有进步，公司才会进步啊。
+</SENT>
+<SENT type=1-1>
+Good morning boss! 
+老板早！
+</SENT>
+<SENT type=1-1>
+You look good in a suit. 
+您穿西装真好看。
+</SENT>
+<SENT type=2-1>
+You've really stayed in shape. You must have some secret technique? 
+您身材保持得这么好，肯定有什么窍门吧？
+</SENT>
+<SENT type=1-1>
+How can you call a belly this big "staying in shape?" 
+我肚子这么大，怎么能叫好呢？
+</SENT>
+<SENT type=1-1>
+That's just showing your success. 
+您这是福相。
+</SENT>
+<SENT type=1-1>
+Some people who want that can't get it. 
+别人想要都没有呢。
+</SENT>
+<SENT type=1-1>
+What day is today? 
+呵呵，今天是什么日子？
+</SENT>
+<SENT type=1-1>
+Everyone is complimenting me. 
+大家都夸我。
+</SENT>
+<SENT type=1-1>
+Oh, that's right! 
+噢，对了！
+</SENT>
+<SENT type=1-1>
+Today I have to decide who gets promoted... 
+今天我要决定谁升职。
+</SENT>
+</DOC>

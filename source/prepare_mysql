@@ -1,0 +1,10 @@
+rm -f ./*.o
+cp -f Makefile.mysql Makefile
+cp -f main.cpp.mysql main.cpp
+cp -f text.cpp.mysql text.cpp
+cp -f text.h.mysql text.h
+cp -f adso.cpp.mysql adso.cpp
+cp -f adso.h.mysql adso.h
+cp -f database.h.mysql database.h
+cp -f parser.cpp.mysql parser.cpp
+cp -f parser.h.mysql parser.h

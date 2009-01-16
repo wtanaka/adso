@@ -1,0 +1,631 @@
+#
+# Adso XML Grammar Rulesets
+#
+#
+# The XML in this file is interpreted "on-the-fly" by Adso in its efforts 
+# to assemble text into meaningful and grammatical Chinese content. These 
+# rules may or may not be adequate for your needs - these rules are 
+# designed for standard newstext of the sort found on Xinhua.
+#
+# Editing these rules will alter system behavior. You can add new rules, 
+# subtract problematic ones, and even throw out this file and build your 
+# own translation engine from scratch. If you come up with any particularly
+# ingenius XML commands please forward them to the main project for 
+# inclusion in our default ruleset.
+#
+#
+#
+#
+<IF><CHINESE -1 »á¼û> AND <CHINESE Ç°> AND <NOTCLASS Adjusted></IF><THEN><SET all english>previously</SET> AND <TAG Adjusted></THEN>
+#
+#
+#
+# First Tag Sentence Beginnings and Endings
+#
+<IF><BEGINNING me 1></IF><THEN><TAG Beginning></THEN>
+<IF><ENDING me 1></IF><THEN><TAG Ending></THEN>
+<IF><CLASS Comma> AND <NOTCLASS 1 PostComma> AND <NOTCLASS PostComma></IF><THEN><TAG 1 PostComma></THEN>
+#
+#
+#
+#
+#
+# Treating Commas as Terminal Units Can Help Slightly (optional)
+#<IF><CLASS Comma> AND <NOTCLASS Terminal></IF><THEN><TAG Terminal></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+#
+# Define Noun Compounds
+#
+<IF><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Noun> AND <CLASS 3 Verb> AND <CLASS 4 Punctuation></DEFINE_COMPOUND></IF><THEN><PRINT chinese></THEN>
+<DEFINE_COMPOUND PluralNounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Noun> AND <CLASS 3 Verb> AND <CLASS 4 Punctuation></DEFINE_COMPOUND><PLURALIZE 2>
+<DEFINE_COMPOUND PluralNounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Adjective> AND <CLASS 3 Punctuation></DEFINE_COMPOUND><PLURALIZE 2>
+<DEFINE_COMPOUND PluralNounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Noun></DEFINE_COMPOUND><PLURALIZE 2>
+<DEFINE_COMPOUND PluralNounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Xing> AND <CLASS 3 Noun></DEFINE_COMPOUND><PLURALIZE 3>
+<DEFINE_COMPOUND PluralNounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Adjective> AND <CLASS 3 Noun></DEFINE_COMPOUND><PLURALIZE 3>
+<DEFINE_COMPOUND PluralNounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Adjective> AND <CLASS 3 Noun> AND <CLASS 4 De01> AND <CLASS 5 Noun></DEFINE_COMPOUND><PLURALIZE 5> AND <POSSESSIVE 3>
+<DEFINE_COMPOUND NounUnit><CLASS Verb> AND <CLASS 1 Noun> AND <CLASS 2 De01> AND <CLASS 3 Noun></DEFINE_COMPOUND><PRINT chinese> AND <SWITCH 0 1>
+<DEFINE_COMPOUND NounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Noun> AND <CLASS 3 De01> AND <CLASS 4 Noun></DEFINE_COMPOUND>
+<DEFINE_COMPOUND NounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Adjective> AND <CLASS 3 Noun></DEFINE_COMPOUND>
+<DEFINE_COMPOUND NounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Xing> AND <CLASS 3 Noun></DEFINE_COMPOUND>
+<DEFINE_COMPOUND NounUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Noun></DEFINE_COMPOUND>
+<DEFINE_COMPOUND NounUnit><CLASS Determiner> AND <CLASS 1 Measure> AND <CLASS 2 Xing> AND <CLASS 3 Noun></DEFINE_COMPOUND>
+<DEFINE_COMPOUND NounUnit><CLASS Determiner> AND <CLASS 1 Measure> AND <CLASS 2 Adjective> AND <CLASS 3 Noun></DEFINE_COMPOUND>
+<DEFINE_COMPOUND NounUnit><CLASS Determiner> AND <CLASS 1 Measure> AND <CLASS 2 Noun></DEFINE_COMPOUND>
+#
+# If we find a word that is both plural (ie. a number) and the starting point for a 
+# plural noun compound, we "execute" the XML code associated with that compound. This
+# will tell the engine to use the plural form of the noun.
+#
+<IF><CLASS Plural> AND <COMPOUND PluralNounUnit></IF><THEN><COMPOUND_EXECUTE PluralNounUnit></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Measure Word Compounds
+#
+<DEFINE_COMPOUND MeasureUnit><CLASS Number> AND <CLASS 1 Measure> AND <COMPOUND 2 NounUnit></DEFINE_COMPOUND><NOTTRANSLATE 1>
+<DEFINE_COMPOUND MeasureUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Noun></DEFINE_COMPOUND><NOTTRANSLATE 1>
+<DEFINE_COMPOUND MeasureUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Preposition></DEFINE_COMPOUND><NOTTRANSLATE 1>
+<DEFINE_COMPOUND MeasureUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 3 Number> AND <CLASS 4 Measure></DEFINE_COMPOUND><NOTTRANSLATE 1> AND <NOTTRANSLATE 4>
+<DEFINE_COMPOUND MeasureUnit><CLASS Number> AND <CLASS 1 Measure> AND <CLASS 2 Opening></DEFINE_COMPOUND><NOTTRANSLATE 1>
+<DEFINE_COMPOUND MeasureUnit><CLASS Adjective> AND <CLASS 1 Measure> AND <CLASS 2 Opening></DEFINE_COMPOUND><NOTTRANSLATE 1>
+<DEFINE_COMPOUND MeasureUnit><CLASS Determiner> AND <CLASS 1 Measure></DEFINE_COMPOUND><NOTTRANSLATE 1>
+#
+# Do not translate measure words by default.
+#
+<IF><COMPOUND MeasureUnit></IF><THEN><COMPOUND_EXECUTE MeasureUnit></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Verb Compounds
+#
+<DEFINE_COMPOUND VerbUnit><CLASS Adverb> AND <CLASS 1 Verb></DEFINE_COMPOUND>
+<DEFINE_COMPOUND VerbUnit><CLASS Auxiliary> AND <CLASS 1 Verb></DEFINE_COMPOUND>
+<DEFINE_COMPOUND VerbUnit><CLASS Auxiliary> AND <CLASS 1 Adverb> AND <CLASS 2 Verb></DEFINE_COMPOUND>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Names and Addresses (Smith Mr., etc.)
+#
+<DEFINE_COMPOUND PersonCompound><CLASS Address> AND <CLASS 1 Person></DEFINE_COMPOUND>
+<DEFINE_COMPOUND PersonCompound><CLASS Person> AND <CLASS 1 Address></DEFINE_COMPOUND><IF><NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 1></THEN>
+<IF><COMPOUND PersonCompound></IF><THEN><COMPOUND_EXECUTE PersonCompound></THEN>
+<DEFINE_COMPOUND PersonCompound><CLASS Person></DEFINE_COMPOUND>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Subjects and Objects
+#
+<DEFINE_COMPOUND Subject><COMPOUND NounUnit></DEFINE_COMPOUND>
+<DEFINE_COMPOUND Subject><COMPOUND PersonCompound></DEFINE_COMPOUND>
+<DEFINE_COMPOUND Object><COMPOUND NounUnit></DEFINE_COMPOUND>
+<DEFINE_COMPOUND Object><COMPOUND PersonCompound></DEFINE_COMPOUND>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Prepositional Phrases
+#
+@grammar/prepositions.grammar
+#
+#
+#
+#
+#
+#
+#
+#
+# Passive Phrases and "Passive" Phrases
+#
+# These are a bit messy, but they help set the proper tense for verbs in passive constructions.
+#
+<IF><CLASS You01> AND <CLASS 1 Address> AND <CLASS 2 Person> AND <CLASS 3 Verb></IF><THEN><TAG Adjusted> AND <SET all english>by</SET> AND <SWITCH 0 3> AND <SWITCH 1 3></THEN>
+<IF><CLASS You01> AND <CLASS 1 Person> AND <CLASS 2 Verb></IF><THEN><TAG Adjusted> AND <SET all english>by</SET> AND <SWITCH 0 2></THEN>
+<IF><CLASS You01> AND <COMPOUND 1 PersonCompound></IF><THEN><TAG Adjusted> AND <SET all english>by</SET></THEN>
+# 
+<IF><CHINESE ±»> AND <CLASS 1 Verb></IF><THEN><MAKE_ONLY Verb> AND <SET all english>to be</SET> AND <TAG Passive> AND <TENSE 1 16></THEN>
+<IF><CHINESE ±»> AND <CLASS 1 Other> AND <CLASS 2 Verb></IF><THEN><MAKE_ONLY Verb> AND <SET all english>to be</SET> AND <TAG Passive> AND <TENSE 2 16></THEN>
+<IF><CHINESE ±»> AND <CLASS 1 Adverb> AND <CLASS 2 Verb></IF><THEN><MAKE_ONLY Verb> AND <SET all english>to be</SET> AND <TAG Passive> AND <TENSE 2 16></THEN>
+#
+<IF><CHINESE ±»> AND <NOTCLASS Adjusted> AND <CLASS 1 Noun> AND <CLASS 2 Verb> AND (<CLASS 2 Ending> OR <CLASS 3 Punctuation>)</IF><THEN><TAG Adjusted> AND <TENSE 2 16> AND <SWITCH 1 2> AND <SWITCH 0 1></THEN>
+#
+# a "pseudo-passive" construction
+#
+<IF><CHINESE ÊÜ> AND <CLASS 1 Noun> AND <CLASS 2 Verb> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SET all english>by</SET> AND <SWITCH 1 2> AND <SWITCH 0 1></THEN>
+#
+#
+##
+##
+##
+##
+#
+# Common Patterns that Begin Sentences
+<DEFINE_COMPOUND SentenceBeginning><CLASS Beginning> AND <CLASS Date> AND <CLASS 1 Person></DEFINE_COMPOUND>
+<DEFINE_COMPOUND SentenceBeginning><CLASS Beginning> AND <CLASS Person> AND <CLASS 1 Date></DEFINE_COMPOUND>
+<DEFINE_COMPOUND SentenceBeginning><CLASS Beginning> AND <CLASS Noun> AND <CLASS 1 Date></DEFINE_COMPOUND>
+#
+# These Phrases Start Sentences
+#
+<COMPOUND_CHAIN_EXECUTE>Subject Date VerbUnit Object Comma</COMPOUND_CHAIN_EXECUTE>
+<COMPOUND_CHAIN_EXECUTE>Subject Date VerbUnit Comma</COMPOUND_CHAIN_EXECUTE>
+<COMPOUND_CHAIN_EXECUTE>Subject VerbUnit Object Comma</COMPOUND_CHAIN_EXECUTE>
+<COMPOUND_CHAIN_EXECUTE>Subject VerbUnit Comma</COMPOUND_CHAIN_EXECUTE>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Lists
+#
+<DEFINE_COMPOUND VerbList0001><CLASS Verb> AND <CLASS 1 Comma> AND <COMPOUND 2 VerbUnit></DEFINE_COMPOUND><PRINT verbunit>
+<COMPOUND_CHAIN_EXECUTE>VerbList0001 Comma VerbUnit</COMPOUND_CHAIN_EXECUTE>
+#
+<DEFINE_COMPOUND NounList0001><CLASS Noun> AND <CLASS 1 Comma> AND <COMPOUND 2 NounUnit></DEFINE_COMPOUND><MAKE_ONLY 0 Noun> AND <MAKE_ONLY 2 Noun>
+<COMPOUND_CHAIN_EXECUTE>NounList0001 Comma Noun</COMPOUND_CHAIN_EXECUTE>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Miscellaneous -- These rules all deal with relatively specific patterns involve particular words/characters
+#
+# Sentence Beginning we want to catch
+<IF><NOTCLASS Adjusted> AND <CLASS Punctuation> AND <CLASS 1 Noun> AND <CLASS 2 Day> AND <CLASS 3 Preposition></IF><THEN><PRETEXT all 2>on the</PRETEXT> AND <TAG Adjusted></THEN>
+<IF><NOTCLASS Adjusted> AND <CLASS Punctuation> AND <CLASS 1 Noun> AND <CLASS 2 Date> AND <CLASS 3 Preposition></IF><THEN><PRETEXT all 2>in</PRETEXT> AND <TAG Adjusted></THEN>
+<IF><NOTCLASS Adjusted> AND <CLASS Day> AND <CLASS 2 Comma> AND (<CLASS -2 Terminal> OR <CLASS -2 Punctuation>)</IF><THEN><PRETEXT all 0>on the</PRETEXT></THEN>
+#
+#
+# Time Compound
+<IF><CLASS Shi02> AND <CLASS 1 Verb> AND <CLASS 2 Punctuation></IF><THEN><NOTTRANSLATE></THEN>
+#
+#´Ó     Æð£¬
+<IF><CHINESE Æð> AND <CLASS 1 Punctuation> AND <LASTWORDLOOP me 1>´Ó</LASTWORDLOOP></IF><THEN><NOTTRANSLATE> AND (<SET all english>ever since</SET> | <LASTWORDLOOP me 1>´Ó</LASTWORDLOOP>) AND <NOTTRANSLATE></THEN>
+#
+# Ever Since
+<IF><CHINESE ÒÔÀ´> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>ever since</PRETEXT> | <LASTLOOP me 1>Beginning</LASTLOOP>)</THEN>
+#
+#
+# "another typical pattern, yi01 + noun + wei
+#
+ÒÔÃ«Ôó¶«ÎªÊ×µÄÖÐ¹²ÖÐÑë¿ªÊ¼
+<IF><CLASS Yi01> AND <CLASS 1 Noun> AND <CLASS 2 Wei01></IF><THEN><SET all english>oriented towards</SET> AND <SET 2 all english>as the</SET></THEN>
+#
+#
+# it really isn't the case that
+#
+<IF><BEGINNING me 1> AND <CHINESE ²¢> AND <CHINESE 1 ²»> AND <CHINESE 2 ÊÇ></IF><THEN><SET all english>it really is not that</SET> AND <NOTTRANSLATE 1> AND <NOTTRANSLATE 2> AND <INSERT 0 3 GrammarUnifiedUnit></THEN>
+#
+#
+# it really isn't like
+<IF><CHINESE ²¢> AND <CHINESE 1 ²»> AND <CHINESE 2 Ïñ></IF><THEN><SET all english>really not as</SET> AND <NOTTRANSLATE 1> AND <NOTTRANSLATE 2> AND <INSERT 0 3 GrammarUnifiedUnit></THEN>
+#
+#
+# "Shi01" .... "De01"
+#
+#Ã«Ôó¶«ÊÇ±§×ÅÏàµ±µÄ×ÔÐÅºÍÆÚÍûÕÙ¿ªµÚ¶þ´ÎÖ£ÖÝ»áÒéµÄ£¬ËûÏ£ÍûÄÜ¾¡Ôç½«×Ô¼ºµÄÏë·¨¸¶ÖîÊµ¼ù£¬ÒÔÀû´º¸ûÉú²ú¡£
+a<IF><CLASS De01> AND <CLASS 1 Punctuation> AND <LASTLOOP me 1>Shi01</LASTLOOP></IF><THEN><TENSE 1 2> | <LASTLOOP me 1>Shi01</LASTLOOP></THEN>
+#<IF><CLASS De01> AND <CLASS 1 Comma> AND <LASTLOOP me 1>Shi01</LASTLOOP></IF><THEN></THEN>
+#
+#
+# suo... verb... de
+#
+<IF><CHINESE Ëù> AND <CLASS 1 Verb> AND <CLASS 2 De01> AND <CHINESE 3 ÄÇÑù> AND <NOTCLASS Adjusted></IF><THEN><NOTTRANSLATE 0> AND <SET 3 all english>that</SET><TAG Adjusted></THEN>
+#
+#
+#
+# because... therefore
+#
+<IF><CHINESE ÒòÎª> AND <NEXTWORDLOOP me 1>¶ø</NEXTWORDLOOP></IF><THEN><SET all english>therefore</SET> | <NEXTWORDLOOP me 1>¶ø</NEXTWORDLOOP></THEN>
+#
+#
+# directionals which follow quote marks are best not-translated
+<IF><CLASS Closing> AND <CLASS 1 Directional></IF><THEN><NOTTRANSLATE 1></THEN>
+#
+#
+<IF><CLASS Noun> AND (<CLASS 1 Directional> OR <CLASS 1 Temporal>) AND <CLASS 2 Verb> AND <CLASS 3 De01> AND <NOTCLASS Adjusted></IF><THEN><Print chinese> AND <TAG Adjusted></THEN>
+#
+#
+# dai4biao3 + Number + ren2
+#
+<IF><CLASS 3 Punctuation> AND <NOTCLASS Adjusted> AND <CLASS Noun> AND <NOTCLASS Verb> AND <CLASS 1 Plural> AND (<CLASS 2 Noun> OR <CLASS 2 Measure> AND <LENGTH 2 is 1>)</IF><THEN><TAG Adjusted> AND <NOTTRANSLATE 2> AND <PLURALIZE> AND <SWITCH 0 1></THEN>
+<IF><CLASS 3 Punctuation> AND <NOTCLASS Adjusted> AND <CLASS Noun> AND <NOTCLASS Verb> AND <CLASS 1 Number> AND (<CLASS 2 Noun> OR <CLASS 2 Measure>)</IF><THEN><TAG Adjusted> AND <SWITCH 0 1></THEN>
+#
+#
+#
+# ÓÐ¶àÖØÒª
+#
+<IF><CLASS You02> AND (<CHINESE 1 ¶à> OR <CHINESE 1 ÄÇÃ´> OR <CHINESE 1 ¶àÃ´> OR <CHINESE 1 ÕâÃ´>) AND (<CLASS 2 Xing> OR <CLASS 2 Adjective>)</IF><THEN><SET 1 all english>so</SET> AND <MAKE_ONLY Verb> AND <SET all english>to be</SET> AND <TAG Phrase00006> AND <BONUS Xing 2 10> AND <BONUS Adjective 2 10></THEN>
+<IF><CLASS Phrase00006> AND (<CHINESE 3 ¶à> OR <CHINESE 3 ÄÇÃ´> OR <CHINESE 3 ¶àÃ´> OR <CHINESE 3 ÕâÃ´>) AND (<CLASS 4 Xing> OR <CLASS 4 Adjective>)</IF><THEN><SET 3 all english>and so</SET> AND <BONUS Xing 4 10> AND <BONUS Adjective 4 10></THEN>
+#
+#
+# there is no need
+#
+<IF><CHINESE ÎÞÐë> AND <CHINESE 1 Èç´Ë> AND <CLASS 2 Adjective></IF><THEN><SET 1 all english>to be this</SET> AND <BONUS Adjective 2 3></THEN>
+<IF><CHINESE ÎÞÐë> AND <CHINESE 1 Èç´Ë> AND <CLASS 2 Xing></IF><THEN><SET 1 all english>to be this</SET> AND <BONUS Adjective 2 5></THEN>
+<IF><CHINESE ÎÞÐë> AND <CLASS 1 Verb></IF><THEN><SET all english>not to need</SET> AND <TENSE 1 0></THEN>
+#
+#
+# Funky zhe4 shi4 ge1 (no number -- squash it!)
+#
+<IF><CLASS Determiner> AND <CLASS 1 Shi02> AND <CLASS 2 Measure></IF><THEN><NOTTRANSLATE 2></THEN>
+<IF><CLASS Determiner> AND (<CHINESE 1 ¶¼> OR CHINESE 1 Ò²>) AND <CLASS 2 Shi02> AND <CLASS 3 Measure></IF><THEN><NOTTRANSLATE 1> AND <NOTTRANSLATE 3></THEN>
+#
+#
+<IF>(<CHINESE ¿ªÊ¼> AND <NOTCLASS Adjusted> AND <CLASS 1 Punctuation>)</IF><THEN>(<TAG Adjusted>) AND (<PRETEXT>at the start of</PRETEXT> | <LASTLOOP me 1>PostComma Beginning</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+#
+# People and Dates
+<IF><NOTCLASS Adjusted> AND <CLASS Person> AND <CLASS 1 Day></IF><THEN><TAG Adjusted> AND (<PRETEXT>on</PRETEXT> | <CLASS 1 Day>)</THEN>
+<IF><NOTCLASS Adjusted> AND <CLASS Person> AND <CLASS 1 Date></IF><THEN><TAG Adjusted> AND (<PRETEXT>in</PRETEXT> | <CLASS 1 Day>)</THEN>
+#
+# 
+# Subject ¶¼/Ò² Verb
+#
+<IF>(<CHINESE ¶¼> OR <CHINESE Ò²>) AND <CLASS 1 Auxiliary> AND <CLASS 2 Verb> AND <CLASS -1 Noun></IF><THEN><NOTTRANSLATE> AND <TAG Phrase4302></THEN>
+<IF>(<CHINESE ¶¼> OR <CHINESE Ò²>) AND <COMPOUND 1 VerbUnit> AND <CLASS -1 Noun></IF><THEN><NOTTRANSLATE> AND <TAG Phrase4303></THEN>
+#
+#
+<IF><CHINESE ÏÖ³¡> AND <CLASS 1 Verb> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SET all english>on site</SET> AND <SWITCH 0 1></THEN>
+#
+<IF><CLASS Zai01> AND <CHINESE -1 ÊÇ> AND <CLASS 1 Verb></IF><THEN><NOTTRANSLATE> AND <TENSE 1 2></THEN>
+<IF><CLASS Zai01> AND <CHINESE -1 Ö»ÊÇ> AND <CLASS 1 Verb></IF><THEN><NOTTRANSLATE> AND <TENSE 1 2></THEN>
+#
+<IF><CLASS Zai01> AND <CLASS 1 Noun> AND <CHINESE 2 ¿´À´></IF><THEN><NOTTRANSLATE 2> AND <SET all english>as seen by</SET> AND <TAG Adjusted></THEN>´
+<IF><CLASS Zai01> AND <CLASS 1 Noun> AND <CLASS 2 De02> AND <CHINESE 3 ¿´À´></IF><THEN><NOTTRANSLATE 3> AND <NOTTRANSLATE 2> AND <SET all english>as seen by</SET> AND <TAG Adjusted></THEN>´
+#
+<IF><CLASS Closing> AND <CHINESE ¼äÏ¶></IF><THEN><NOTTRANSLATE 1></THEN>
+#
+# age ranges
+#
+<IF><NOTCLASS Adjusted> AND <CLASS Age> AND <CHINESE 1 µ½> AND <CLASS 2 Age></IF><THEN><TAG Adjusted> AND <PRETEXT>from</PRETEXT> AND <SET 1 all english>to</SET></THEN>
+#
+# we can safely ignore this common introduction to lists
+#
+<IF><CLASS Punctuation> AND <CHINESE 1 ÆäÖÐ> AND <CLASS 2 Comma></IF><THEN><NOTTRANSLATE 1> AND <NOTTRANSLATE 2></THEN>
+#
+# to occupy a certain rank
+#
+<IF><CHINESE Î»¾Ó> AND <CHINESE 1 ÅÅÐÐ°ñ> AND <CLASS 2 Number> AND <CHINESE 3 Î»></IF><THEN><SET all english>to occupy the</SET> AND <NOTTRANSLATE 1> AND <SET 3 all english>position</SET></THEN>
+#
+#
+# differentiating between "should" and "this"
+#
+<IF><CHINESE ¸Ã> AND <CLASS -1 Verb> AND <CLASS 1 Noun></IF><THEN><MAKE_ONLY Adjective></THEN>
+#
+# A translation tweak that straddles clauses ...de, shi... (the adjectival preceeding phrase is applied to the following)
+<IF><CLASS Comma> AND <CLASS -1 De01> AND <CLASS 1 Shi01></IF><THEN><NOTTRANSLATE -1> AND <NOTTRANSLATE 1></THEN>
+#
+Ð´ÊéÕõµ½´óÇ®¡£
+#
+<IF><CHINESE Í¨¹ý> AND <CLASS 1 Verb> AND <CLASS 2 Verb> AND <NOTCLASS Adjusted></IF><THEN><SET all english>by way of</SET> AND <TAG Adjusted> AND <TENSE 1 2></THEN>
+#
+# Pluralization Case
+#
+<IF><CLASS Plural> AND <CLASS Number> AND <CLASS 1 Noun> AND (<CLASS 1 Ending> OR <CLASS 2 Punctuation>)</IF><THEN><PLURALIZE 1></THEN>
+#
+# Explanatory Content in Quotations or Brackets, followed by a "tell us it is an object"
+<IF><CLASS Closing> AND <CHINESE 1 Ò»> AND <CLASS 2 Noun> AND (<CLASS 2 Ending> OR <CLASS 3 Punctuation>)</IF><THEN><NOTTRANSLATE 1> AND <NOTTRANSLATE 2></THEN>
+#
+# Chinese text specifies single items where not needed in translation
+#
+<IF><CLASS Determiner> AND <CHINESE 1 Ò»></IF><THEN><NOTTRANSLATE 1></THEN>
+#
+# Years at the Beginning Marking Time
+#
+<IF><BEGINNING me 1> AND <CLASS Range> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <PRETEXT>from</PRETEXT></THEN>
+<IF><BEGINNING me 1> AND <CLASS Day> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <PRETEXT>on</PRETEXT></THEN>
+<IF><BEGINNING me 1> AND <CLASS Date> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <PRETEXT>in</PRETEXT></THEN>
+#
+<IF><CLASS Wei01> AND (<CHINESE -1 ´óÔ¼> OR <CLASS -1 Adverb>) AND <CLASS 1 Number> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 -1></THEN>
+#
+#
+# Wei01 + Person + Verb
+<IF><NOTCLASS Adjusted> AND <CLASS Wei01> AND (<CLASS 1 Person> OR <CHINESE 1 ×Ô¼º> OR <CLASS 1 Pronoun> OR <CLASS 1 ProperNoun>) AND <CLASS 2 Auxiliary> AND <CLASS 3 Verb></IF><THEN><SET all english>for</SET> AND <MAKE_ONLY 3 Verb> AND <TAG Adjusted></THEN>
+<IF><NOTCLASS Adjusted> AND <CLASS Wei01> AND (<CLASS 1 Person> OR <CHINESE 1 ×Ô¼º> OR <CLASS 1 Pronoun> OR <CLASS 1 ProperNoun>) AND <CLASS 2 Verb></IF><THEN><SET all english>for</SET> AND <MAKE_ONLY 2 Verb> AND <TAG Adjusted></THEN>
+#
+# jiu4 following zai4 prepositional phrase and preceding verb is mostly for emphasis, can avoid translatin
+#
+<IF><CHINESE ¾Í> AND <LASTLOOP me 1>Zai01</LASTLOOP> AND <COMPOUND 1 VerbUnit></IF><THEN><NOTTRANSLATE></THEN>
+#
+#
+# drop end-list marker
+#
+<IF><CHINESE µÈ></IF><THEN><NOTTRANSLATE></THEN>
+# to work at a job for a certain length of time
+#
+#
+#ÎÒ×öÁË8ÄêµÄÕ½µØ¼ÇÕß£¬È¥¹ýÒÁÀ­¿Ë¡¢°ÍÀÕË¹Ì¹¡¢¼ÓÉ³¡¢Ë÷ÂíÀï
+<IF><CLASS Verb> AND <CLASS 1 Number> AND <CHINESE 2 Äê> AND <CLASS 3 De01> AND <CLASS 4 Noun> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 3> AND <SET all english>for a period of</SET></THEN>
+#
+# to convene in X
+#
+<IF><CLASS Zai01> AND <CLASS 1 Noun> AND (<CHINESE 2 ¾ÙÐÐ> OR <CHINESE 2 ÕÙ¿ª>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 2> AND <SWITCH 1 2> AND <SET 1 all english>in</SET></THEN>
+<IF><CLASS Zai01> AND <CLASS 1 Noun> AND <CLASS 2 De01> AND <CLASS 3 Noun> AND (<CHINESE 4 ¾ÙÐÐ> OR <CHINESE 4 ÕÙ¿ª>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 4> AND <SWITCH 1 4> AND <SWITCH 2 4> AND <SWITCH 3 4> AND <SET 1 all english>in</SET></THEN>
+<IF><CLASS Zai01> AND <CLASS 1 Place> AND <CLASS 2 Verb> AND (<CLASS 2 Ending> OR <CLASS 3 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 2> AND <SWITCH 1 2> AND <SET 1 all english>in</SET></THEN>
+#
+#
+# "at that time" 
+#
+<DEFINE_COMPOUND PrepositionalPhrase><CHINESE ÔÚ> AND <CLASS 1 Verb> AND <CLASS 2 Noun> AND <CHINESE 3 Ê±></DEFINE_COMPOUND><NOTTRANSLATE 3> AND <SET all english>when</SET> AND <TENSE 1 2> AND <TAG Adjusted> AND <IF><CLASS -1 Shi01></IF><THEN><NOTTRANSLATE -1></THEN>
+#
+#
+#¾ÍÔÚ´ó¼ÒÕû×°´ý·¢µÄÊ±ºò
+<IF><CHINESE ¾Í> AND <BEGINNING me 1> AND <CHINESE 1 ÔÚ> AND <NEXTWORDLOOP me 1>µÄÊ±ºò</NEXTWORDLOOP> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<NOTTRANSLATE> | <NEXTWORDLOOP me 1>µÄÊ±ºò</NEXTWORDLOOP>) AND <SET all english>just</SET> AND <SET 1 all english>when</SET></THEN>
+#
+<IF><BEGINNING me 1> AND <CHINESE ÔÚ> AND <NEXTWORDLOOP me 1>µÄÊ±ºò</NEXTWORDLOOP> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<NOTTRANSLATE> | <NEXTWORDLOOP me 1>µÄÊ±ºò</NEXTWORDLOOP>) AND <SET all english>when</SET> AND <NOTTRANSLATE 2></THEN>
+#
+# Drop "big" from translation if it precedes a noun
+#
+<IF><CHINESE ´ó> AND <CLASS 1 Noun></IF><THEN><NOTTRANSLATE> AND <BONUS Noun 1 1></THEN>
+#
+# A Certain Plural
+#
+<IF><CLASS Zai01> AND <CLASS 1 Plural> AND <CLASS 2 Noun> AND <CLASS 3 Directional></IF><THEN><PLURALIZE 2> AND <TAG Adjusted:Phrase04235</THEN>
+#
+# This is rarely about sex - more usually an adjectival compound that is missing from the database
+<IF><CHINESE ÐÔ> AND <NOTCLASS -1 Punctuation></IF><THEN><NOTTRANSLATE></THEN>
+#
+# Person FROM Place...
+<IF><CHINESE À´×Ô> AND <CLASS 1 Noun> AND <CLASS 2 De01> AND <CLASS 3 Person> AND <NOTCLASS Adjusted></IF><THEN><SWITCH 1 3> AND <SET 2 all english>from</SET> AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+#
+# as compared with
+#
+<IF><CHINESE ºÍ> AND <CLASS 1 Noun> AND <CHINESE 2 ±È> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SET all english>as compared with</SET> AND <NOTTRANSLATE 2> AND <BONUS Noun 1 20></THEN>
+#
+# If versus a persons' words (de hua)
+<IF><CLASS Person> AND <CHINESE 1 µÄ»°> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <POSSESSIVE> AND <SET 1 all english>words</SET> AND <TAG Adjusted></THEN>
+#
+<IF><CLASS -1 Closing> AND <CLASS Day> AND (<CLASS 1 Punctuation> OR <CLASS 1 Transform_01>) AND <NOTCLASS Adjusted></IF><THEN><PRETEXT>on</PRETEXT> AND <TAG Adjusted></THEN>
+<IF><CLASS -1 Closing> AND <CLASS Date> AND (<CLASS 1 Punctuation> OR <CLASS 1 Transform_01>) AND <NOTCLASS Adjusted></IF><THEN><PRETEXT>in</PRETEXT> AND <TAG Adjusted></THEN>
+#
+# Years and Seasons
+<IF><CHINESE ´º¼¾> AND <CLASS -1 Year> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<PRETEXT>the spring of</PRETEXT> | <CLASS -1 Year>) AND <NOTTRANSLATE></THEN>
+<IF><CHINESE Çï¼¾> AND <CLASS -1 Year> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<PRETEXT>the spring of</PRETEXT> | <CLASS -1 Year>) AND <NOTTRANSLATE></THEN>
+<IF><CHINESE ÏÄ¼¾> AND <CLASS -1 Year> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<PRETEXT>the spring of</PRETEXT> | <CLASS -1 Year>) AND <NOTTRANSLATE></THEN>
+<IF><CHINESE ¶¬¼¾> AND <CLASS -1 Year> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<PRETEXT>the spring of</PRETEXT> | <CLASS -1 Year>) AND <NOTTRANSLATE></THEN>
+#
+# Related Stuff
+<IF><CHINESE ÓÐ¹Ø²¿ÃÅ> AND <NOTCLASS Adjusted> AND <CLASS -1 Noun></IF><THEN><POSSESSIVE -1> AND <TAG Adjusted></THEN>
+<IF><CHINESE ÓÐ¹Ø> AND <NOTCLASS Adjusted> AND <CLASS 1 Noun> AND <CLASS -1 Noun></IF><THEN><POSSESSIVE -1> AND <TAG Adjusted> AND <SET all english>regarding</SET></THEN>
+#
+## Until ... time
+<IF><CHINESE µ½> AND <CLASS 1 Date> AND <CHINESE 2 Ê±> AND <NOTCLASS Adjusted></IF><THEN><SET all english>until</SET> AND <NOTTRANSLATE 2> AND <TAG Adjusted></THEN>
+#
+# Don't translate MW and other words following closing quotations
+<IF>(<CHINESE Æª> OR <CHINESE ºÅ> OR <CHINESE ÊÂ¼þ> OR <CLASS Measure>) AND <CLASS -1 Closing> AND <NOTCLASS Adjusted></IF><THEN><NOTTRANSLATE></THEN>
+#
+# Very Common in Newstext
+# ¾ÝÌ©¹úÃ½Ìå£±£¶ÈÕ±¨µÀ£...
+<IF><CLASS Day> AND <NOTCLASS Month> AND <LASTWORDLOOP me 1>¾Ý</LASTWORDLOOP> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> and <PRETEXT>on the</PRETEXT></THEN>
+<IF><CLASS Day> AND <LASTWORDLOOP me 1>¾Ý</LASTWORDLOOP> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> and <PRETEXT>on</PRETEXT></THEN>
+<IF><CLASS Date> AND <LASTWORDLOOP me 1>¾Ý</LASTWORDLOOP> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> and <PRETEXT>in</PRETEXT></THEN>
+#
+# To learn from...
+ÐÂ»ªÍø³É¶¼£¹ÔÂ£±£¶ÈÕµç £¨¼ÇÕß Ìï¸Õ£©¼ÇÕß´ÓËÄ´¨Ê¡°²È«Éú²ú¼à¶½¹ÜÀí¾Ö»ñÏ¤£¬½ØÖÁ£±£¶ÈÕÒ¹¼ä£¬¿µ¶¨½»Í¨ÊÂ¹ÊËÑ¾È¹¤×÷ÈÔÔÚ½øÐÐ£¬ÓÖ·¢ÏÖÁ½ÃûÓöÄÑÕßÒÅÌå£¬ÊÂ¹ÊËÀÍöÈËÊýÔöÖÁ£±£³ÈË£¬Áí£¸ÃûÊ§×ÙÕßÉú»¹µÄ¿ÉÄÜÐÔ½ÏÐ¡¡£
+<IF><LASTWORDLOOP me 1>´Ó</LASTWORDLOOP> AND <CHINESE »ñÏ¤> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<SET all english>to learn from</SET> | <LASTWORDLOOP me 1>´Ó</LASTWORDLOOP>)</THEN>
+#
+#
+## Do not translate onomatopaiec characters closing quotations, etc.
+<IF><CLASS Onomat> AND <CLASS 1 Punctuation></IF><THEN><NOTTRANSLATE></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Common Sentence Patterns
+#
+<IF>(<CLASS 1 Punctuation> OR <CLASS Ending>) AND <CLASS Verb> AND <CLASS -1 Day> AND <CLASS -2 Noun> AND (<CLASS -3 Terminal> OR <CLASS -2 Beginning>) AND <NOTCLASS Adjusted></IF><THEN><MAKE_ONLY Verb> AND <TAG Adjusted> AND (<PRETEXT>on</PRETEXT> | <CLASS -1 Day>)</THEN>
+<IF>(<CLASS 1 Punctuation> OR <CLASS Ending>) AND <CLASS Verb> AND <CLASS -1 Date> AND <CLASS -2 Noun> AND (<CLASS -3 Terminal> OR <CLASS -2 Beginning>) AND <NOTCLASS Adjusted></IF><THEN><MAKE_ONLY Verb> AND <TAG Adjusted> AND (<PRETEXT -1>in</PRETEXT> | <CLASS -1 Date>)</THEN>
+#
+#
+<IF><CLASS SentIntr> AND <CLASS 1 Noun></IF><THEN><MAKE_ONLY 1 Noun></THEN>
+<IF><CLASS SentIntr> AND <CLASS 1 Punctuation> AND <CLASS 2 Noun></IF><THEN><MAKE_ONLY 2 Noun></THEN>
+#
+<IF><CHINESE ÓÐ¹Ø> AND <CLASS 1 Verb> AND <NOTCLASS Adjusted></IF><THEN><SET all english>related to</SET> AND <TENSE 1 2></THEN>
+#
+<IF><CHINESE ¸°> AND <CLASS 1 Country> AND <CLASS 2 Verb></IF><THEN><TAG Adjusted> AND <MAKE_ONLY 2 Verb> AND <TENSE 2 2> AND (<PRETEXT>to</PRETEXT> | <CLASS 1 Country>) AND <SWITCH 1 2></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# These Sentence Patterns End Phrases
+<IF><CLASS Verb> AND <CLASS 1 Number> AND <CLASS 2 Measure> AND <CLASS 3 Noun> AND (<CLASS 4 Punctuation> OR <CLASS 3 Ending>)</IF><THEN><TAG Adjusted> AND <TAG 1 Adjusted> AND <TAG 2 Adjusted> AND <TAG 3 Adjusted> AND <MAKE_ONLY Verb> AND <MAKE_ONLY 3 Noun></THEN>
+<IF><CLASS Verb> AND <CLASS 1 Number> AND <CLASS 2 Noun> AND (<CLASS 3 Punctuation> OR <CLASS 2 Terminal>)</IF><THEN><PLURALIZE 2> AND <TAG Adjusted> AND <TAG 1 Adjusted> AND <TAG 2 Adjusted></THEN>
+#
+#
+#
+#
+# Time Phrases
+#
+<IF><CLASS Day> AND <CLASS -1 Conjunction> AND <CLASS 1 Preposition> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <PRETEXT>the</PRETEXT></THEN>
+#
+<IF><CLASS Day> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <PRETEXT>on</PRETEXT></THEN>
+<IF><CLASS Date> AND <CLASS 1 Comma> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <PRETEXT>in</PRETEXT></THEN>
+#
+<IF><CHINESE Ê±> AND (<CLASS 1 Punctuation> OR <CLASS Terminal>) AND <LASTLOOP me 1>Zai01</LASTLOOP></IF><THEN><NOTTRANSLATE> AND (<SET all english>when</SET> AND <TENSE 1 2> | <LASTLOOP me 1>Zai01</LASTLOOP>)</THEN>
+<IF><CHINESE Ê±ºò> AND (<CLASS 1 Punctuation> OR <CLASS Terminal>) AND <LASTLOOP me 1>Zai01</LASTLOOP></IF><THEN><NOTTRANSLATE> AND (<SET all english>when</SET> AND <TENSE 1 2> | <LASTLOOP me 1>Zai01</LASTLOOP>)</THEN>
+<IF><CHINESE µÄÊ±ºò> AND (<CLASS 1 Punctuation> OR <CLASS Terminal>) AND <LASTLOOP me 1>Zai01</LASTLOOP></IF><THEN><NOTTRANSLATE> AND (<SET all english>when</SET> AND <TENSE 1 2> | <LASTLOOP me 1>Zai01</LASTLOOP>)</THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#£¬¼ÆËã»úÉÏµÄ¹¦ÄÜ, etc.
+<IF><CLASS Noun> AND <CLASS 1 Directional> AND <CLASS 2 De01> AND <CLASS 3 Noun></IF><THEN><NOTTRANSLATE 1></THEN>
+#
+# 10% of...
+<IF><CLASS Percent> AND <CLASS 1 De01></IF><THEN><SET 1 all english>of</SET></THEN>
+#
+#
+<IF><CLASS PreNoun> AND <CLASS 1 Noun></IF><THEN><MAKE_ONLY PreNoun> AND <MAKE_ONLY 1 Noun></THEN>
+#
+#
+#
+<IF><CLASS -1 Noun> AND <CLASS Shi01> AND <CLASS 1 Number> AND <CLASS 2 Measure> AND <CLASS 3 Colon> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH -1 2> AND <NOTTRANSLATE -1> AND <TAG Phrase5923></THEN>
+<IF><CLASS Phrase5923> AND <NUMBER 1 gt 1></IF><THEN><PLURALIZE 2> AND <SET all english>there are</SET></THEN>
+#
+#
+#
+#
+<IF><CLASS Shi01> AND <CLASS 1 Noun> AND <CLASS 2 Range> AND <NOTCLASS Adjusted></IF><THEN><POSSESSIVE 1> AND <SWITCH 1 2> AND <TAG Adjusted:Phrase14232></THEN>
+#
+#
+#
+<IF><CLASS Comma> AND <CLASS 1 Noun> AND <CLASS 2 Verb> AND <CHINESE 3 ºó> AND <CLASS 4 Verb> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted:Phrase48293> AND <NOTTRANSLATE 3></THEN>
+#
+# Ë¶Ê¿ÑÐ¾¿Éú±ÏÒµºóÁôÑ§µÂ¹ú²¢ÔÚ°ÂµÏ¹«Ë¾¹¤×÷ÁË£±£°Äê£
+
+#ÖÐ¹ú¿Æ¼¼·¢Õ¹µÄÄ¿±êÊÇÈÃ¸ü¶àµÄÈË£¬ÓÈÆäÊÇ×îÆ¶À§µØÇøµÄÈËÄÜÏíÊÜµ½
+<IF><CHINESE ÓÈÆä> AND <CLASS 1 Shi01></IF><THEN><NOTTRANSLATE 1></THEN>
+#
+#
+#
+# A not-uncommon sentence pattern
+<IF>(<CLASS Noun> AND (<CLASS PostComma> OR <CLASS Beginning>)) AND <CLASS 1 Verb> AND <CLASS 2 Adjective> AND <CLASS 3 Noun> AND (<CLASS 4 Punctuation> OR <CLASS 3 Terminal>)</IF><THEN><MAKE_ONLY 3 Noun></THEN>
+#
+#
+# Another not-uncommon pattern, especially in news articles
+<IF><CLASS Noun> AND <CLASS 1 Date> AND <CLASS 2 Zai01> AND <CLASS 3 Place> AND <CLASS 4 Verb></IF><THEN><BOOST Verb 4 10></THEN>
+#
+#
+#
+# Someone says something (a quote)
+<IF><CLASS ProperNoun> AND (<CLASS Beginning> OR <CLASS -1 Punctuation>) AND <CLASS 1 Verb> AND <CLASS 2 Opening></IF><THEN><MAKE_ONLY ProperNoun> AND <MAKE_ONLY 1 Verb></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+# Cadverb and Xing/Adjective Combinations
+<IF><CLASS Cadverb> AND <CLASS 1 Xing> AND <NOTCLASS Adjusted> AND (<CLASS 2 Punctuation> OR <CLASS 1 Ending>)</IF><THEN><MAKE_ONLY Cadverb> AND (<MAKE_ONLY Xing> | <CLASS 1 Xing>) AND <TAG Adjusted:Phrase02943> AND <INSERT 0 0 Verb></THEN>
+<IF><CLASS Phrase02943></IF><THEN><SET all english>to be </SET> | <CLASS -1 Verb></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+<IF><CHINESE Î´> AND <CLASS 1 Verb> AND <CHINESE 2 ÓÐ ></IF><THEN><NOTTRANSLATE 3> AND <SET all english>not</SET></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Avoid Translating "side/aspect" when it is a reference to a party or player
+# that has likely already been mentioned in the sentence
+<IF><CHINESE ·½Ãæ> AND <CLASS 1 SentIntr></IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE ·½> AND <MATCH me 1>·½Ãæ</MATCH></IF><THEN><NOTTRANSLATE></THEN>
+#
+<IF><CLASS Year> AND <CHINESE 1 ·¢²¼> AND <CHINESE 2 µÄ></IF><THEN><SET 1 all english>edition of</SET> AND <NOTTRANSLATE 2></THEN>
+#
+#
+<IF><CLASS Noun> AND <CHINESE 1 ÄãºÃ> AND <CLASS 3 Punctuation> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <SWITCH 0 1></THEN>
+<IF><CLASS Noun> AND <CLASS 1 Comma> AND <CHINESE 2 ÄãºÃ> AND <CLASS 3 Punctuation></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE 1> AND <SWITCH 0 2></THEN>
+#
+<IF><CHINESE ÐÂ»ªÍø> AND <CLASS 1 Noun> AND <CLASS 2 NewsFiling> AND <NOTCLASS Adjusted></IF><THEN><TAG 2 Ending> AND <TAG Adjusted> AND (<PRETEXT>from</PRETEXT> | <CLASS 1 Noun>) AND <SWITCH 1 2></THEN>
+#
+<IF><CLASS Opening> AND <CHINESE 1 ¼ÇÕß> AND (<CLASS 2 NonChinese> OR <CLASS 2 Punctuation>) AND <CLASS 3 Person> AND <CLASS 4 Closing> AND <NOTCLASS Adjusted></IF><THEN><TAG 4 Terminal:Ending> AND <TAG Adjusted></THEN>
+<IF><CLASS Opening> AND <CHINESE 1 ¼ÇÕß> AND (<CLASS 2 NonChinese> OR <CLASS 2 Punctuation>) AND <CLASS 3 Person> AND (<CLASS 4 Punctuation> OR <CLASS 4 NonChinese>) AND <CLASS 5 Person> AND <CLASS 6 Closing> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <TAG 6 Terminal:Ending> AND (<SET all english>reporters</SET> | <CLASS 1 Unit>)</THEN>
+#
+#
+#
+#

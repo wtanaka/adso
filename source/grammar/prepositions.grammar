@@ -1,0 +1,247 @@
+#
+# Adso XML Prepositional Phrases
+#
+#
+# The XML in this file is interpreted "on-the-fly" by Adso in its efforts 
+# to assemble text into meaningful and grammatical Chinese content. These 
+# rules may or may not be adequate for your needs - these rules are 
+# designed for standard newstext of the sort found on Xinhua.
+#
+# Editing these rules will alter system behavior. You can add new rules, 
+# subtract problematic ones, and even throw out this file and build your 
+# own translation engine from scratch. If you come up with any particularly
+# ingenius XML commands please forward them to the main project for 
+# inclusion in our default ruleset.
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Prepositional phrases are tricky. They precede verbs, but can also be used as verbs on their own.
+# We attempt to first tag entries which precede other verbs, and then look for typical closing 
+# pairs. But first, let's give a bonus to prepositions that precede verbs of sorts, or are followed
+# by commas, both of which suggest the presence of prepositional phrases.
+#
+#
+<IF><NOTCLASS Adjusted> AND <CLASS Preposition> AND <CLASS 1 Noun> AND <CLASS 2 Verb></IF><THEN><BONUS Preposition 10></THEN>
+<IF><NOTCLASS Adjusted> AND <CLASS Preposition> AND <NEXTLOOP me 1>Comma</NEXTLOOP> AND <NEXTLOOP me 1>Verb Auxiliary Xing</NEXTLOOP></IF><THEN><BONUS Preposition 10></THEN>
+#
+#
+#
+#
+# Temporal Prepositions (when, etc.)
+#
+#
+</NEXTWORDLOOP></IF><THEN><TAG Adjusted> AND <SET all english>when</SET> AND <TENSE 1 2> AND (<NOTTRANSLATE> | <NEXTWORDLOOP me 1>时 时候 的时候</NEXTWORDLOOP>)</THEN>
+<IF><CLASS Zai01> AND <NOTCLASS Adjusted> AND <NEXTWORDLOOP me 1>时 时候 的时候</NEXTWORDLOOP></IF><THEN><TAG Adjusted> AND <SET all english>when</SET> AND <TENSE 1 2> AND (<NOTTRANSLATE> | <NEXTWORDLOOP me 1>时 时候 的时候</NEXTWORDLOOP>)</THEN>
+<IF><CLASS Zai01> AND <CLASS 1 Place> AND <CLASS 2 Verb></IF><THEN><BONUS Place 1 1> AND <BONUS Verb 2 5></THEN>
+#
+#
+#
+#
+#
+# Zai01: split prepositional phrases: zai....li, etc.
+#
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 里> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted>)</IF><THEN><TAG Adjusted> AND (<SET all english>in</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 上面> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted>)</IF><THEN><TAG Adjusted> AND (<SET all english>on</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 下面> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted>)</IF><THEN><TAG Adjusted> AND (<SET all english>on</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 里面> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted>)</IF><THEN><TAG Adjusted> AND (<SET all english>on</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 之际> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>in</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 之中> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>in</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 之下> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>under</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 下> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>under</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 外> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>beyond</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 外面> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>outside</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 上> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>on</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 前> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>before</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 内> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>within</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 领域> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>in the domain</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 境内> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>within the territory of</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 间> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>between</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 后> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>after</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 附近> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>in the area of</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 中> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>in</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 中间> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>in</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 以前> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>before</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 以后> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>after</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 以外> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>beyond</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 以内> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>within</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 以下> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>below</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+<IF>(<CLASS 1 Verb> OR <CLASS 1 Adverb> OR <CLASS 1 Auxiliary>) AND <CHINESE 以上> AND (<LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND (<SET all english>above</SET> | <LASTLOOP me 1>Zai01</LASTLOOP>) AND <NOTTRANSLATE></THEN>
+#
+#
+#
+#
+#
+#
+#
+# Dui01 (towards)
+#
+<IF><CLASS Dui01> AND <CLASS 1 Noun> AND <CLASS 2 Verb> AND <NOTCLASS Adjusted></IF><THEN><SET all english>towards</SET> AND <TAG Adjusted></THEN>
+#
+#
+# Xiang (towards)
+#
+<IF><CHINESE 向> AND <CLASS Dui01> AND <CLASS 1 Noun> AND <CLASS 2 Verb> AND <NOTCLASS Adjusted></IF><THEN><SET all english>towards</SET> AND <TAG Adjusted></THEN>
+#
+#
+#
+# Non-Split Prepositional End-markers are tricky. This catches some which follow nouns at the beginning of sentences
+#
+<IF><CHINESE 里> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>in</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 之际> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>between</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 之中> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>in</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 之下> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>under</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 下> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>under</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 外> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>outside</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 上> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>on</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 前> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>before</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 内> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>within</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 后> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>after</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 中> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>in</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 以前> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>before</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 以后> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>after</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 以外> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>outside</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 以内> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>within</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 以下> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>below</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+<IF><CHINESE 以上> AND <CLASS -1 Noun> AND (<CLASS -1 Beginning> OR <CLASS -2 Punctuation>) AND <NOTCLASS Adjusted></IF><THEN>(<PRETEXT>above</PRETEXT> | <CLASS -1 Noun>) AND <NOTTRANSLATE> AND <TAG Adjusted></THEN>
+#
+#
+<IF><CHINESE 里> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 之际> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 之中> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 之下> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 下> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 外> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 上> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 前> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 内> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 后> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 中> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 以前> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 以后> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 以外> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 以内> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 以下> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+<IF><CHINESE 以上> AND (<CLASS 1 You01> OR <CLASS 1 Meiyou01> OR <CLASS 1 Auxiliary>)</IF><THEN><NOTTRANSLATE></THEN>
+#
+#
+#
+<IF><CHINESE 里> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 之际> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>between</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 之中> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 之下> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 下> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 外> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>beyond</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 上> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>at</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 前> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 内> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>within</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 后> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 中> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 以前> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 之前> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 以后> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 之后> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 以外> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>beyond</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 以内> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>within</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 以下> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+<IF><CHINESE 以上> AND <CLASS -2 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>on</SET><TAG Adjusted> | <CLASS -2 Zai01>)</THEN>
+#
+#
+<IF><CHINESE 里> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 之际> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>between</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 之中> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 之下> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 下> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 外> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>beyond</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 上> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>at</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 前> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 内> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>within</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 后> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 中> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以前> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以后> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以外> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>beyond</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以内> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>within</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以下> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以上> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>on</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+#
+#
+#
+#
+#
+<IF><CHINESE 里> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 之际> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>between</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 之中> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 之下> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 下> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 外> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>beyond</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 上> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>at</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 前> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 内> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>within</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 后> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 中> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>in</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以前> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>before</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以后> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>after</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以外> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>beyond</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以内> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>within</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以下> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>under</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+<IF><CHINESE 以上> AND <CLASS -3 Zai01></IF><THEN><NOTTRANSLATE> AND (<SET all english>on</SET><TAG Adjusted> | <CLASS -3 Zai01>)</THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+# Short Sentence Fragments with Directional Conclusions
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 里> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 上面> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 下面> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 里面> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 之际> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 之中> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 之下> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 下> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 外> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 外面> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 上> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 前> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 内> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 领域> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 境内> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 间> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 后> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 附近> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 中> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 中间> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 以前> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 以后> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 以外> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 以内> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 以下> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+<IF>(<CLASS -3 Punctuation> OR <CLASS -2 Beginning>) AND (<CLASS -2 Noun> OR <CLASS -2 Pronoun>) AND <CLASS -1 Verb> AND <CHINESE 以上> AND <NOTCLASS Adjusted></IF><THEN><TAG Adjusted> AND <NOTTRANSLATE> AND (<PRETEXT>after</PRETEXT> | <CLASS -2 Noun>)</THEN>
+#
+#
+#
+#
+# directionals at the ends of sentences and after Zai should probably be matched with it. But if we haven't
+# found it yet, we can at least not translate it by default.
+<IF><CLASS Directional> AND (<CLASS 1 Punctuation> OR <CLASS Ending>) AND <LASTWORDLOOP me 1>在</LASTWORDLOOP></IF><THEN><TAG Phrase3142:Adjusted> AND <NOTTRANSLATE></THEN>
+<IF><CLASS Directional> AND (<CLASS 2 Punctuation> OR <CLASS 1 Ending>) AND <LASTWORDLOOP me 1>在</LASTWORDLOOP></IF><THEN><TAG Phrase3142:Adjusted> AND <NOTTRANSLATE></THEN>
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#

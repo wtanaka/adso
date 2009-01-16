@@ -1,0 +1,27 @@
+echo "Removing old files...."
+rm -f ./*.o 
+rm -f ./*.cpp
+rm -f ./*.h
+rm -f ./*.dat
+echo "Generating data files....";
+php 1_generate_data_files.php
+echo "Generating Adso class files...."
+php 2_generate_compiled_database_class.php > compiled_database.cpp
+echo "Generating Adso header files...."
+php 3_generate_compiled_database_header.php > compiled_database.h
+echo "Generating character-lookup indexes...."
+php 4_generate_indexes.php > indexes.dat
+echo "Generating Makefile...."
+php 5_generate_makefile.php > Makefile
+echo "The updated database files are being copied into ../source/database/ . When this process is done please recompile the software."
+#make
+#cp ./*.o ../../source/database
+cp ./*.dat ../../source/database
+cp ./*.cpp ../../source/database
+cp ./*.h ../../source/database
+echo "Removing temporary files"
+rm -f ./temp
+#rm -f ./*.o
+rm -f ./*.cpp
+rm -f ./*.h
+rm -f ./*.dat

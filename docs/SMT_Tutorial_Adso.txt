@@ -1,0 +1,110 @@
+                                                                     
+This tutorial covers using the Adso text-analysis system to simplify the preparation of Chinese materials for use with popular SMT software tools. We are particularly interested in demonstrating how Adso can simplify text preparation and reduce the amount of manual scripting required to prepare documents for analysis by the Champollion Toolkit, Giza++, and the Moses Decoder.
+
+
+SETTING UP ADSO: (10-20 minutes)
+
+Download the latest source distribution from Adsotrans. 
+
+> http://www.adsotrans.com/downloads/v5/
+
+Unpack the software in /home/smt. Now let's install the Adso database. First, we need to install MySQL. Under Ubuntu typing the following at the command line takes care of everything:
+
+> sudo apt-get install mysql-client mysql-server libmysqlclient-dev
+
+Now go into the database subdirectory (/home/smt/adso-v5.004/database). Our database file is sitting in this directory. Adso needs that data to be accessible in a database called "expanded" and will try to connect to the database using the login and password "adso". So do this at the command line:
+
+> mysql -u root
+mysql> CREATE DATABASE expanded
+mysql> GRANT ALL PRIVILEGES ON expanded.* to 'adso'@'localhost' IDENTIFIED BY 'adso';
+mysql> FLUSH PRIVILEGES;
+mysql> exit
+> mysql -u adso -p expanded < adso-v5.[version].sql
+
+It should take about 5 minutes for MySQL to populate the database. When it is done we can compile the software by heading into the source directory and typing "make". The software will compile and create the program "adso", which will be located in your source directory. You can test that everything is working fine by entering that directory and trying the following command:
+
+> ./adso -f test.gb2312 -t
+
+The engine should produce a relatively primitive gist translation. Don't worry too much about how polished it is. The important thing for us right now is Adso's word segmentation; number, name and place recognition; part-of-speech analysis; and semantic regexp functions.
+
+
+
+
+
+CHAMPOLLION: Parallel Text Alignment (10-20 minutes)
+
+SMT requires parallel texts. For demonstration purposes I've taken a lesson from ChinesePod.com and simply removed the newlines to provide parallel texts. These documents can be found in the texts subdirectory in this folder. These are the files "english.txt" and "chinese.txt". If you have them feel free to use your own texts instead. 
+
+There are various English-language segmenters around, most of which work through REGEXP. Unfortunately, the profusion of encodings, punctuation marks and writing styles in Chinese text makes REGEXP much less useful for basic scripting purposes. And so we use semantic regexp instead:
+
+> ./adso -f chinese.txt --extra-code "<REDUCE> AND <PRINT chinese> AND <IF><CLASS Terminal></IF><THEN><PRINT newline></THEN>" > chinese_line_segmented.txt
+
+If you open up the file "chinese_line_segmented.txt" you'll see that we've done in one command what would have otherwise taken quite some time and experimentation with a scripting language. We've also just had our first experience with semantic regexp. With the exception of "<REDUCE>", which picks the most likely candidate at every position in the sentence, our instructions to Adso are also relatively clear. We ask the engine to take the file "chinese.txt" and print out all of the words in it. We also included a conditional <IF><THEN> construct that prints a newline for each word identified as a "Terminal" marker.
+
+There are two things worth noting from a text-analysis perspective. The first is that we are not simply REGEXPing on text. Adso is much smarter than a REGEXP script when it comes to recognizing terminal characters. Also, we could teach the software new rules and classes on the fly for use in processing or segmenting texts. Those familiar with Chinese text encoding will probably also have noticed our second advantage: simplified support for Chinese encodings. Adso provides automatic recognition for GB2312 and UTF8 texts. <PRINT chinese> produces GB2312-encoded text by default, while <PRINT chinese_utf8s> or <PRINT chinese_utf8c> produce simplified and traditional output in UTF-8. I'm going to use GB2312 out of convenience, but there's no reason you can't use UTF-8 if you want.
+
+Back to the tutorial. We now have unaligned sentences in our source (Chinese) and target (English) languages. We wish to align these sentences in order to make them useful for analysis by Giza++ so that we can build a language model. This is where the Champollion Toolkit comes in. Download the software from Sourceforge and install it as required. Then give it our English and Chinese texts and let Champollion identify the alignments:
+
+/home/smt/champollion-1.1/bin/champollion.EC /home/smt/texts/english_sentences.txt /home/smt/texts/chinese_sentences.txt /home/smt/texts/alignment_file.txt
+
+Champollion will produce the file "alignment_file.txt" which contains information on probable sentence alignments. We feed this output file back into another script to have the software match our sentences together:
+
+/home/smt/champollion-1.1/bin/merge_alignment.pl /home/smt/texts/english_sentences.txt /home/smt/texts/chinese_sentences.txt /home/smt/texts/alignment_file.txt > /home/smt/texts/aligned_sentences.txt
+
+If you open up that file you'll see that Champollion has successfully matched our sentences together. Giza++ requires a single file containing Chinese sentences and a single file containing English sentences. A little bit of perl accomplishes this:
+
+$start = $ARGV[0]
+while (<STDIN>) {$text .= $_; }
+@lines = split(/\n/, $text);
+for ($i = $start; $lines[$i] ne ""; $i+4) { print $lines[$i] . "\n"; }
+	
+Name this split_champollion_aligned_file.pl and use it to produced properly aligned sentence files:
+
+cat /home/smt/texts/aligned_sentences.txt | perl split_champollion_aligned_file.pl 2 > /home/smt/texts/english_aligned.txt
+cat /home/smt/texts/aligned_sentences.txt | perl split_champollion_aligned_file.pl 3 > /home/smt/texts/chinese_aligned.txt
+
+Now to GIZA++ for some statistical work.
+
+
+
+
+BUILDING A LANGUAGE MODEL WITH GIZA++:
+
+Rather than provide a tutorial on Giza++, I'm going to explain how to save time preparing documents for analysis using Adso. To get started, we need to segment our Chinese text into space-delimited text with ASCII punctuation. There is a special ruleset that accomplishes this in our grammar folder. 
+
+
+./adso -f [input_file] -g2 grammar/giza++.grammar --code
+
+You can open the file grammar/giza++.grammar with a text editor to see what is happening. This file contains a few rulesets similar to the ruleset we fed in manually above. The one new element is the use of (-g2) rather than (-g). This numeric flag controls the logic of code execution. -g2 applies all rules to each word before advancing to the next word. Otherwise we analysis our XML horizontally. If you're confused just switch -g2 for -g1 and see the difference in output for yourself.
+
+The --code command instructs Adso to execute any additional code that may be stored in the database and associated with individual words. This provides a boost in the accuracy of our word segmentation and (for certain uses) sense disambiguation: one relatively easy way to solve segmentation problems is to create a ruleset ordering the software to resegment certain words under certain combinations and stick it in our dictionary. It is a good idea to include the "--code" command in almost all circumstances.
+
+Significantly, using just three or four lines of semantic regexp, Adso provides:
+
+(1) high-quality and contextual word-segmention
+
+(2) conversion of Chinese punctuation into ASCII
+
+
+
+
+
+STATISTICAL MACHINE TRANSLATION (Moses Decoder):
+
+We need to segment Chinese texts similar to the way our language model segmented them before feeding them into the Moses Decoder. Adso can help in a few ways. The engine can:
+
+(1) pre-translate names, numbers, foreign loan words, company names, etc.
+
+(2) drop/remove content we deem unnecessary or extraneous
+
+(3) rearrange the order of Chinese phrases so as to more closely follow their order of translation
+
+Semantic regexp allows us to accomplish much more. We could easily drop certain parts of speech such as aspectual and complement markers, remove measure words, prefer our own translations of low-frequency and lengthy phrases. We can easily ask Adso to selectively translate subsections of the text it knows with a high degree of confidence (dates, times, names, foreign loan words, countries, high frequency phrases, etc.) before passing more ambiguous passages on to a beam search decoder like Moses. Or Google. Or any other available SMT-based system.
+
+I've written a few such rules and placed them in the file grammar/moses.grammar. Feedback is welcome.
+ 
+
+David Lancashire
+September 18th, 2007
+Shanghai, China
+

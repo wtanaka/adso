@@ -1,0 +1,2 @@
+<DEFINE_COMPOUND NonChineseCompound><CLASS Country> AND <CLASS 1 NonChinese></DEFINE_COMPOUND>
+<IF><COMPOUND NonChineseCompound></IF><THEN><COMPOUND_EXECUTE><PRINT chinese_utf8s></COMPOUND_EXECUTE></THEN>

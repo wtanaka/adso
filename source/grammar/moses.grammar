@@ -1,0 +1,30 @@
+#
+# 
+# This file provides output designed for the Moses Decodor. Text is segmented 
+# and punctuation is converted into ASCII. Terms which can be translated into
+# english with high confidence are translated. The remainder of the text is
+# left in Chinese
+# 
+# Boost Likelihood of Selection
+#
+<IF><CLASS Onomat></IF><THEN><MAKE_ONLY Onomat></THEN>
+<IF><CLASS Date></IF><THEN><BOOST Date 1></THEN>
+<IF><CLASS Date></IF><THEN><BOOST Phrase 1></THEN>
+#
+#
+<REDUCE>
+#
+#
+# Output a Mixture of English and Chinese Content
+#
+<IF><CLASS Onomat></IF><THEN><TAG Adjusted></THEN>
+<IF><CLASS Transform_01> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Number> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Date> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><LENGTH gt 2> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Roman> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Phrase> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Punctuation> AND <NOTCLASS Adjusted> AND <NOTCLASS Newline></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><NOTCLASS Adjusted> AND <NOTCLASS Newline></IF><THEN><PRINT chinese> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Newline> AND <NOTCLASS Adjusted></IF><THEN><PRINT chinese> AND <TAG Adjusted></THEN>
+#

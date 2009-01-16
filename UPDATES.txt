@@ -1,0 +1,120 @@
+September 11,
+- improved traditional support in backend database - purging of empty single-character entries so that 
+  UNKNOWN entries in automatically-generated words are less frequent and/or non-existent.
+
+September 2
+- improvements to pinyin generation for the number class. It will no longer drop certain characters which have
+  been unified with numbers.
+
+July 29, 2008
+- mass simplification of the number class. There are still some numbers which will run off the upper limits
+  of our handling capabilities, but treatment of large numbers with 亿 should be much more reliable and 
+  accurate, even with decimal figures.
+
+July 4, 2008
+- changes to --editable-five-fields to improve treatment of ASCII for more reliable popups
+
+June 27, 2008
+- minor changes for --editable-five-fields ignores ASCII-only text for Popup Chinese
+
+June 22, 2008
+- clode cleanup
+- addition of "--editable-five-fields" flag
+- traditional variants now generated automatically if non-existent
+
+April 29, 2008
+- major dictionary update (+6000 entries)
+
+April 24, 2008
+- major dictionary update (+2000 entries)
+- fix to number class that caused segmentation fault in certain cases involving suffixed numbers
+
+March 28, 2008
+- fixed issue with pinyin generation causing segmentation fault
+- --split-on-ascii-punctuation added (NLP feature)
+
+March 10, 2008
+- fixed compile issue for Mac OS
+
+March 07, 2008
+- reduplicated pinyin error fixed
+- improvements to Name recognition
+
+Feb 24, 2008
+- improvements to editing features (better traditional support)
+- --tonalize mode added for conversion from numeric to tonal pinyin
+- vocabulary output mode for traditional output enabled
+
+Feb 18, 2008
+- improvements to editing features (better traditional support)
+- more dictionary entries added/reviewed
+- proper escaping of apostrophes in --textbook output javascript
+- some additional improvements to grammar/translation.grammar file
+  to support better translation of phraes from contemporary news
+  texts.
+
+Feb 16, 2008
+- automatic detection of traditional characters re-enabled
+
+Feb 11, 2008
+- routine database update (1000 or so new words/phrases).
+- improvements to noun recognition, number handling
+- correction of minor errors in textbook output mode
+- further improvements in date processing
+
+Feb 7, 2008
+- major correction to parsing class
+- improvements to corporate/proper noun recognition
+- improvements to --textbook output for cleaner javascript
+  in pinyin/english with apostrophes
+- month+time+minute handling improved
+
+Jan 25, 2008
+- input method --textbook-markup accepts --textbook output
+  as input. Useful for altering, editing existing segmentation
+  for pre-analysed texts.
+
+Jan 21, 2008
+- improvement to nonchinese.cpp for the correct recognition of 
+  nonchinese/number/nonchinese compounds as nonchinese compounds.
+  examples include URLs that include both ASCII and numbers.
+
+Jan 19, 2008
+- --segcn (Chinese segmentation), --vocab (vocab list) features added
+- more modifications to pronoun class to improve identification of possessive
+  pronouns
+
+Jan 15, 2008
+- addition of double field to dictionary for logorithmic frequency data
+- FREQ2 added to expanded_unified table, as well as each individual table
+
+Jan 14, 2008
+- improved spacing for pinyin generation of Proper Nouns.
+
+Jan 13, 2008
+- word/frequency identification feature added
+  --frequency
+  --frequency-reset
+
+Jan 12, 2008
+- modifications to pronoun class
+- minor bugfixes
+
+Dec 27, 2007
+- automation of stand-alone .dat files (from MySQL)
+- scripts included in the scripts directory. 
+
+Dec 19, 2007
+- question mark now handled properly (textbook mode)
+
+Dec 13, 2007
+- fix to handling of bei (passive) that would segfault
+
+Nov 13, 2007
+- asciify Chinese punctuation feature added (--ucp)
+- minor bug-fixes
+
+Oct 03, 2007
+- basic support for traditional parsing added
+- improved resegmentation handling
+- improved support for address recognition

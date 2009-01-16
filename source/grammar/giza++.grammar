@@ -1,0 +1,7 @@
+<REDUCE>
+<IF><CLASS Terminal> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT newline> AND <TAG Adjusted></THEN>
+<IF><CLASS Punctuation> AND <NOTCLASS Adjusted> AND <NOTCLASS Newline></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Roman> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Number> AND <NOTCLASS Adjusted></IF><THEN><PRINT english> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><NOTCLASS Adjusted> AND <NOTCLASS Newline></IF><THEN><PRINT chinese> AND <PRINT  > AND <TAG Adjusted></THEN>
+<IF><CLASS Newline> AND <NOTCLASS Adjusted></IF><THEN><PRINT chinese> AND <TAG Adjusted></THEN>

@@ -1,0 +1,4 @@
+wget http://www.popupchinese.com/data/adso-latest.sql.gz -O adso-latest.sql.gz
+gunzip adso-latest.sql.gz
+mysql -u root < refresh_database
+mysql -u root expanded < adso-latest.sql

@@ -1,0 +1,5 @@
+
+The scripts in this directory fill out the pinyin and traditional fields in 
+the database. They require Adso to be installed on your system, as they 
+call Adso to perform some of the conversions.
+

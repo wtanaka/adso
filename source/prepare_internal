@@ -1,0 +1,10 @@
+rm -f ./*.o
+cp -f Makefile.internal Makefile
+cp -f text.h.internal text.h
+cp -f text.cpp.internal text.cpp
+cp -f adso.cpp.internal adso.cpp
+cp -f adso.h.internal adso.h
+cp -f database.h.internal database.h
+cp -f main.cpp.internal main.cpp
+cp -f parser.h.internal parser.h
+cp -f parser.cpp.internal parser.cpp

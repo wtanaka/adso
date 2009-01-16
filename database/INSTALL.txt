@@ -1,0 +1,23 @@
+
+MySQL Database Dump:
+
+For the MySQL installation install this .sql file into the database "expanded" 
+using the login "adso" and password "adso".  Otherwise edit the file adso.cpp 
+and hardcode your login/database info into the software.
+
+The Short Version:
+
+(connect to mysql)
+mysql -u root
+> CREATE DATABASE expanded;
+> GRANT ALL PRIVILEGES on expanded.* to 'adso'@'localhost' IDENTIFIED BY 'adso';
+> FLUSH PRIVILEGES;
+> exit
+
+(then import the database file)
+
+mysql -u adso -p expanded < adso-[version].sql
+
+(wait 5 minutes and you're done)
+
+
