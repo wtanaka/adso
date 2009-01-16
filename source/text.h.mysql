@@ -274,6 +274,8 @@ class Text {
 		std::string translate();
 		std::string popup();
 		
+
+
 		virtual std::string generate_chinese();
 		virtual std::string generate_chinese_utf8s();
 		virtual std::string generate_chinese_utf8c();

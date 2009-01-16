@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ui version="4.0" >
+ <class>Form</class>
+ <widget class="QWidget" name="Form" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>921</width>
+    <height>698</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_4" >
+   <item>
+        <widget class="QWebView" name="webView" >
+         <property name="url" >
+          <url>
+           <string>about:blank</string>
+          </url>
+         </property>
+        </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+</ui>

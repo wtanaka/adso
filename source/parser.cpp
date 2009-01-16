@@ -1,7 +1,7 @@
 
 
-#define USE_COMPILED = 1
-//#define USE_MYSQL = 1
+//#define USE_COMPILED = 1
+#define USE_MYSQL = 1
 //#define USE_SQLITE = 1
 
 #include "parser.h"
@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 
-//#include <mysql.h>
+#include <mysql.h>
 
 #ifdef USE_COMPILED
 #include "database/compiled_database.h"
@@ -169,142 +169,185 @@ void Parser::parse(Text *text) {
 
 
 
+void Parser::parse_textbook_markup(Text *text) {
+
+        std::string temp = text->fulltext;
+
+	int match = temp.find("</span>");
+	while (match != std::string::npos) {
+
+		std::string pre = "";
+		std::string field1 = "";
+		std::string field2 = "";
+		std::string field3 = "";
+		std::string field4 = "";
+
+		int z = 0; std::string temp2 = ""; while (z < match) { temp2 += temp[z]; z++; }
+
+		// Prior matches
+		int prematch = temp2.find("<span");
+		if (prematch > 0 && prematch != std::string::npos) { for (int i = 0; i < prematch; i++) { pre += temp2[i]; } temp2 = temp2.substr(prematch); }
+
+		int match2 = temp2.find("','");
+
+		if (match2 != std::string::npos) {
+			int z2 = 0; std::string temp3 = ""; while (z2 < match2) { temp3 += temp2[z2]; z2++; }
+			if (temp3.find("'") != std::string::npos) { field1 = temp3.substr(temp3.find("'")+1); }
+			std::string temp4 = temp2.substr(match2+3);
+			int z5 = temp4.find("','");
+			if (z5 != std::string::npos) { field2 = temp4.substr(0, z5); temp4 = temp4.substr(z5+3); }
+			z5 = temp4.find("','");
+			if (z5 != std::string::npos) { field3 = temp4.substr(0, z5); temp4 = temp4.substr(z5+3); }
+			z5 = temp4.find("')");
+			if (z5 != std::string::npos) { field4 = temp4.substr(0, z5); temp4 = temp4.substr(z5+3); }
+		
+		}
+
+		if (pre != "") { add_option(text, new NonChinese(text), pre, pre, "", "", "", "", pre, pre, "", "", 1, 0, 0, ""); }
+		if (field3 != "") { add_option(text, new Unit(text), "", field1, field2, "", "", "", field3, field4, "", "", 1, 0, 0, ""); }
+
+
+		temp = temp.substr(match+7);
+		match = temp.find("</span>");
+	}
+
+	return;
+}
 
 
 
-
-void Parser::add_option_from_compiled_database(Text *text, std::string english, std::string pinyin, std::string flag, std::string code, std::string table_key, std::string chinese, std::string chinese_utf8s, std::string chinese_utf8c, std::string big5, std::string newstrack, int new_item) {
+void Parser::add_option_from_compiled_database(Text *text, std::string english, std::string pinyin, std::string flag, std::string code, std::string table_key, std::string chinese, std::string chinese_utf8s, std::string chinese_utf8c, std::string big5, std::string newstrack, int new_item, int freq1, float freq2, std::string table) {
 
 			int added = 0;
 
 			if (table_key == "-1") { 
 
-				if (chinese == "0") { add_option(text, new Number(text), "0", "", "ling2", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "1") { add_option(text, new Number(text), "1", "", "yi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "2") { add_option(text, new Number(text), "2", "", "er4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "3") { add_option(text, new Number(text), "3", "", "san1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "4") { add_option(text, new Number(text), "4", "", "si4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "5") { add_option(text, new Number(text), "5", "", "wu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "6") { add_option(text, new Number(text), "6", "", "liu4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "7") { add_option(text, new Number(text), "7", "", "qi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "8") { add_option(text, new Number(text), "8", "", "ba1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-				if (chinese == "9") { add_option(text, new Number(text), "9", "", "jiu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
+				if (chinese == "0") { add_option(text, new Number(text), "0", "", "ling2", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0,0,""); return; }
+				if (chinese == "1") { add_option(text, new Number(text), "1", "", "yi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "2") { add_option(text, new Number(text), "2", "", "er4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "3") { add_option(text, new Number(text), "3", "", "san1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "4") { add_option(text, new Number(text), "4", "", "si4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "5") { add_option(text, new Number(text), "5", "", "wu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "6") { add_option(text, new Number(text), "6", "", "liu4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "7") { add_option(text, new Number(text), "7", "", "qi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "8") { add_option(text, new Number(text), "8", "", "ba1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
+				if (chinese == "9") { add_option(text, new Number(text), "9", "", "jiu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,""); return; }
 
-				add_option(text, new NonChinese(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; return; 
+				add_option(text, new NonChinese(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; return; 
 
 			}
-			if (flag.find("NOUN") != std::string::npos) { add_option(text, new Noun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("VERB") != std::string::npos) { add_option(text, new Verb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ADVB") != std::string::npos) { add_option(text, new Adverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ADJT") != std::string::npos) { add_option(text, new Adjective(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("XING") != std::string::npos) { add_option(text, new Xing(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CONJ") != std::string::npos) { add_option(text, new Conjunction(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ADDRESS") != std::string::npos) { add_option(text, new Address(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("AUXV") != std::string::npos) { add_option(text, new Auxiliary(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BA01") != std::string::npos) { add_option(text, new Ba01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BEI01") != std::string::npos) { add_option(text, new Bei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BI01") != std::string::npos) { add_option(text, new Bi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BING01") != std::string::npos) { add_option(text, new Bing01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BU01") != std::string::npos) { add_option(text, new Bu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CAD") != std::string::npos) { add_option(text, new Cadverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SPECIAL") != std::string::npos) { add_option(text, new Special(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CAI01") != std::string::npos) { add_option(text, new Cai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CHENGYU") != std::string::npos) { add_option(text, new Chengyu(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CHU01") != std::string::npos) { add_option(text, new Chu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CITY") != std::string::npos) { add_option(text, new City(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("COMPLEMENT") != std::string::npos) { add_option(text, new Complement(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CONG01") != std::string::npos) { add_option(text, new Cong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("COUNTRY") != std::string::npos) { add_option(text, new Country(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CUN01") != std::string::npos) { add_option(text, new Cun01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DANG01") != std::string::npos) { add_option(text, new Dang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DAO01") != std::string::npos) { add_option(text, new Dao01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DATE") != std::string::npos) { add_option(text, new Date(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DAY") != std::string::npos) { add_option(text, new Day(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DE01") != std::string::npos) { add_option(text, new De01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DE02") != std::string::npos) { add_option(text, new De02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DETERMINER") != std::string::npos) { add_option(text, new Determiner(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PROPERNOUN") != std::string::npos) { add_option(text, new ProperNoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("GEOGRAPHY") != std::string::npos) { add_option(text, new Geography(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PLACE") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DIRECTIONAL") != std::string::npos) { add_option(text, new Directional(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DUI01") != std::string::npos) { add_option(text, new Dui01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DUIYU01") != std::string::npos) { add_option(text, new Duiyu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("EARTHLYBRANCH") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ER01") != std::string::npos) { add_option(text, new Er01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ERSHI01") != std::string::npos) { add_option(text, new Ershi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ERYAN01") != std::string::npos) { add_option(text, new Eryan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("FOU01") != std::string::npos) { add_option(text, new Fou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("GEI01") != std::string::npos) { add_option(text, new Gei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("GEN01") != std::string::npos) { add_option(text, new Gen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HANGXIAN01") != std::string::npos) { add_option(text, new Hangxian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HE01") != std::string::npos) { add_option(text, new He01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HEAVENLYSTEM") != std::string::npos) { add_option(text, new HeavenlyStem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HOU01") != std::string::npos) { add_option(text, new Hou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HOUR") != std::string::npos) { add_option(text, new Hour(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("JIANG01") != std::string::npos) { add_option(text, new Jiang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("JIU01") != std::string::npos) { add_option(text, new Jiu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("KE01") != std::string::npos) { add_option(text, new Ke01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("LE01") != std::string::npos) { add_option(text, new Le01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("LU01") != std::string::npos) { add_option(text, new Lu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("LI01") != std::string::npos) { add_option(text, new Li01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MW") != std::string::npos) { add_option(text, new Measure(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MEIYOU01") != std::string::npos) { add_option(text, new Meiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MEN01") != std::string::npos) { add_option(text, new Men01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MINUTE") != std::string::npos) { add_option(text, new Minute(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MEASUREMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MONTH") != std::string::npos) { add_option(text, new Month(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("NAME") != std::string::npos) { add_option(text, new Name(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("NUM") != std::string::npos) { add_option(text, new Number(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ONOMAT") != std::string::npos) { add_option(text, new Onomat(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ORG") != std::string::npos) { add_option(text, new Organization(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("UNIFO") != std::string::npos) { add_option(text, new Orguess(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("OTHR") != std::string::npos) { add_option(text, new Other(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PERSON") != std::string::npos) { add_option(text, new Person(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PHONETIC") != std::string::npos) { add_option(text, new Phonetic(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PHRASE") != std::string::npos) { add_option(text, new Phrase(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PREM") != std::string::npos) { add_option(text, new Prem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PREP") != std::string::npos) { add_option(text, new Preposition(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PRONOUN") != std::string::npos) { add_option(text, new Pronoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PUNCT") != std::string::npos) { add_option(text, new Punctuation(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("QUAN01") != std::string::npos) { add_option(text, new Quan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("QU01") != std::string::npos) { add_option(text, new Qu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ROMAN") != std::string::npos) { add_option(text, new Roman(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SECOND") != std::string::npos) { add_option(text, new Second(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHANG01") != std::string::npos) { add_option(text, new Shang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHI01") != std::string::npos) { add_option(text, new Shi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHI02") != std::string::npos) { add_option(text, new Shi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHI03") != std::string::npos) { add_option(text, new Shi03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SUO01") != std::string::npos) { add_option(text, new Suo01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("TEMPORAL") != std::string::npos) { add_option(text, new Temporal(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("TIME") != std::string::npos) { add_option(text, new Time(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("WEI01") != std::string::npos) { add_option(text, new Wei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("XIA01") != std::string::npos) { add_option(text, new Xia01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("XIAN01") != std::string::npos) { add_option(text, new Xian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YEAR") != std::string::npos) { add_option(text, new Year(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YI01") != std::string::npos) { add_option(text, new Yi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YOU01") != std::string::npos) { add_option(text, new You01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YOU02") != std::string::npos) { add_option(text, new You02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YOU03") != std::string::npos) { add_option(text, new You03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YU01") != std::string::npos) { add_option(text, new Yu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YU02") != std::string::npos) { add_option(text, new Yu02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YU03") != std::string::npos) { add_option(text, new Yu03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YUE01") != std::string::npos) { add_option(text, new Yue01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZAI01") != std::string::npos) { add_option(text, new Zai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHE01") != std::string::npos) { add_option(text, new Zhe01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHEN01") != std::string::npos) { add_option(text, new Zhen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHENGZAI001") != std::string::npos) { add_option(text, new Zhengzai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHI01") != std::string::npos) { add_option(text, new Zhi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHI02") != std::string::npos) { add_option(text, new Zhi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHIJIAN01") != std::string::npos) { add_option(text, new Zhijian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHIYI01") != std::string::npos) { add_option(text, new Zhiyi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHIYOU01") != std::string::npos) { add_option(text, new Zhiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHONG01") != std::string::npos) { add_option(text, new Zhong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHOU01") != std::string::npos) { add_option(text, new Zhou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHU01") != std::string::npos) { add_option(text, new Zhu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZI01") != std::string::npos) { add_option(text, new Zi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZIJI01") != std::string::npos) { add_option(text, new Ziji01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (added == 0) { add_option(text, new Unit(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); }
+			if (flag.find("NOUN") != std::string::npos) { add_option(text, new Noun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("VERB") != std::string::npos) { add_option(text, new Verb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ADVB") != std::string::npos) { add_option(text, new Adverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ADJT") != std::string::npos) { add_option(text, new Adjective(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("XING") != std::string::npos) { add_option(text, new Xing(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CONJ") != std::string::npos) { add_option(text, new Conjunction(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ADDRESS") != std::string::npos) { add_option(text, new Address(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("AUXV") != std::string::npos) { add_option(text, new Auxiliary(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("BA01") != std::string::npos) { add_option(text, new Ba01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("BEI01") != std::string::npos) { add_option(text, new Bei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("BI01") != std::string::npos) { add_option(text, new Bi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("BING01") != std::string::npos) { add_option(text, new Bing01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("BU01") != std::string::npos) { add_option(text, new Bu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CAD") != std::string::npos) { add_option(text, new Cadverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SPECIAL") != std::string::npos) { add_option(text, new Special(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CAI01") != std::string::npos) { add_option(text, new Cai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CHENGYU") != std::string::npos) { add_option(text, new Chengyu(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CHU01") != std::string::npos) { add_option(text, new Chu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CITY") != std::string::npos) { add_option(text, new City(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("COMPLEMENT") != std::string::npos) { add_option(text, new Complement(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CONG01") != std::string::npos) { add_option(text, new Cong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("COUNTRY") != std::string::npos) { add_option(text, new Country(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("CUN01") != std::string::npos) { add_option(text, new Cun01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DANG01") != std::string::npos) { add_option(text, new Dang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DAO01") != std::string::npos) { add_option(text, new Dao01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DATE") != std::string::npos) { add_option(text, new Date(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DAY") != std::string::npos) { add_option(text, new Day(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DE01") != std::string::npos) { add_option(text, new De01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DE02") != std::string::npos) { add_option(text, new De02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DETERMINER") != std::string::npos) { add_option(text, new Determiner(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PROPERNOUN") != std::string::npos) { add_option(text, new ProperNoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("GEOGRAPHY") != std::string::npos) { add_option(text, new Geography(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PLACE") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DIRECTIONAL") != std::string::npos) { add_option(text, new Directional(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DUI01") != std::string::npos) { add_option(text, new Dui01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("DUIYU01") != std::string::npos) { add_option(text, new Duiyu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("EARTHLYBRANCH") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ER01") != std::string::npos) { add_option(text, new Er01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ERSHI01") != std::string::npos) { add_option(text, new Ershi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ERYAN01") != std::string::npos) { add_option(text, new Eryan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("FOU01") != std::string::npos) { add_option(text, new Fou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("GEI01") != std::string::npos) { add_option(text, new Gei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("GEN01") != std::string::npos) { add_option(text, new Gen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("HANGXIAN01") != std::string::npos) { add_option(text, new Hangxian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("HE01") != std::string::npos) { add_option(text, new He01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("HEAVENLYSTEM") != std::string::npos) { add_option(text, new HeavenlyStem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("HOU01") != std::string::npos) { add_option(text, new Hou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("HOUR") != std::string::npos) { add_option(text, new Hour(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("JIANG01") != std::string::npos) { add_option(text, new Jiang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("JIU01") != std::string::npos) { add_option(text, new Jiu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("KE01") != std::string::npos) { add_option(text, new Ke01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("LE01") != std::string::npos) { add_option(text, new Le01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("LU01") != std::string::npos) { add_option(text, new Lu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("LI01") != std::string::npos) { add_option(text, new Li01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MW") != std::string::npos) { add_option(text, new Measure(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MEIYOU01") != std::string::npos) { add_option(text, new Meiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MEN01") != std::string::npos) { add_option(text, new Men01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MINUTE") != std::string::npos) { add_option(text, new Minute(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MEASUREMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("MONTH") != std::string::npos) { add_option(text, new Month(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("NAME") != std::string::npos) { add_option(text, new Name(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("NUM") != std::string::npos) { add_option(text, new Number(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ONOMAT") != std::string::npos) { add_option(text, new Onomat(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ORG") != std::string::npos) { add_option(text, new Organization(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("UNIFO") != std::string::npos) { add_option(text, new Orguess(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("OTHR") != std::string::npos) { add_option(text, new Other(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PERSON") != std::string::npos) { add_option(text, new Person(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PHONETIC") != std::string::npos) { add_option(text, new Phonetic(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PHRASE") != std::string::npos) { add_option(text, new Phrase(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PREM") != std::string::npos) { add_option(text, new Prem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PREP") != std::string::npos) { add_option(text, new Preposition(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PRONOUN") != std::string::npos) { add_option(text, new Pronoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("PUNCT") != std::string::npos) { add_option(text, new Punctuation(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("QUAN01") != std::string::npos) { add_option(text, new Quan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("QU01") != std::string::npos) { add_option(text, new Qu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ROMAN") != std::string::npos) { add_option(text, new Roman(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SECOND") != std::string::npos) { add_option(text, new Second(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SHANG01") != std::string::npos) { add_option(text, new Shang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SHI01") != std::string::npos) { add_option(text, new Shi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SHI02") != std::string::npos) { add_option(text, new Shi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SHI03") != std::string::npos) { add_option(text, new Shi03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("SUO01") != std::string::npos) { add_option(text, new Suo01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("TEMPORAL") != std::string::npos) { add_option(text, new Temporal(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("TIME") != std::string::npos) { add_option(text, new Time(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("WEI01") != std::string::npos) { add_option(text, new Wei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("XIA01") != std::string::npos) { add_option(text, new Xia01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("XIAN01") != std::string::npos) { add_option(text, new Xian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YEAR") != std::string::npos) { add_option(text, new Year(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YI01") != std::string::npos) { add_option(text, new Yi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YOU01") != std::string::npos) { add_option(text, new You01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YOU02") != std::string::npos) { add_option(text, new You02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YOU03") != std::string::npos) { add_option(text, new You03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YU01") != std::string::npos) { add_option(text, new Yu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YU02") != std::string::npos) { add_option(text, new Yu02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YU03") != std::string::npos) { add_option(text, new Yu03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("YUE01") != std::string::npos) { add_option(text, new Yue01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZAI01") != std::string::npos) { add_option(text, new Zai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHE01") != std::string::npos) { add_option(text, new Zhe01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHEN01") != std::string::npos) { add_option(text, new Zhen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHENGZAI001") != std::string::npos) { add_option(text, new Zhengzai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHI01") != std::string::npos) { add_option(text, new Zhi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHI02") != std::string::npos) { add_option(text, new Zhi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHIJIAN01") != std::string::npos) { add_option(text, new Zhijian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHIYI01") != std::string::npos) { add_option(text, new Zhiyi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHIYOU01") != std::string::npos) { add_option(text, new Zhiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHONG01") != std::string::npos) { add_option(text, new Zhong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHOU01") != std::string::npos) { add_option(text, new Zhou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZHU01") != std::string::npos) { add_option(text, new Zhu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZI01") != std::string::npos) { add_option(text, new Zi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (flag.find("ZIJI01") != std::string::npos) { add_option(text, new Ziji01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); added++; new_item = 0; }
+			if (added == 0) { add_option(text, new Unit(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table); }
 
 			new_item = 0;
 
@@ -317,7 +360,7 @@ void Parser::add_option_from_compiled_database(Text *text, std::string english, 
 
 
 
-void Parser::add_option(Text *maintext, Text *subtext, std::string chinese, std::string english, std::string pinyin, std::string flag, std::string code, std::string table_pkey, std::string chinese_utf8s, std::string chinese_utf8c, std::string chinese_big5, std::string newstrack, int new_item) {
+void Parser::add_option(Text *maintext, Text *subtext, std::string chinese, std::string english, std::string pinyin, std::string flag, std::string code, std::string table_pkey, std::string chinese_utf8s, std::string chinese_utf8c, std::string chinese_big5, std::string newstrack, int new_item, int freq1, float freq2, std::string table) {
 
 	subtext->field_rank->push_back(0.0);
 	subtext->field_english->push_back(english);
@@ -325,6 +368,8 @@ void Parser::add_option(Text *maintext, Text *subtext, std::string chinese, std:
 	subtext->field_code->push_back(code);
 	subtext->field_pkey->push_back(table_pkey);
 	subtext->field_newstrack->push_back(newstrack);
+
+	subtext->table = table;
 
 	subtext->chinese = chinese;
 	subtext->english = english;
@@ -371,25 +416,25 @@ void Parser::populate_text_elements(std::string str, Text *text, std::string myt
 		chinese_utf8c = str;
 		big5 = str;
 
-		if (str == "0") { add_option(text, new Number(text), "0", "", "ling2", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "1") { add_option(text, new Number(text), "1", "", "yi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "2") { add_option(text, new Number(text), "2", "", "er4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "3") { add_option(text, new Number(text), "3", "", "san1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "4") { add_option(text, new Number(text), "4", "", "si4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "5") { add_option(text, new Number(text), "5", "", "wu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "6") { add_option(text, new Number(text), "6", "", "liu4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "7") { add_option(text, new Number(text), "7", "", "qi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "8") { add_option(text, new Number(text), "8", "", "ba1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		if (str == "9") { add_option(text, new Number(text), "9", "", "jiu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); return; }
-		add_option(text, new NonChinese(text), chinese, chinese, chinese, "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1); 
+		if (str == "0") { add_option(text, new Number(text), "0", "", "ling2", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "1") { add_option(text, new Number(text), "1", "", "yi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "2") { add_option(text, new Number(text), "2", "", "er4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "3") { add_option(text, new Number(text), "3", "", "san1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "4") { add_option(text, new Number(text), "4", "", "si4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "5") { add_option(text, new Number(text), "5", "", "wu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "6") { add_option(text, new Number(text), "6", "", "liu4", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "7") { add_option(text, new Number(text), "7", "", "qi1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "8") { add_option(text, new Number(text), "8", "", "ba1", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		if (str == "9") { add_option(text, new Number(text), "9", "", "jiu3", "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1, 0, 0,mytable); return; }
+		add_option(text, new NonChinese(text), chinese, chinese, chinese, "", "", "-1", chinese_utf8s, chinese_utf8c, big5, "", 1,0,0,mytable); 
 		return;
 	 }	
 	try {
 
-		//*results = text->adso->select_query("ENGLISH, PINYIN, FLAG, CODE, pkey, CHINESE, CHINESE_UTF8_S, CHINESE_UTF8_C, CHINESE_BIG5, NEWSTRACK", mytable, search_field, str);
-		*results = text->adso->select_query("ENGLISH, PINYIN, FLAG, CODE, pkey, CHINESE, CHINESE_UTF8_S, CHINESE_UTF8_C", mytable, search_field, str);
+		//*results = text->adso->select_query("ENGLISH, PINYIN, FLAG, CODE, pkey, CHINESE, CHINESE_UTF8_S, CHINESE_UTF8_C, CHINESE_BIG5, NEWSTRACK, FREQ", mytable, search_field, str);
+		*results = text->adso->select_query("ENGLISH, PINYIN, FLAG, CODE, pkey, CHINESE, CHINESE_UTF8_S, CHINESE_UTF8_C, FREQ", mytable, search_field, str);
 
-		for (unsigned int i = 0, c = 0; c <= results->size()/10; c++, i+=10) {
+		for (unsigned int i = 0, c = 0; c <= results->size()/9; c++, i+=9) {
 
 			int added = 0;
 
@@ -401,122 +446,126 @@ void Parser::populate_text_elements(std::string str, Text *text, std::string myt
 			chinese = results->at(i+5);
 			chinese_utf8s = results->at(i+6);
 			chinese_utf8c = results->at(i+7);
+			//big5 = results->at(i+8);
+			//newstrack = results->at(i+9);
 			big5 = "";
 			newstrack = "";
+			int freq1 = 0;
+			float freq2 = 0;
 
-			if (flag.find("NOUN") != std::string::npos) { add_option(text, new Noun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("VERB") != std::string::npos) { add_option(text, new Verb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ADVB") != std::string::npos) { add_option(text, new Adverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ADJT") != std::string::npos) { add_option(text, new Adjective(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("XING") != std::string::npos) { add_option(text, new Xing(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CONJ") != std::string::npos) { add_option(text, new Conjunction(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ADDRESS") != std::string::npos) { add_option(text, new Address(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("AUXV") != std::string::npos) { add_option(text, new Auxiliary(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BA01") != std::string::npos) { add_option(text, new Ba01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BEI01") != std::string::npos) { add_option(text, new Bei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BI01") != std::string::npos) { add_option(text, new Bi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BING01") != std::string::npos) { add_option(text, new Bing01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("BU01") != std::string::npos) { add_option(text, new Bu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CAD") != std::string::npos) { add_option(text, new Cadverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SPECIAL") != std::string::npos) { add_option(text, new Special(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CAI01") != std::string::npos) { add_option(text, new Cai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CHENGYU") != std::string::npos) { add_option(text, new Chengyu(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CHU01") != std::string::npos) { add_option(text, new Chu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CITY") != std::string::npos) { add_option(text, new City(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("COMPLEMENT") != std::string::npos) { add_option(text, new Complement(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CONG01") != std::string::npos) { add_option(text, new Cong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("COUNTRY") != std::string::npos) { add_option(text, new Country(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("CUN01") != std::string::npos) { add_option(text, new Cun01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DANG01") != std::string::npos) { add_option(text, new Dang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DAO01") != std::string::npos) { add_option(text, new Dao01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DATE") != std::string::npos) { add_option(text, new Date(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DAY") != std::string::npos) { add_option(text, new Day(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DE01") != std::string::npos) { add_option(text, new De01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DE02") != std::string::npos) { add_option(text, new De02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DETERMINER") != std::string::npos) { add_option(text, new Determiner(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PROPERNOUN") != std::string::npos) { add_option(text, new ProperNoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("GEOGRAPHY") != std::string::npos) { add_option(text, new Geography(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PLACE") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DIRECTIONAL") != std::string::npos) { add_option(text, new Directional(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DUI01") != std::string::npos) { add_option(text, new Dui01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("DUIYU01") != std::string::npos) { add_option(text, new Duiyu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("EARTHLYBRANCH") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ER01") != std::string::npos) { add_option(text, new Er01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ERSHI01") != std::string::npos) { add_option(text, new Ershi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ERYAN01") != std::string::npos) { add_option(text, new Eryan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("FOU01") != std::string::npos) { add_option(text, new Fou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("GEI01") != std::string::npos) { add_option(text, new Gei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("GEN01") != std::string::npos) { add_option(text, new Gen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HANGXIAN01") != std::string::npos) { add_option(text, new Hangxian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HE01") != std::string::npos) { add_option(text, new He01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HEAVENLYSTEM") != std::string::npos) { add_option(text, new HeavenlyStem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HOU01") != std::string::npos) { add_option(text, new Hou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("HOUR") != std::string::npos) { add_option(text, new Hour(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("JIANG01") != std::string::npos) { add_option(text, new Jiang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("JIU01") != std::string::npos) { add_option(text, new Jiu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("KE01") != std::string::npos) { add_option(text, new Ke01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("LE01") != std::string::npos) { add_option(text, new Le01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("LU01") != std::string::npos) { add_option(text, new Lu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("LI01") != std::string::npos) { add_option(text, new Li01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MW") != std::string::npos) { add_option(text, new Measure(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MEIYOU01") != std::string::npos) { add_option(text, new Meiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MEN01") != std::string::npos) { add_option(text, new Men01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MINUTE") != std::string::npos) { add_option(text, new Minute(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MEASUREMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("MONTH") != std::string::npos) { add_option(text, new Month(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("NAME") != std::string::npos) { add_option(text, new Name(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("NUM") != std::string::npos) { add_option(text, new Number(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ONOMAT") != std::string::npos) { add_option(text, new Onomat(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ORG") != std::string::npos) { add_option(text, new Organization(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("UNIFO") != std::string::npos) { add_option(text, new Orguess(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("OTHR") != std::string::npos) { add_option(text, new Other(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PERSON") != std::string::npos) { add_option(text, new Person(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PHONETIC") != std::string::npos) { add_option(text, new Phonetic(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PHRASE") != std::string::npos) { add_option(text, new Phrase(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PREM") != std::string::npos) { add_option(text, new Prem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PREP") != std::string::npos) { add_option(text, new Preposition(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PRONOUN") != std::string::npos) { add_option(text, new Pronoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("PUNCT") != std::string::npos) { add_option(text, new Punctuation(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("QUAN01") != std::string::npos) { add_option(text, new Quan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("QU01") != std::string::npos) { add_option(text, new Qu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ROMAN") != std::string::npos) { add_option(text, new Roman(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SECOND") != std::string::npos) { add_option(text, new Second(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHANG01") != std::string::npos) { add_option(text, new Shang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHI01") != std::string::npos) { add_option(text, new Shi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHI02") != std::string::npos) { add_option(text, new Shi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SHI03") != std::string::npos) { add_option(text, new Shi03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("SUO01") != std::string::npos) { add_option(text, new Suo01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("TEMPORAL") != std::string::npos) { add_option(text, new Temporal(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("TIME") != std::string::npos) { add_option(text, new Time(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("WEI01") != std::string::npos) { add_option(text, new Wei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("XIA01") != std::string::npos) { add_option(text, new Xia01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("XIAN01") != std::string::npos) { add_option(text, new Xian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YEAR") != std::string::npos) { add_option(text, new Year(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YI01") != std::string::npos) { add_option(text, new Yi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YOU01") != std::string::npos) { add_option(text, new You01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YOU02") != std::string::npos) { add_option(text, new You02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YOU03") != std::string::npos) { add_option(text, new You03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YU01") != std::string::npos) { add_option(text, new Yu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YU02") != std::string::npos) { add_option(text, new Yu02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YU03") != std::string::npos) { add_option(text, new Yu03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("YUE01") != std::string::npos) { add_option(text, new Yue01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZAI01") != std::string::npos) { add_option(text, new Zai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHE01") != std::string::npos) { add_option(text, new Zhe01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHEN01") != std::string::npos) { add_option(text, new Zhen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHENGZAI001") != std::string::npos) { add_option(text, new Zhengzai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHI01") != std::string::npos) { add_option(text, new Zhi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHI02") != std::string::npos) { add_option(text, new Zhi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHIJIAN01") != std::string::npos) { add_option(text, new Zhijian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHIYI01") != std::string::npos) { add_option(text, new Zhiyi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHIYOU01") != std::string::npos) { add_option(text, new Zhiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHONG01") != std::string::npos) { add_option(text, new Zhong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHOU01") != std::string::npos) { add_option(text, new Zhou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZHU01") != std::string::npos) { add_option(text, new Zhu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZI01") != std::string::npos) { add_option(text, new Zi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (flag.find("ZIJI01") != std::string::npos) { add_option(text, new Ziji01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); added++; new_item = 0; }
-			if (added == 0) { add_option(text, new Unit(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item); }
+			if (flag.find("NOUN") != std::string::npos) { add_option(text, new Noun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("VERB") != std::string::npos) { add_option(text, new Verb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ADVB") != std::string::npos) { add_option(text, new Adverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ADJT") != std::string::npos) { add_option(text, new Adjective(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("XING") != std::string::npos) { add_option(text, new Xing(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CONJ") != std::string::npos) { add_option(text, new Conjunction(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ADDRESS") != std::string::npos) { add_option(text, new Address(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("AUXV") != std::string::npos) { add_option(text, new Auxiliary(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("BA01") != std::string::npos) { add_option(text, new Ba01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("BEI01") != std::string::npos) { add_option(text, new Bei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("BI01") != std::string::npos) { add_option(text, new Bi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("BING01") != std::string::npos) { add_option(text, new Bing01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("BU01") != std::string::npos) { add_option(text, new Bu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CAD") != std::string::npos) { add_option(text, new Cadverb(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SPECIAL") != std::string::npos) { add_option(text, new Special(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CAI01") != std::string::npos) { add_option(text, new Cai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CHENGYU") != std::string::npos) { add_option(text, new Chengyu(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CHU01") != std::string::npos) { add_option(text, new Chu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CITY") != std::string::npos) { add_option(text, new City(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("COMPLEMENT") != std::string::npos) { add_option(text, new Complement(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CONG01") != std::string::npos) { add_option(text, new Cong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("COUNTRY") != std::string::npos) { add_option(text, new Country(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("CUN01") != std::string::npos) { add_option(text, new Cun01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DANG01") != std::string::npos) { add_option(text, new Dang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DAO01") != std::string::npos) { add_option(text, new Dao01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DATE") != std::string::npos) { add_option(text, new Date(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DAY") != std::string::npos) { add_option(text, new Day(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DE01") != std::string::npos) { add_option(text, new De01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DE02") != std::string::npos) { add_option(text, new De02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DETERMINER") != std::string::npos) { add_option(text, new Determiner(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PROPERNOUN") != std::string::npos) { add_option(text, new ProperNoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("GEOGRAPHY") != std::string::npos) { add_option(text, new Geography(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PLACE") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DIRECTIONAL") != std::string::npos) { add_option(text, new Directional(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DUI01") != std::string::npos) { add_option(text, new Dui01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("DUIYU01") != std::string::npos) { add_option(text, new Duiyu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("EARTHLYBRANCH") != std::string::npos) { add_option(text, new Place(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ER01") != std::string::npos) { add_option(text, new Er01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ERSHI01") != std::string::npos) { add_option(text, new Ershi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ERYAN01") != std::string::npos) { add_option(text, new Eryan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("FOU01") != std::string::npos) { add_option(text, new Fou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("GEI01") != std::string::npos) { add_option(text, new Gei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("GEN01") != std::string::npos) { add_option(text, new Gen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("HANGXIAN01") != std::string::npos) { add_option(text, new Hangxian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("HE01") != std::string::npos) { add_option(text, new He01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("HEAVENLYSTEM") != std::string::npos) { add_option(text, new HeavenlyStem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("HOU01") != std::string::npos) { add_option(text, new Hou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("HOUR") != std::string::npos) { add_option(text, new Hour(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("JIANG01") != std::string::npos) { add_option(text, new Jiang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("JIU01") != std::string::npos) { add_option(text, new Jiu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("KE01") != std::string::npos) { add_option(text, new Ke01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("LE01") != std::string::npos) { add_option(text, new Le01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("LU01") != std::string::npos) { add_option(text, new Lu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("LI01") != std::string::npos) { add_option(text, new Li01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MW") != std::string::npos) { add_option(text, new Measure(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MEIYOU01") != std::string::npos) { add_option(text, new Meiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MEN01") != std::string::npos) { add_option(text, new Men01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MINUTE") != std::string::npos) { add_option(text, new Minute(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MEASUREMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MMENT") != std::string::npos) { add_option(text, new Mment(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("MONTH") != std::string::npos) { add_option(text, new Month(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("NAME") != std::string::npos) { add_option(text, new Name(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("NUM") != std::string::npos) { add_option(text, new Number(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ONOMAT") != std::string::npos) { add_option(text, new Onomat(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ORG") != std::string::npos) { add_option(text, new Organization(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("UNIFO") != std::string::npos) { add_option(text, new Orguess(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("OTHR") != std::string::npos) { add_option(text, new Other(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PERSON") != std::string::npos) { add_option(text, new Person(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PHONETIC") != std::string::npos) { add_option(text, new Phonetic(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PHRASE") != std::string::npos) { add_option(text, new Phrase(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PREM") != std::string::npos) { add_option(text, new Prem(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PREP") != std::string::npos) { add_option(text, new Preposition(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PRONOUN") != std::string::npos) { add_option(text, new Pronoun(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("PUNCT") != std::string::npos) { add_option(text, new Punctuation(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("QUAN01") != std::string::npos) { add_option(text, new Quan01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("QU01") != std::string::npos) { add_option(text, new Qu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ROMAN") != std::string::npos) { add_option(text, new Roman(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SECOND") != std::string::npos) { add_option(text, new Second(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SHANG01") != std::string::npos) { add_option(text, new Shang01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SHI01") != std::string::npos) { add_option(text, new Shi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SHI02") != std::string::npos) { add_option(text, new Shi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SHI03") != std::string::npos) { add_option(text, new Shi03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("SUO01") != std::string::npos) { add_option(text, new Suo01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("TEMPORAL") != std::string::npos) { add_option(text, new Temporal(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("TIME") != std::string::npos) { add_option(text, new Time(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("WEI01") != std::string::npos) { add_option(text, new Wei01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("XIA01") != std::string::npos) { add_option(text, new Xia01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("XIAN01") != std::string::npos) { add_option(text, new Xian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YEAR") != std::string::npos) { add_option(text, new Year(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YI01") != std::string::npos) { add_option(text, new Yi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YOU01") != std::string::npos) { add_option(text, new You01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YOU02") != std::string::npos) { add_option(text, new You02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YOU03") != std::string::npos) { add_option(text, new You03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YU01") != std::string::npos) { add_option(text, new Yu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YU02") != std::string::npos) { add_option(text, new Yu02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YU03") != std::string::npos) { add_option(text, new Yu03(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("YUE01") != std::string::npos) { add_option(text, new Yue01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZAI01") != std::string::npos) { add_option(text, new Zai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHE01") != std::string::npos) { add_option(text, new Zhe01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHEN01") != std::string::npos) { add_option(text, new Zhen01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHENGZAI001") != std::string::npos) { add_option(text, new Zhengzai01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHI01") != std::string::npos) { add_option(text, new Zhi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHI02") != std::string::npos) { add_option(text, new Zhi02(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHIJIAN01") != std::string::npos) { add_option(text, new Zhijian01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHIYI01") != std::string::npos) { add_option(text, new Zhiyi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHIYOU01") != std::string::npos) { add_option(text, new Zhiyou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHONG01") != std::string::npos) { add_option(text, new Zhong01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHOU01") != std::string::npos) { add_option(text, new Zhou01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZHU01") != std::string::npos) { add_option(text, new Zhu01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZI01") != std::string::npos) { add_option(text, new Zi01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (flag.find("ZIJI01") != std::string::npos) { add_option(text, new Ziji01(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); added++; new_item = 0; }
+			if (added == 0) { add_option(text, new Unit(text), chinese, english, pinyin, flag, code, table_key, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,mytable); }
 
 			new_item = 0;
 		}
@@ -555,11 +604,29 @@ void Parser::longest_word_match(Text *text) {
 	std::string where2 = "";
 	std::string pkey = "pkey";
 
+	std::string reverse_search_index = "";
+	std::string reverse_pkey = "";
+	std::string reverse_search_field = "";
+
 	std::string search_field = "CHINESE";
 	std::string search_index = "character_index";
-	if (text->encoding->input_encoding == 2) { search_field = "CHINESE_UTF8_S"; search_index = "utf8s_index"; }
-	if (text->encoding->input_script == 2) { search_field = "CHINESE_UTF8_C"; search_index = "utf8c_index"; pkey = "first"; }
+	if (text->encoding->input_encoding == 2) { 
+		search_field = "CHINESE_UTF8_S"; 
+		search_index = "utf8s_index"; 
+		reverse_search_index = "utf8c_index";
+		reverse_pkey = "first";
+		reverse_search_field = "CHINESE_UTF8_C";
+	}
+	if (text->encoding->input_script == 2) { 
+		search_field = "CHINESE_UTF8_C"; 
+		search_index = "utf8c_index"; 
+		pkey = "first"; 
+		reverse_search_index = "utf8s_index";
+		reverse_search_field = "CHINESE_UTF8_S";
+		reverse_pkey = "pkey";
+	}
 
+	int reverse_search_enabled = 0;
 
 
 	int first_char_length = 0;
@@ -569,6 +636,8 @@ void Parser::longest_word_match(Text *text) {
 	first_char_length = text->encoding->first_character_length(temp);
 	
 	while (first_char_length > 0) {
+
+		reverse_search_enabled = 0;
 
 		// Default to a Single Character	
 		wordlength = first_char_length;
@@ -614,16 +683,60 @@ void Parser::longest_word_match(Text *text) {
 
 		} else {
 
-			// Not Found in Index - (ASCII?) add as single char
-			current_table = "";
-			wordlength = 1;
+			// Use Database to Identify Longer Matches
+			if (text->encoding->input_encoding == 2) {
+
+				*results = text->adso->select_query(reverse_pkey, reverse_search_index, "name", first_char);
+				if (results->size() > 0) {
+
+					key = results->at(0);
+
+					// Fetch All Possibilities
+					current_table = "_" + key;
+					current_match = first_char;
+					current_match_size = first_char_length;
+
+					*results = text->adso->select_query_wildcard(reverse_search_field, current_table, reverse_search_field, where2);
+
+					// find the largest match
+					for (unsigned int i = 0; i < results->size(); i++) {
+						if (results->at(i).length() > current_match_size) {
+							if (temp.find(results->at(i)) == 0) {
+								current_match = results->at(i);
+								current_match_size = current_match.length();
+							}
+						}
+					}
+	
+					wordlength = current_match_size;
+					reverse_search_enabled = 1;
+				} else {
+
+					// UTF8 but still not found in index on reverse check
+					current_table = "";
+					wordlength = 1;
+
+				}
+
+			} else {
+
+				// Not Found in Index - (ASCII?) add as single char
+				current_table = "";
+				wordlength = 1;
+			}
+
 		}
+
 
 
 		// Add Word 
 		word = temp.substr(0, wordlength);
 		temp = temp.substr(wordlength);
-		populate_text_elements(word, text, current_table, search_field);
+		if (reverse_search_enabled == 1) {
+			populate_text_elements(word, text, current_table, reverse_search_field);
+		} else {
+			populate_text_elements(word, text, current_table, search_field);
+		}
 
 
 		// Prepare for Next Loop
@@ -697,15 +810,16 @@ void Parser::parse_against_compiled_database(Text *text) {
 					if (tempstr.length() > current_match_size) {
 						if (tempstr.length() <= temp.length()) {
 							if (tempstr == temp.substr(0, tempstr.length())) {
+
+
                                                                 if (no_phrases == 0) {
-                                                     	                current_match_size = tempstr.length();
+                                                                        current_match_size = tempstr.length();
                                                                 } else {
                                                                         pos = answer[i][5];
                                                                         if (pos.find("PHRASE") == std::string::npos) {
-                                                                        	current_match_size = tempstr.length();
-                                                                	}
-                                                         	}
- 
+                                                                                current_match_size = tempstr.length();
+                                                                        }
+                                                                }
 
 							}
 						}
@@ -722,6 +836,9 @@ void Parser::parse_against_compiled_database(Text *text) {
 				if (tempstr.length() == current_match_size) {
 					if (tempstr == temp.substr(0, tempstr.length())) {
 
+						int freq1 = 0;
+						float freq2 = 0;
+
 						std::string english = answer[i][6];
 						std::string pinyin = answer[i][7];
 						std::string chinese = answer[i][1];
@@ -732,7 +849,7 @@ void Parser::parse_against_compiled_database(Text *text) {
 						std::string code = answer[i][8];
 						std::string table_key = answer[i][0];
 						std::string newstrack = "";
-						add_option_from_compiled_database(text, english, pinyin, flag, code, table_key, chinese, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item);
+						add_option_from_compiled_database(text, english, pinyin, flag, code, table_key, chinese, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table);
 						new_item = 0;
 					}
 				}
@@ -742,7 +859,6 @@ void Parser::parse_against_compiled_database(Text *text) {
 
 		} else {
 			if (search_index == 4) { 
-//				table = compiled_database->search_index_utf8s(first_char);
 				table = compiled_database->search_index_utf8s(first_char);
 				if (first_char.find("?") != std::string::npos) { table = -1; }
 				if (table != -1) {
@@ -764,16 +880,16 @@ void Parser::parse_against_compiled_database(Text *text) {
 							if (tempstr.length() > current_match_size) {
 								if (tempstr.length() <= temp.length()) {
 									if (tempstr == temp.substr(0, tempstr.length())) {
-        		                                                        if (no_phrases == 0) {
-                		                                                        current_match_size = tempstr.length();
-                        		                                        } else {
-		                                                                	pos = answer[i][5];
-											if (pos.find("PHRASE") == std::string::npos) {
-                		                                                        	current_match_size = tempstr.length();
-											}
-										}
-									}
-								}
+
+                                                                if (no_phrases == 0) {
+                                                                        current_match_size = tempstr.length();
+                                                                } else {
+                                                                        pos = answer[i][5];
+                                                                        if (pos.find("PHRASE") == std::string::npos) {
+                                                                                current_match_size = tempstr.length();
+                                                                        }
+                                                                }
+
 							}
 						}
 					}
@@ -797,23 +913,26 @@ void Parser::parse_against_compiled_database(Text *text) {
 								std::string code = answer[i][8];
 								std::string table_key = answer[i][0];
 								std::string newstrack = "";
-								add_option_from_compiled_database(text, english, pinyin, flag, code, table_key, chinese, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item);
+								int freq1 = 0;
+								float freq2 = 0;
+								add_option_from_compiled_database(text, english, pinyin, flag, code, table_key, chinese, chinese_utf8s, chinese_utf8c, big5, newstrack, new_item, freq1, freq2,table);
 								new_item = 0;
 							}
 						}
 					}
 					wordlength = current_match_size;
 				} else {
+
 					wordlength = 1;
 					word = temp.substr(0, wordlength);
-					add_option_from_compiled_database(text, "", "", "", "", "-1", word, word, word, word, "", 1);
+					add_option_from_compiled_database(text, "", "", "", "", "-1", word, word, word, word, "", 1,0,0,"");
 					new_item = 0;
 				}
 			} else {
 				// Add as ASCII
 				wordlength = 1;
 				word = temp.substr(0, wordlength);
-				add_option_from_compiled_database(text, "", "", "", "", "-1", word, word, word, word, "", 1);
+				add_option_from_compiled_database(text, "", "", "", "", "-1", word, word, word, word, "", 1,0,0,"");
 				new_item = 0;
 			}
 		}
@@ -823,7 +942,7 @@ void Parser::parse_against_compiled_database(Text *text) {
 			wordlength = 1;
 			word = temp.substr(0, wordlength);
 			temp = temp.substr(wordlength);
-			add_option_from_compiled_database(text, word, "", "", "", "-1", word, word, word, "", "", new_item);
+			add_option_from_compiled_database(text, word, "", "", "", "-1", word, word, word, "", "", new_item,0,0,"");
 		}
 
 		// Prepare for Next Loop
