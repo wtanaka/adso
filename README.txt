@@ -11,9 +11,7 @@ Adso is a semantic analysis engine for Chinese text. It provides:
 * document preprocessing for search/clustering/etc.
 * semantic REGEXP
 
-Adso is available free-of-charge for non-commercial use. Permission for commercial use will generally be given to organizations/individuals who feed back to our community by helping promote the development of open corpi for bilingual text analysis and e-learning.
-
-Adso is designed so users can easily add or disable text-manipulation rules. The software comes with a default set of grammar rules: if you spot an error or missegmentation, please email us so that we can fix it. Missing entries can be added through our dictionary interface (http://www.adsotrans.com or http://dict.chinesepod.com) as well. We require contributors to provide us with joint copyright over contributions to our database, but respect the rights of major contributors to release materials under alternate licenses if desired (contact us for details). All contributions and edits are reviewed more or less monthly for quality control purposes.
+Adso is designed so that additional rules can be provided to the engine through external rulesets. The software comes with a default set of grammar rules: if you spot an error or missegmentation, please email us so that we can fix it. Missing entries can be added through our dictionary interface (http://www.adsotrans.com or http://dict.chinesepod.com) as well. We require contributors to provide us with joint copyright over contributions to our database, but respect the rights of major contributors to release materials under alternate licenses if desired (contact us for details). All contributions and edits are reviewed more or less monthly for quality control purposes.
 
 If you see a general grammatical rule Adso does not support, or a word that is routinely translated incorrectly in a very specific context, we can fix it. Please provide:
 
@@ -221,8 +219,8 @@ MAKE_ONLY:
 		- <MAKE_ONLY 1 Adverb><NEXT 2 1>Verb</NEXT></MAKE_ONLY>
 		- makes the next entry an Adverb if the second next entry is a verb.
 
-<DELETE [category] [location]>
-  -- deletes [category] at relative location [location]. Will not delete EVERYTHING at any location unless "all" is provided as the "category". This is to prevent accidentally deleting the only definition for a word that exists.
+<DELETE [category] [location]> 
+  -- deletes [category] at relative location [location]. Will not delete EVERYTHING at any location unless "all" is provided as the "category". This is to prevent accidentally deleting the only definition for a word that exists. <DELETE all> will remove a word completely from the text.
 
 
 <SWITCH int a, int b> 
