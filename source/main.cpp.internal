@@ -453,8 +453,8 @@ std::string process(std::string x, Text *text, Ontology *ontology) {
 
         // Switch Script as Necessary
         if (switch_script == 1) {
-          if (text->encoding->input_script == 1) { text->encoding->output_script = 1; }
-          else                                   { text->encoding->output_script = 2; }
+          if (text->encoding->input_script == 1) { text->encoding->output_script = 2; }
+          else                                   { text->encoding->output_script = 1; }
         }
 
 

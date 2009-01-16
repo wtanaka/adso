@@ -138,7 +138,6 @@ int Number::unify(Text *parent, int a, int b, int c) {
 
 
 
-
 	// Now Generate the Pinyin
 	pinyin = generate_complex_pinyin(whole_number);
 
@@ -1531,7 +1530,7 @@ void Number::generate_numbers() {
 
 	// Generate Chinese for the Whole Number
 	for (int i = 0, j = 1; j == 1 && post->post_chinese != NULL; i++) {
-		if (post->post_chinese->chinese == "." || post->post_chinese->chinese == "го" || post->post_chinese->chinese == "╡у") {
+		if (post->post_chinese->chinese == "." || post->post_chinese->chinese_utf8s == "." || post->post_chinese->chinese == "го" || post->post_chinese->chinese == "╡у") {
 			j = 0;
 			max_loop--;
 			decimal_found = 1;
@@ -1603,7 +1602,6 @@ void Number::generate_numbers() {
 		else {
 
 			if (temp < 10) {
-
 				if (last_place_signifier == 1) {
 
 					mm/=10;
@@ -1619,12 +1617,9 @@ void Number::generate_numbers() {
 					y = 0;
 					last_place_signifier = 0;
 				}
-
 				first_number = 0;
-
 			}
 			else {
-
 				if (mm < temp) { 
 					if (prev_place_signifier == 0) {
 						int temp2 = temp/10;
@@ -1656,15 +1651,16 @@ void Number::generate_numbers() {
 
 		}
 		}
+
 	}
 
-	if (y == 1) { whole_num = (int) mm + whole_num; }
+
+
+	if (y == 1) { whole_num = (int) (mm + whole_num) / 10; }
 	if (post_number > 0 ) { whole_num += post_number; }
 
 
 
-
-	
 
 	int yi_in_decimal = 0;
 
@@ -1693,9 +1689,8 @@ void Number::generate_numbers() {
 			if (temp < 9) { decimal_num += (dmm * temp); dmm *= 0.1; }
 		}
 	}
+
 	if (mm > 1) { decimal_multiplier = mm; }
-
-
 
 
 
@@ -1715,10 +1710,10 @@ void Number::generate_numbers() {
 			if (bigger_than_dec <= 0) {}
 			else {
 				decimal_num = bigger_than_dec - (decimal_num * (decimal_multiplier));
-				if (decimal_num < 0.0001 && decimal_multiplier > 1) { decimal_num = 0; }
+                                decimal_num *= -1;
+				if (decimal_num < 0.0001 && decimal_multiplier > 1) { std::cout << "BAD: " << decimal_num << " -- " << decimal_multiplier << std::endl; decimal_num = 0; }
 				whole_num += bigger_than_dec;
 			}
-
 		}
 
 
@@ -1758,6 +1753,7 @@ void Number::generate_numbers() {
 		myStream << whole_num; 
 		english = myStream.str(); 
 	}
+
 
 	whole_number = whole_num;
 	decimal_number = decimal_num;

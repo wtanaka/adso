@@ -1,3 +1,8 @@
+October 21,
+- database updates, improvements to the number class to better handle decimals and some 
+  new command line options for segmentation (--skip-basic, --skip-advanced), and see --help
+  for the rest.
+
 September 11,
 - improved traditional support in backend database - purging of empty single-character entries so that 
   UNKNOWN entries in automatically-generated words are less frequent and/or non-existent.
