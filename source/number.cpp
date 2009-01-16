@@ -1711,7 +1711,7 @@ void Number::generate_numbers() {
 			else {
 				decimal_num = bigger_than_dec - (decimal_num * (decimal_multiplier));
                                 decimal_num *= -1;
-				if (decimal_num < 0.0001 && decimal_multiplier > 1) { std::cout << "BAD: " << decimal_num << " -- " << decimal_multiplier << std::endl; decimal_num = 0; }
+				if (decimal_num < 0.0001 && decimal_multiplier > 1) { decimal_num = 0; }
 				whole_num += bigger_than_dec;
 			}
 		}

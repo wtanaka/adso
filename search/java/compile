@@ -1,0 +1,3 @@
+/path/to/bin/javac -classpath /path/to/lucene-2.1.0/lucene-core-2.1.0.jar AdsoIndexer.java 
+/path/to/bin/jar -cf search.jar *.class 
+rm -f ./*.class

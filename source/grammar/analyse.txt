@@ -1,0 +1,2 @@
+<REDUCE>
+<IF>(<NOTCLASS STOPWORD> AND <NOTCLASS Adjective>) AND (<NOTCLASS Preposition> AND <NOTCLASS Verb>) AND (<NOTCLASS Date>) AND <NOTCLASS Punctuation> AND <NOTCLASS Special> AND <LENGTH gt 1> AND <NOTCLASS Conjunction> AND <NOTCLASS NonChinese> AND <NOTCLASS Adverb> AND <NOTCLASS Cadverb></IF><THEN><PRINT chinese_utf8s><PRINT newline></THEN>

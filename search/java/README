@@ -1,0 +1,31 @@
+
+ This directory contains everything you need to setup a Chinese/English/Pinyin fulltext 
+ search engine using Adso+Lucene. The code can also act as a tutorial for how to get
+ started with Lucene and Adso.
+
+ First of all, edit the scripts that compile and run the software, and replace the 
+ /path/to references with the actual paths to the JAVA/JAR executables on your 
+ system. 
+
+ Then you will need to process the documents you wish to search using Adso, and 
+ feed the resulting file into our AdsoIndexer class. The file that will be indexed 
+ needs to have one document per line, with the following tab-separated fields
+
+ 1. Full unsegmented Chinese text
+ 2. Segmented simplified UTF8 text (segmented_utf8s)
+ 3. Segmented traditional UTF8 text (segmented_utf8c)
+ 4. Segmented pinyin (segmented_pinyin)
+ 5. Segmented english (segmented_english)
+ 6. unique identifier (URL/Document ID)
+ 7. publication date?
+
+ Index the document like this:
+
+ ./run index [document] 
+
+ Search it with:
+
+ ./run search [searchterm] [searchfield] 
+
+
+

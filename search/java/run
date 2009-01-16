@@ -1,0 +1,1 @@
+/path/to/bin/java -classpath /path/to/lucene-2.1.0/lucene-core-2.1.0.jar:/path/to/search.jar AdsoIndexer $1 $2 $3

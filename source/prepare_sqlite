@@ -1,0 +1,10 @@
+rm -f ./*.o
+cp -f Makefile.sqlite Makefile
+cp -f main.cpp.sqlite main.cpp
+cp -f text.cpp.mysql text.cpp
+cp -f text.h.mysql text.h
+cp -f adso.cpp.sqlite adso.cpp
+cp -f adso.h.sqlite adso.h
+cp -f database.h.sqlite database.h
+cp -f parser.cpp.sqlite parser.cpp
+cp -f parser.h.sqlite parser.h

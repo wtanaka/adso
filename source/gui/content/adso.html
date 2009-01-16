@@ -1,0 +1,34 @@
+<html>
+<head>
+  <link rel="stylesheet" href="adso.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div id="dhtmltooltip"></div>
+<script language="javascript" src="tooltips.js"></script>
+<script>
+function annotate() {
+  var text = document.getElementById("text").value;
+alert(text);
+  document.getElementById("adso_output").innerHTML = "";
+  previewer.processAdso(text);
+}
+</script>
+
+
+  <img src="logo.gif" />
+
+  <br />
+
+  Simplified or Traditional Chinese:
+
+  <form onsubmit="annotate();return false;" />
+  <textarea id="text" ></textarea>
+  <input type="submit" value="Go" />
+  </form>
+
+  <div style="margin-top:20px" id="adso_output">
+  </div>
+
+</body>
+</html>

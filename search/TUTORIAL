@@ -1,0 +1,31 @@
+
+ We're going to index a file containing Chinese text. Assuming you 
+ have Adso installed at the command line, do this:
+
+   php 1_prepare_file_for_indexing.php [your_file] > index_me.txt
+
+ You can open up the file index_me.txt and see what it looks like.
+ Basically, we've just processed the file into a tab-separated document.
+ We want the file index_me.txt to contain as many documents as we
+ want to index. One document per line. We feed this document into 
+ a special class we've created that indexes them according to the 
+ following information 
+
+    simplified chinese
+    traditional chinese
+    english 
+    pinyin
+
+ Brilliant... you now have four ways of searching the same Chinese
+ text. And everything is searchable in real-time.
+
+ NOTE: we need each document to have a unique ID in order to index
+ it properly. We take the document name as the UID unless you edit 
+ the PHP script or write your own. Feel free to hack around with the 
+ actual Java class to customize it there.
+
+ When you have a file ready to index and are ready to stick it into 
+ your new search engine, head into the java/ subdirectory and read 
+ the README file.
+
+

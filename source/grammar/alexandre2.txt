@@ -1,0 +1,18 @@
+<REDUCE>
+<IF><CLASS Special></IF><THEN><DELETE all></THEN>
+<IF><CLASS NonChinese></IF><THEN><DELETE all></THEN>
+<IF><CLASS Adjective></IF><THEN><DELETE all></THEN>
+<IF><CLASS Adverb></IF><THEN><DELETE all></THEN>
+<IF><CLASS Conjunction></IF><THEN><DELETE all></THEN>
+<IF><CLASS Preposition></IF><THEN><DELETE all></THEN>
+<IF><CLASS Cadverb></IF><THEN><DELETE all></THEN>
+<IF><CLASS Determiner></IF><THEN><DELETE all></THEN>
+<IF><CLASS Number></IF><THEN><DELETE all></THEN>
+<IF><CLASS Verb></IF><THEN><DELETE all></THEN>
+<IF><CLASS Auxiliary></IF><THEN><DELETE all></THEN>
+<IF><CLASS Punctuation></IF><THEN><DELETE all></THEN>
+<IF><CLASS Date></IF><THEN><DELETE all></THEN>
+<IF><CLASS STOPWORD></IF><THEN><DELETE all></THEN>
+<IF><LENGTH is 1></IF><THEN><DELETE all></THEN>
+<PRINT chinese_utf8s><PRINT  >
+
